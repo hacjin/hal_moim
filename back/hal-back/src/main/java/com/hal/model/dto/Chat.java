@@ -6,7 +6,7 @@ public class Chat {
 	private int cid;
 	private String message;
 	private Date time;
-	private boolean status; //ÀĞÀ½ , ¾ÈÀĞ
+	private boolean status; //true: ì½ìŒ, false: ì•ˆì½ìŒ
 	private Room room;
 	private User sender;
 	

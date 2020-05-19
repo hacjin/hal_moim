@@ -7,10 +7,10 @@ public class Moim {
 	private String title;
 	private Date time;
 	private String location;
-	private boolean state; //¸ğÀÓÀÌ »ì¾ÆÀÖ´ÂÁö ÆøÆÄÇß´ÂÁö
+	private boolean state; //true : ëª¨ì„ ìˆëŠ”ì§€, false: ë°©í­
 	private double latitude;
 	private double longitude;
-	private User host; //host Á¤º¸
+	private User host; //host ì •ë³´
 	
 	public Moim() {}
 	public Moim(int mid, String title, Date time, String location, boolean state, double latitude, double longitude,
