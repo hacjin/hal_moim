@@ -3,14 +3,14 @@ package com.hal.model.dto;
 public class Participate {
 	private int pid;
 	private Moim mid;
-	private User uid;
+	private User user;
 	
 	public Participate() {}
 	public Participate(int pid, Moim mid, User uid) {
 		super();
 		this.pid = pid;
 		this.mid = mid;
-		this.uid = uid;
+		this.user = uid;
 	}
 	public int getPid() {
 		return pid;
@@ -25,10 +25,10 @@ public class Participate {
 		this.mid = mid;
 	}
 	public User getUid() {
-		return uid;
+		return user;
 	}
 	public void setUid(User uid) {
-		this.uid = uid;
+		this.user = uid;
 	}
 	
 	
