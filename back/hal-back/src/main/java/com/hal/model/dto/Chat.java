@@ -6,7 +6,7 @@ public class Chat {
 	private int cid;
 	private String message;
 	private Date time;
-	private boolean status; //true: 읽음, false: 안읽음
+	private boolean state; //true: 읽음, false: 안읽음
 	private Room room;
 	private User sender;
 	
@@ -16,7 +16,7 @@ public class Chat {
 		this.cid = cid;
 		this.message = message;
 		this.time = time;
-		this.status = status;
+		this.state = status;
 		this.room = room;
 		this.sender = sender;
 	}
@@ -39,10 +39,10 @@ public class Chat {
 		this.time = time;
 	}
 	public boolean isStatus() {
-		return status;
+		return state;
 	}
 	public void setStatus(boolean status) {
-		this.status = status;
+		this.state = status;
 	}
 	public Room getRoom() {
 		return room;
