@@ -2,12 +2,30 @@ package com.hal.model.dto;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "chat")
 public class Chat {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cid;
 	private String message;
 	private Date time;
 	private boolean state; //true: 읽음, false: 안읽음
+	@ManyToOne
+	@JoinColumn(name = "room_rid")
 	private Room room;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_uid")
 	private User sender;
 	
 	public Chat() {}
@@ -56,7 +74,5 @@ public class Chat {
 	public void setSender(User sender) {
 		this.sender = sender;
 	}
-	
-	
 
 }
