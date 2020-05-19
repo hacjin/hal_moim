@@ -21,11 +21,11 @@ public class Chat {
 	private Date time;
 	private boolean state; //true: 읽음, false: 안읽음
 	@ManyToOne
-	@JoinColumn(name = "room_rid")
+	@JoinColumn(name = "room_rid", updatable = false, insertable = false)
 	private Room room;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_uid")
+	@JoinColumn(name = "user_uid", updatable = false, insertable = false)
 	private User sender;
 	
 	public Chat() {}

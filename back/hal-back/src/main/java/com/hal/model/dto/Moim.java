@@ -24,7 +24,7 @@ public class Moim {
 	private double longitude;
 	
 	@OneToOne
-	@JoinColumn(name = "user_uid")
+	@JoinColumn(name = "user_uid", updatable = false, insertable = false)
 	private User host; //host 정보
 	
 	public Moim() {}

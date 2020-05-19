@@ -16,10 +16,10 @@ public class Participate {
 	private int pid;
 	
 	@ManyToOne
-	@JoinColumn(name = "moim_mid")
+	@JoinColumn(name = "moim_mid", updatable = false, insertable = false)
 	private Moim mid;
 	@ManyToOne
-	@JoinColumn(name = "user_uid")
+	@JoinColumn(name = "user_uid", updatable = false, insertable = false)
 	private User user;
 	
 	public Participate() {}
