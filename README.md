@@ -53,3 +53,17 @@ typora-copy-images-to: img
 ![image-20200515134518635](./img/image-20200515134518635.png)
 
 ![image-20200515134526960](./img/image-20200515134526960.png)
+
+
+
+## 환경설정
+
+- Front : React
+- Back : Spring boot 
+  - STS 4.6.1
+  - Java 1.8
+  - Python 3.6.8
+- DB : MongoDB 4.2.6 
+  - Robomongo 
+- Docker/Kubernetes
+- 서버: AWS
