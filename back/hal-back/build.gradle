@@ -26,6 +26,9 @@ dependencies {
 	compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.2.1'
 	// https://mvnrepository.com/artifact/commons-io/commons-io
 	compile group: 'commons-io', name: 'commons-io', version: '2.4'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.0.RELEASE'
+	
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
 	providedCompile group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
 	
