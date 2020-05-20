@@ -25,6 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Builder
 public class MoimRequestDto {
 	private int mid;
 	private String title;
@@ -34,25 +35,4 @@ public class MoimRequestDto {
 	private double latitude;
 	private double longitude;
 	private int uid; // host 정보
-	
-	@Builder
-	public MoimRequestDto(int mid, String title, Date time, String location, boolean state, double latitude,
-			double longitude, int uid) {
-		super();
-		this.mid = mid;
-		this.title = title;
-		this.time = time;
-		this.location = location;
-		this.state = state;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.uid = uid;
-	}
-	
-//	@Transient
-//	private double distance;
-//	@Transient
-//	private int count;
-	
-
 }

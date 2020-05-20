@@ -8,45 +8,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 @Entity
 @Table(name = "participate")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Getter
+@ToString
 public class Participate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int pid;
 	
 	@ManyToOne
-	@JoinColumn(name = "moim_mid", updatable = false, insertable = false)
+	@JoinColumn(name = "mid",referencedColumnName = "mid", updatable = false, insertable = false)
 	private Moim mid;
-	@ManyToOne
-	@JoinColumn(name = "user_uid", updatable = false, insertable = false)
-	private User user;
 	
-	public Participate() {}
-	public Participate(int pid, Moim mid, User uid) {
-		super();
-		this.pid = pid;
-		this.mid = mid;
-		this.user = uid;
-	}
-	public int getPid() {
-		return pid;
-	}
-	public void setPid(int pid) {
-		this.pid = pid;
-	}
-	public Moim getMid() {
-		return mid;
-	}
-	public void setMid(Moim mid) {
-		this.mid = mid;
-	}
-	public User getUid() {
-		return user;
-	}
-	public void setUid(User uid) {
-		this.user = uid;
-	}
+	@ManyToOne
+	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
+	private User user;
 	
 	
 }

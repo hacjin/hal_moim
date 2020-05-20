@@ -85,24 +85,25 @@ public class MoimServiceImp implements MoimService {
 
 	@Override
 	public Moim updateMoim(Moim moim) {
-		// TODO Auto-generated method stub
-		return null;
+		moim.closeRoom();
+		return mr.save(moim);
 	}
 
 	@Override
-	public Participate updateParticipate(User user, Moim moim, int check) {
+	public void updateParticipate(User user, Moim moim, int check) {
 		if(check == 1) {
+			Participate pc = new Participate(0, moim, user);
 			// insert
+			pr.save(pc);
 		}else {
-			// delete
+			Participate pc = pr.findByUserUid(user.getUid());
+			pr.delete(pc);
 		}
-		return null;
 	}
 
 	@Override
 	public List<User> findUsersByMoim(Moim moim) {
-		// TODO Auto-generated method stub
-		return null;
+		return pr.findByMoimMid(moim.getMid());
 	}
 
 }

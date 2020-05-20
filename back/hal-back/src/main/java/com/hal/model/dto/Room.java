@@ -1,5 +1,6 @@
 package com.hal.model.dto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,46 +9,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 @Entity
 @Table(name = "room")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Getter
+@ToString
 public class Room {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "rid")
 	private int rid;
 	
 	@ManyToOne
-	@JoinColumn(name = "uid1",referencedColumnName = "user_uid",insertable = false, updatable = false)
+	@JoinColumn(name = "uid1",referencedColumnName = "uid",insertable = false, updatable = false)
 	private User sender;
 	
 	@ManyToOne
-	@JoinColumn(name = "uid2",referencedColumnName = "user_uid",insertable = false, updatable = false)
+	@JoinColumn(name = "uid2",referencedColumnName = "uid",insertable = false, updatable = false)
 	private User receiver;
-	
-	public Room() {}
-	public Room(int rid, User sender, User receiver) {
-		super();
-		this.rid = rid;
-		this.sender = sender;
-		this.receiver = receiver;
-	}
-	public int getRid() {
-		return rid;
-	}
-	public void setRid(int rid) {
-		this.rid = rid;
-	}
-	public User getSender() {
-		return sender;
-	}
-	public void setSender(User sender) {
-		this.sender = sender;
-	}
-	public User getReceiver() {
-		return receiver;
-	}
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
-	}
-	
 	
 }

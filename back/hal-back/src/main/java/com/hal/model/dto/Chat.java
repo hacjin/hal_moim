@@ -2,6 +2,7 @@ package com.hal.model.dto;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,70 +13,40 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 @Entity
 @Table(name = "chat")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Getter
+@ToString
 public class Chat {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cid")
 	private int cid;
+	
+	@Column(name = "message")
 	private String message;
+	
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "time")
 	private Date time;
+	
+	@Column(name = "state")
 	private boolean state; //true: 읽음, false: 안읽음
+	
 	@ManyToOne
-	@JoinColumn(name = "room_rid", updatable = false, insertable = false)
+	@JoinColumn(name = "rid",referencedColumnName = "rid", updatable = false, insertable = false)
 	private Room room;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_uid", updatable = false, insertable = false)
+	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
 	private User sender;
-	
-	public Chat() {}
-	public Chat(int cid, String message, Date time, boolean status, Room room, User sender) {
-		super();
-		this.cid = cid;
-		this.message = message;
-		this.time = time;
-		this.state = status;
-		this.room = room;
-		this.sender = sender;
-	}
-	public int getCid() {
-		return cid;
-	}
-	public void setCid(int cid) {
-		this.cid = cid;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	public Date getTime() {
-		return time;
-	}
-	public void setTime(Date time) {
-		this.time = time;
-	}
-	public boolean isStatus() {
-		return state;
-	}
-	public void setStatus(boolean status) {
-		this.state = status;
-	}
-	public Room getRoom() {
-		return room;
-	}
-	public void setRoom(Room room) {
-		this.room = room;
-	}
-	public User getSender() {
-		return sender;
-	}
-	public void setSender(User sender) {
-		this.sender = sender;
-	}
-
 }

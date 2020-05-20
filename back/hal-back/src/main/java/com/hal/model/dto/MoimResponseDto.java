@@ -37,23 +37,5 @@ public class MoimResponseDto {
 	private User host; // host 정보
 	private double distance;
 	private int count;
-	
-//	@Builder
-//	public MoimResponseDto(int mid, String title, Date time, String location, boolean state, double latitude,
-//			double longitude, User host, double distance, int count) {
-//		super();
-//		this.mid = mid;
-//		this.title = title;
-//		this.time = time;
-//		this.location = location;
-//		this.state = state;
-//		this.latitude = latitude;
-//		this.longitude = longitude;
-//		this.host = host;
-//		this.distance = distance;
-//		this.count = count;
-//	}
-
-	
 
 }

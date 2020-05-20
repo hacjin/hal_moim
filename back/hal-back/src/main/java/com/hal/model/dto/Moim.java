@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +21,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "moim")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @ToString
@@ -49,7 +51,11 @@ public class Moim {
 	private double longitude;
 
 	@OneToOne
-	@JoinColumn(name = "user_uid", updatable = false, insertable = false)
+	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
 	private User host; // host 정보
+	
+	public void closeRoom() {
+		this.state = false;
+	}
 
 }
