@@ -30,7 +30,7 @@ public class MoimServiceImp implements MoimService {
 	@Override
 	public List<MoimResponseDto> findMoimByDist(User user,int dis_filter) {
 		User client = ur.findById(user.getUid()).orElseThrow(IllegalArgumentException::new);
-		List<Moim> moims = mr.findByMoimHostNot(client);
+		List<Moim> moims = mr.findByHostNot(client);
 		List<MoimResponseDto> result = new ArrayList<>();
 		double user_lat = client.getLatitude();
 		double user_long = client.getLongitude();
@@ -63,7 +63,7 @@ public class MoimServiceImp implements MoimService {
 		    			.longitude(moim_long)
 		    			.host(moim.getHost())
 		    			.distance(Math.round(distance*10)/10.0)
-		    			.count(pr.countByMoimMid(moim.getMid()))
+		    			.count(pr.countByMid(moim.getMid()))
 		    			.build();
 		    	result.add(tmpMoim);
 		    }
@@ -103,7 +103,7 @@ public class MoimServiceImp implements MoimService {
 
 	@Override
 	public List<User> findUsersByMoim(Moim moim) {
-		return pr.findByMoimMid(moim.getMid());
+		return pr.findByMid(moim.getMid());
 	}
 
 }
