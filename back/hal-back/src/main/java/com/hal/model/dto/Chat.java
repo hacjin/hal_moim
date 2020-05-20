@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "chat")
@@ -18,6 +20,7 @@ public class Chat {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cid;
 	private String message;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date time;
 	private boolean state; //true: 읽음, false: 안읽음
 	@ManyToOne

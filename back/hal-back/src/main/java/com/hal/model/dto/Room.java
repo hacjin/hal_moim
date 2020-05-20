@@ -16,11 +16,11 @@ public class Room {
 	private int rid;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_uid",insertable = false, updatable = false)
+	@JoinColumn(name = "uid1",referencedColumnName = "user_uid",insertable = false, updatable = false)
 	private User sender;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_uid",insertable = false, updatable = false)
+	@JoinColumn(name = "uid2",referencedColumnName = "user_uid",insertable = false, updatable = false)
 	private User receiver;
 	
 	public Room() {}

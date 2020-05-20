@@ -2,7 +2,6 @@ package com.hal.model.dto;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,44 +11,49 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Table(name = "moim")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
-public class Moim {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "mid")
+@Builder
+public class MoimResponseDto {
 	private int mid;
-
-	@Column(name = "title")
 	private String title;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "time")
 	private Date time;
-
-	@Column(name = "location")
 	private String location;
-
-	@Column(name = "state")
 	private boolean state; // true : 모임 있는지, false: 방폭
-	
-	@Column(name = "latitude")
 	private double latitude;
-	
-	@Column(name = "longitude")
 	private double longitude;
-
-	@OneToOne
-	@JoinColumn(name = "user_uid", updatable = false, insertable = false)
 	private User host; // host 정보
+	private double distance;
+	private int count;
+	
+//	@Builder
+//	public MoimResponseDto(int mid, String title, Date time, String location, boolean state, double latitude,
+//			double longitude, User host, double distance, int count) {
+//		super();
+//		this.mid = mid;
+//		this.title = title;
+//		this.time = time;
+//		this.location = location;
+//		this.state = state;
+//		this.latitude = latitude;
+//		this.longitude = longitude;
+//		this.host = host;
+//		this.distance = distance;
+//		this.count = count;
+//	}
+
+	
 
 }

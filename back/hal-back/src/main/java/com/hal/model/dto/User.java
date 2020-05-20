@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +21,10 @@ public class User {
 	private int gender;
 	private String phone;
 	private String addr;
-	private String profile_img;
-	private String login_img;
+	@Column(name = "profile_img")
+	private String profileImg;
+	@Column(name = "login_img")
+	private String loginImg;
 	private double latitude;
 	private double longitude;
 	
@@ -39,8 +40,8 @@ public class User {
 		this.gender = gender;
 		this.phone = phone;
 		this.addr = addr;
-		this.profile_img = profile_img;
-		this.login_img = login_img;
+		this.profileImg = profile_img;
+		this.loginImg = login_img;
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
@@ -83,16 +84,16 @@ public class User {
 		this.addr = addr;
 	}
 	public String getProfile_img() {
-		return profile_img;
+		return profileImg;
 	}
 	public void setProfile_img(String profile_img) {
-		this.profile_img = profile_img;
+		this.profileImg = profile_img;
 	}
 	public String getLogin_img() {
-		return login_img;
+		return loginImg;
 	}
 	public void setLogin_img(String login_img) {
-		this.login_img = login_img;
+		this.loginImg = login_img;
 	}
 	public double getLatitude() {
 		return latitude;
