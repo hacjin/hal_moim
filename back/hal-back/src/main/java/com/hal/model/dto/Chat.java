@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "chat")
@@ -18,6 +23,9 @@ public class Chat {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cid;
 	private String message;
+//	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+//	@DateTimeFormat
 	private Date time;
 	private boolean state; //true: 읽음, false: 안읽음
 	@ManyToOne
