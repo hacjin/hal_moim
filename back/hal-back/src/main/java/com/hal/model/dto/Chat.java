@@ -21,7 +21,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "chat")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @ToString

@@ -32,7 +32,7 @@ public class Room {
 	private User sender;
 	
 	@ManyToOne
-	@JoinColumn(name = "uid2",referencedColumnName = "uid",insertable = false, updatable = false)
+	@JoinColumn(name = "uid2", referencedColumnName = "uid", insertable = false, updatable = false)
 	private User receiver;
 	
 }
