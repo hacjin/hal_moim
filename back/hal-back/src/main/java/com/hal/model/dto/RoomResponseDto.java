@@ -1,5 +1,7 @@
 package com.hal.model.dto;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,31 +10,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Table(name = "room")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
-public class Room {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "rid")
+@Builder
+public class RoomResponseDto {
+	
 	private int rid;
-	
-	@ManyToOne
-	@JoinColumn(name = "uid1",referencedColumnName = "uid",insertable = false, updatable = false)
-	private User user1;
-	
-	@ManyToOne
-	@JoinColumn(name = "uid2", referencedColumnName = "uid", insertable = false, updatable = false)
-	private User user2;
-	
+	private User sender;
+	private User receiver;
 }

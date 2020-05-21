@@ -46,8 +46,8 @@ public class ChatController {
 
 	@ApiOperation(value = "chat room 목록 조회")
 	@GetMapping("/findRoomListById")
-	public ResponseEntity<Map<String, Object>> findRoomListById(User user) throws Exception {
-		return handleSuccess(rservice.findRoomListById(user)); 
+	public ResponseEntity<Map<String, Object>> findRoomListById(int uid) throws Exception {
+		return handleSuccess(rservice.findRoomListById(uid)); 
 	}
 	
 	@ApiOperation(value = "chat room 만들기")

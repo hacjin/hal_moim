@@ -67,3 +67,11 @@ typora-copy-images-to: img
   - Robomongo 
 - Docker/Kubernetes
 - 서버: AWS
+
+
+
+
+
+- Lombok설치
+
+  설치방법: https://duzi077.tistory.com/142
