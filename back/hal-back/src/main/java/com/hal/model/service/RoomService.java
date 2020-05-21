@@ -8,4 +8,6 @@ import com.hal.model.dto.User;
 public interface RoomService {
 
 	public List<Room> findRoomListById(User user);
+
+	public String addRoom(User sender, User receiver);
 }

@@ -32,4 +32,11 @@ public class RoomServiceImp implements RoomService {
 		
 		return roomList;
 	}
+	
+	@Override
+	public String addRoom(User sender, User receiver) {
+		roomRepository.numOfRoom();
+//		roomRepository.addRoom(sender, receiver);
+		return "ok";
+	}
 }
