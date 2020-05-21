@@ -64,7 +64,7 @@ public class MoimServiceImp implements MoimService {
 		    			.longitude(moim_long)
 		    			.host(moim.getHost())
 		    			.distance(Math.round(distance*10)/10.0)
-		    			.count(pr.countByMid(moim.getMid()))
+		    			.count(pr.countByMoimMid(moim.getMid()))
 		    			.build();
 		    	result.add(tmpMoim);
 		    }
@@ -113,7 +113,7 @@ public class MoimServiceImp implements MoimService {
 
 	@Override
 	public List<User> findUsersByMid(int mid) {
-		return pr.findByMid(mid);
+		return pr.findByMoimMid(mid);
 	}
 
 }
