@@ -14,6 +14,7 @@ import com.hal.model.dao.UserRepository;
 import com.hal.model.dto.Moim;
 import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Participate;
+import com.hal.model.dto.ParticipateResponseDto;
 import com.hal.model.dto.User;
 
 @Service
@@ -90,20 +91,29 @@ public class MoimServiceImp implements MoimService {
 	}
 
 	@Override
-	public void updateParticipate(User user, Moim moim, int check) {
+	public ParticipateResponseDto updateParticipate(int uid, int mid, int check) {
+		User user = ur.findById(uid).orElseThrow(IllegalArgumentException::new);
+		Moim moim = mr.findById(mid);
+		Participate pc;
 		if(check == 1) {
-			Participate pc = new Participate(0, moim, user);
+			pc = new Participate(0, moim, user);
 			// insert
-			pr.save(pc);
+			pc = pr.save(pc);
 		}else {
-			Participate pc = pr.findByUserUid(user.getUid());
+			pc = pr.findByUserUidAndMoimMid(uid, mid);
 			pr.delete(pc);
 		}
+		ParticipateResponseDto result = ParticipateResponseDto.builder()
+				.pid(pc.getPid())
+				.user(pc.getUser())
+				.moim(pc.getMoim())
+				.build();
+		return result;
 	}
 
 	@Override
-	public List<User> findUsersByMoim(Moim moim) {
-		return pr.findByMid(moim.getMid());
+	public List<User> findUsersByMid(int mid) {
+		return pr.findByMid(mid);
 	}
 
 }
