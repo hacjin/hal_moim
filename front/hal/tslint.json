@@ -1,0 +1,15 @@
+{
+    "extends": ["tslint:recommended", "tslint-config-prettier"],
+    "defaultSeverity": "warning",
+    "linterOptions": {
+      "exclude": [
+        "config/**/*.js",
+        "node_modules/**/*.ts"
+      ]
+    },
+    "rules": {
+      "semicolon": true
+    },
+    "rulesDirectory": []
+  }
+  
