@@ -17,5 +17,5 @@ public class RoomRequestDto {
 	private int rid;
 	private int uid1;
 	private int uid2;
-	
+
 }

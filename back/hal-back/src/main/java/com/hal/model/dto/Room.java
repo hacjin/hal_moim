@@ -29,10 +29,10 @@ public class Room {
 	
 	@ManyToOne
 	@JoinColumn(name = "uid1",referencedColumnName = "uid",insertable = false, updatable = false)
-	private User sender;
+	private User user1;
 	
 	@ManyToOne
 	@JoinColumn(name = "uid2", referencedColumnName = "uid", insertable = false, updatable = false)
-	private User receiver;
+	private User user2;
 	
 }

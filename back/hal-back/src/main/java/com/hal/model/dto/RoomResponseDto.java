@@ -14,6 +14,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class RoomResponseDto {
+
 	private int rid;
 	private User sender;
 	private User receiver;
