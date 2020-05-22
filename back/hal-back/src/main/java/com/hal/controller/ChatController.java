@@ -52,8 +52,8 @@ public class ChatController {
 	
 	@ApiOperation(value = "chat room 만들기")
 	@GetMapping("/addRoom")
-	public ResponseEntity<Map<String, Object>> addRoom(User sender, User receiver) throws Exception {
-		return handleSuccess(rservice.addRoom(sender,receiver)); 
+	public ResponseEntity<Map<String, Object>> addRoom(int senderId, int receiverId) throws Exception {
+		return handleSuccess(rservice.addRoom(senderId,receiverId)); 
 	}
 	
 	  
@@ -72,6 +72,6 @@ public class ChatController {
 	    resultMap.put("state", "ok");
 	    resultMap.put("data", data);
 	    return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
+	} 
     
 }

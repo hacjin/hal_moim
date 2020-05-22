@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hal.model.dao.RoomRepository;
+import com.hal.model.dao.UserRepository;
 import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Room;
 import com.hal.model.dto.RoomResponseDto;
@@ -17,6 +18,7 @@ public class RoomServiceImp implements RoomService {
 
 	@Autowired
 	private RoomRepository roomRepository;
+	private UserRepository userRepository;
 	
 	public List<RoomResponseDto> findRoomListById(int uid){
 		List<RoomResponseDto> roomList = new LinkedList<>();
@@ -44,9 +46,19 @@ public class RoomServiceImp implements RoomService {
 	}
 	
 	@Override
-	public String addRoom(User sender, User receiver) {
-		roomRepository.numOfRoom();
-//		roomRepository.addRoom(sender, receiver);
+	public String addRoom(int senderId, int receiverId) {
+		if(roomRepository.numOfRoom(senderId, receiverId)<1) {
+			System.out.println(roomRepository.numOfRoom(senderId, receiverId));
+			
+//			roomRepository.addRoom(senderId, receiverId);
+//			User sender = userRepository.findById(senderId).orElseThrow(exceptionSupplier);
+//			User receiver = userRepository.findById(receiverId).orElseThrow(exceptionSupplier);
+//			
+//			Room room = new Room(null,sender,receiver);
+//			roomRepository.save(room);
+			
+			
+		}
 		return "ok";
 	}
 }

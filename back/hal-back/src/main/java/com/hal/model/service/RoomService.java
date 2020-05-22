@@ -10,5 +10,5 @@ public interface RoomService {
 
 	public List<RoomResponseDto> findRoomListById(int uid);
 
-	public String addRoom(User sender, User receiver);
+	public String addRoom(int senderId, int receiverId);
 }
