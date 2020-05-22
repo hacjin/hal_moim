@@ -24,4 +24,5 @@ public class UserResponseDto {
 	private String loginImg;
 	private double latitude;
 	private double longitude;
+	private double distance;
 }

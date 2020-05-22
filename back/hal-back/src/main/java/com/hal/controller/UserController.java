@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hal.model.service.UserService;
@@ -25,6 +26,12 @@ public class UserController {
 	@GetMapping("/userAllList")
 	public ResponseEntity<Map<String, Object>> userSearchAllList() throws Exception {
 	    return handleSuccess(userServiceImp.userSearchAllList());
+	}
+
+	@ApiOperation(value = "모든 Friend 조회")
+	@GetMapping("/friendsByDistance")
+	public ResponseEntity<Map<String, Object>> friendsAllList(@RequestParam int uid, @RequestParam int dis_filter) throws Exception {
+	    return handleSuccess(userServiceImp.findFriendByDistance(uid, dis_filter));
 	}
 	
 	
