@@ -83,3 +83,9 @@ npm start
 
 - 객체와 Entity에 필요한 Lombok 설치
   - 설치방법: https://duzi077.tistory.com/142
+
+
+
+#### API 확인
+
+http://localhost:8080/swagger-ui.html
