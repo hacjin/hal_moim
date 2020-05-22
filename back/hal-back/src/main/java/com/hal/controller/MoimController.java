@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hal.model.dao.UserRepository;
 import com.hal.model.dto.Moim;
 import com.hal.model.dto.MoimRequestDto;
+import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.ParticipateResponseDto;
 import com.hal.model.dto.Room;
 import com.hal.model.dto.RoomResponseDto;
@@ -65,12 +66,13 @@ public class MoimController {
 		Moim moim;
 		try {
 			User user = userRepository.findById(requestMoim.getUid()).orElseThrow(IllegalArgumentException::new);
-			moim = new Moim(requestMoim.getMid(), requestMoim.getTitle(), new Date(), requestMoim.getLocation(),
-					requestMoim.isState(), requestMoim.getLatitude(), requestMoim.getLongitude(), user);
+			moim = requestMoim.toEntity(user, requestMoim);
+//			moim = new Moim(requestMoim.getMid(), requestMoim.getTitle(), new Date(), requestMoim.getLocation(),
+//					requestMoim.isState(), requestMoim.getLatitude(), requestMoim.getLongitude(), user);
 			moimService.addMoim(moim);
 			resultMap.put("state", "Success");
 			resultMap.put("message", "모임방 생성 성공");
-			resultMap.put("data", moim);
+			resultMap.put("data", requestMoim.toResponse(moim));
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		} catch (Exception e) {
 			String msg = e.getMessage();
@@ -89,12 +91,13 @@ public class MoimController {
 		Moim moim;
 		try {
 			User user = userRepository.findById(requestMoim.getUid()).orElseThrow(IllegalArgumentException::new);
-			moim = new Moim(requestMoim.getMid(), requestMoim.getTitle(), new Date(), requestMoim.getLocation(),
-					requestMoim.isState(), requestMoim.getLatitude(), requestMoim.getLongitude(), user);
+			moim = requestMoim.toEntity(user, requestMoim);
+//			moim = new Moim(requestMoim.getMid(), requestMoim.getTitle(), new Date(), requestMoim.getLocation(),
+//					requestMoim.isState(), requestMoim.getLatitude(), requestMoim.getLongitude(), user);
 			moimService.updateMoim(moim);
 			resultMap.put("state", "Success");
 			resultMap.put("message", "모임방 상태 수정 성공");
-			resultMap.put("data", moim);
+			resultMap.put("data", requestMoim.toResponse(moim));
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		} catch (Exception e) {
 			String msg = e.getMessage();
