@@ -41,7 +41,7 @@ public class MoimController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			User user = userRepository.findById(uid).orElseThrow(IllegalArgumentException::new);
-			resultMap.put("state", "fail");
+			resultMap.put("state", "Success");
 			resultMap.put("data", moimService.findMoimByDist(user, dis_filter));
 			return new ResponseEntity<Map<String, Object>>(resultMap,HttpStatus.OK);
 		} catch (Exception e) {

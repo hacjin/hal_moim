@@ -26,11 +26,13 @@ public class Participate {
 	private int pid;
 	
 	@ManyToOne
-	@JoinColumn(name = "mid",referencedColumnName = "mid", updatable = false, insertable = false)
+//	@JoinColumn(name = "mid",referencedColumnName = "mid", updatable = false, insertable = false)
+	@JoinColumn(name = "mid",referencedColumnName = "mid")
 	private Moim moim;
 	
 	@ManyToOne
-	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
+//	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
+	@JoinColumn(name = "uid",referencedColumnName = "uid")
 	private User user;
 	
 	
