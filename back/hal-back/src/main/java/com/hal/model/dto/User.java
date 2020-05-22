@@ -1,8 +1,5 @@
 package com.hal.model.dto;
 
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,22 +24,32 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "uid")
 	private int uid;
+
 	@Column(name = "name")
 	private String name;
+	
 	@Column(name = "birth")
 	private String birth;
+	
 	@Column(name = "gender")
 	private int gender;
+	
 	@Column(name = "phone")
 	private String phone;
+	
 	@Column(name = "addr")
 	private String addr;
+	
 	@Column(name = "profile_img")
 	private String profileImg;
+	
 	@Column(name = "login_img")
 	private String loginImg;
+	
 	@Column(name = "latitude")
 	private double latitude;
+	
 	@Column(name = "longitude")
 	private double longitude;
+	
 }
