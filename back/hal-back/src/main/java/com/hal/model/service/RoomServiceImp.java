@@ -58,8 +58,6 @@ public class RoomServiceImp implements RoomService {
 			
 			Room room = new Room(0,sender,receiver);
 			roomRepository.save(room);
-			
-			
 		}
 		return "ok";
 	}

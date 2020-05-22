@@ -53,7 +53,7 @@ public class ChatController {
 	
 	@ApiOperation(value = "chat room 만들기")
 	@GetMapping("/addRoom")
-	public ResponseEntity<Map<String, Object>> addRoom(@RequestParam int senderId,@RequestParam  int receiverId) throws Exception {
+	public ResponseEntity<Map<String, Object>> addRoom(@RequestParam int senderId,@RequestParam int receiverId) throws Exception {
 		return handleSuccess(rservice.addRoom(senderId,receiverId)); 
 	}
 	
