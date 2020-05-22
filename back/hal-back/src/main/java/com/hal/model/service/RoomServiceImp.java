@@ -50,23 +50,14 @@ public class RoomServiceImp implements RoomService {
 	@Override
 	public String addRoom(int senderId, int receiverId) {
 		if(roomRepository.numOfRoom(senderId, receiverId)<1) {
-			System.out.println(senderId);
-			System.out.println(receiverId);
+			System.out.println(senderId + " // " + receiverId);
 			System.out.println(roomRepository.numOfRoom(senderId, receiverId));
 			
-//			roomRepository.addRoom(senderId, receiverId);
-			
 			User sender = userRepository.findById(senderId).orElseThrow(IllegalArgumentException::new);
-			System.out.println(sender);
 			User receiver = userRepository.findById(receiverId).orElseThrow(IllegalArgumentException::new);
-			System.out.println("리시버"+receiver);
 			
-			Room room = new Room(2,sender,receiver);
-			System.out.println("room"+room);
+			Room room = new Room(0,sender,receiver);
 			roomRepository.save(room);
-			System.out.println("save");
-			
-			
 		}
 		return "ok";
 	}

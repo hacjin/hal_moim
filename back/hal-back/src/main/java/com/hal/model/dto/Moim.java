@@ -51,7 +51,8 @@ public class Moim {
 	private double longitude;
 
 	@OneToOne
-	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
+//	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
+	@JoinColumn(name = "uid",referencedColumnName = "uid")
 	private User host; // host 정보
 	
 	public void closeRoom() {
