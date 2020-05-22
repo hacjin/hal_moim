@@ -27,7 +27,7 @@ public class Participate {
 	
 	@ManyToOne
 	@JoinColumn(name = "mid",referencedColumnName = "mid", updatable = false, insertable = false)
-	private Moim mid;
+	private Moim moim;
 	
 	@ManyToOne
 	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
