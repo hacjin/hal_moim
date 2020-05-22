@@ -29,7 +29,6 @@ import lombok.ToString;
 @ToString
 @Builder
 public class MoimRequestDto {
-	public static UserRepository uRepo;
 	private int mid;
 	private String title;
 	private Date time;
@@ -39,9 +38,7 @@ public class MoimRequestDto {
 	private double longitude;
 	private int uid; // host 정보
 	
-	public static Moim toEntity(MoimRequestDto request) {
-		System.out.println("사용자번호 : " + request.getUid());
-		User user = uRepo.findById(request.getUid()).orElseThrow(IllegalArgumentException::new);
+	public Moim toEntity(User user, MoimRequestDto request) {
 		Moim moim = new Moim(request.getMid()
 				,request.getTitle()
 				,new Date()
@@ -51,5 +48,18 @@ public class MoimRequestDto {
 				,request.getLongitude()
 				,user);
 		return moim;
+	}
+	
+	public MoimResponseDto toResponse(Moim moim) {
+		MoimResponseDto result = MoimResponseDto.builder()
+				.mid(moim.getMid())
+				.title(moim.getTitle())
+				.time(moim.getTime())
+				.state(moim.isState())
+				.latitude(moim.getLatitude())
+				.longitude(moim.getLongitude())
+				.host(moim.getHost())
+				.build();
+		return result;
 	}
 }
