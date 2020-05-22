@@ -18,6 +18,7 @@ public class RoomServiceImp implements RoomService {
 
 	@Autowired
 	private RoomRepository roomRepository;
+	@Autowired
 	private UserRepository userRepository;
 	
 	public List<RoomResponseDto> findRoomListById(int uid){
@@ -49,14 +50,21 @@ public class RoomServiceImp implements RoomService {
 	@Override
 	public String addRoom(int senderId, int receiverId) {
 		if(roomRepository.numOfRoom(senderId, receiverId)<1) {
+			System.out.println(senderId);
+			System.out.println(receiverId);
 			System.out.println(roomRepository.numOfRoom(senderId, receiverId));
 			
 //			roomRepository.addRoom(senderId, receiverId);
-//			User sender = userRepository.findById(senderId).orElseThrow(exceptionSupplier);
-//			User receiver = userRepository.findById(receiverId).orElseThrow(exceptionSupplier);
-//			
-//			Room room = new Room(null,sender,receiver);
-//			roomRepository.save(room);
+			
+			User sender = userRepository.findById(senderId).orElseThrow(IllegalArgumentException::new);
+			System.out.println(sender);
+			User receiver = userRepository.findById(receiverId).orElseThrow(IllegalArgumentException::new);
+			System.out.println("리시버"+receiver);
+			
+			Room room = new Room(2,sender,receiver);
+			System.out.println("room"+room);
+			roomRepository.save(room);
+			System.out.println("save");
 			
 			
 		}
