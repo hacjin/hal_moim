@@ -25,11 +25,18 @@ public class RoomServiceImp implements RoomService {
 		for(int i=0; i<tmpList.size(); i++) {
 			Room room = tmpList.get(i);
 			User receiver = room.getSender();
-			room.setReceiver(receiver);
-			room.setSender(user);
+//			room.setReceiver(receiver);
+//			room.setSender(user);
 			roomList.add(room);
 		}
 		
 		return roomList;
+	}
+	
+	@Override
+	public String addRoom(User sender, User receiver) {
+		roomRepository.numOfRoom();
+//		roomRepository.addRoom(sender, receiver);
+		return "ok";
 	}
 }

@@ -13,9 +13,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class ParticipateResponseDto {
-	private int pid;
-	private Moim moim;
-	private User user;
+public class RoomResponseDto {
+	private int rid;
+	private User sender;
+	private User receiver;
 	
 }

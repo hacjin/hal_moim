@@ -47,10 +47,16 @@ public class ChatController {
 	@ApiOperation(value = "chat room 목록 조회")
 	@GetMapping("/findRoomListById")
 	public ResponseEntity<Map<String, Object>> findRoomListById(User user) throws Exception {
-		rservice.findRoomListById(user);
 		return handleSuccess(rservice.findRoomListById(user)); 
 	}
 	
+	@ApiOperation(value = "chat room 만들기")
+	@GetMapping("/addRoom")
+	public ResponseEntity<Map<String, Object>> addRoom(User sender, User receiver) throws Exception {
+		return handleSuccess(rservice.addRoom(sender,receiver)); 
+	}
+	
+	  
 	
 	// Fail
 	public ResponseEntity<Map<String, Object>> handleFail(Object data, HttpStatus state) {
