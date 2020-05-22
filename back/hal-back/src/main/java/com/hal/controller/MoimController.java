@@ -84,9 +84,13 @@ public class MoimController {
 
 	@ApiOperation(value = "모임방 상태 변화 (폭파)")
 	@PostMapping("/updateState")
-	public ResponseEntity<Map<String, Object>> moimUpdate(@RequestBody Moim moim) {
+	public ResponseEntity<Map<String, Object>> moimUpdate(@RequestBody MoimRequestDto requestMoim) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Moim moim;
 		try {
+			User user = userRepository.findById(requestMoim.getUid()).orElseThrow(IllegalArgumentException::new);
+			moim = new Moim(requestMoim.getMid(), requestMoim.getTitle(), new Date(), requestMoim.getLocation(),
+					requestMoim.isState(), requestMoim.getLatitude(), requestMoim.getLongitude(), user);
 			moimService.updateMoim(moim);
 			resultMap.put("state", "Success");
 			resultMap.put("message", "모임방 상태 수정 성공");
@@ -96,7 +100,7 @@ public class MoimController {
 			String msg = e.getMessage();
 			resultMap.put("state", "Server Error");
 			resultMap.put("message", msg);
-			resultMap.put("data", moim);
+			resultMap.put("data", "");
 			e.printStackTrace();
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
