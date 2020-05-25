@@ -29,7 +29,19 @@ public class ChatController {
 	
 	@Autowired
 	private RoomService rservice;
+//	@Autowired
+//	private ChatService cservice;
 
+	/**이벤트 trigger방식(2가지)
+	 * 1. client소켓에서 sendMessage함수로 메시지 보낼경우 @MessageMapping으로 받을 수 있음
+	 * 2. GET사용할때는 @RequestMapping 사용
+	 * 
+	 * 메시지 응답방식(2가지)
+	 * 1. @SendTo를 사용하여 해당 topics를 수싲하는 client websocket에 메시지 전달
+	 * 	  리턴타입 정의해야함, 리턴을 통해 client에 메시지 전달
+	 * 2. SimpMessagingTemplate사용
+	 *    리턴값은 void로 처리해야함
+	 */
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
     public Chat sendMessage(@Payload Chat chatMessage) {
@@ -54,7 +66,9 @@ public class ChatController {
 	@ApiOperation(value = "chat room 만들기")
 	@GetMapping("/addRoom")
 	public ResponseEntity<Map<String, Object>> addRoom(@RequestParam int senderId,@RequestParam int receiverId) throws Exception {
-		return handleSuccess(rservice.addRoom(senderId,receiverId)); 
+		rservice.addRoom(senderId,receiverId);
+		
+		return handleSuccess("ok"); 
 	}
 	
 	  
