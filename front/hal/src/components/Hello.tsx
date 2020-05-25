@@ -19,6 +19,7 @@ function Hello({ name, enthusiasmLevel = 1, onIncrement, onDecrement }: Props) {
       <div>
         <button onClick={onDecrement}>-</button>
         <button onClick={onIncrement}>+</button>
+        <p>{enthusiasmLevel}</p>
       </div>
     </div>
   )
