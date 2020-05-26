@@ -1,23 +1,25 @@
-import * as React from 'react';
-import './App.css';
-import Hello from './components/Hello';
-
-const logo = require('./logo.svg');
+import React from 'react'
+// import CounterContainer from './containers/CounterContainer'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { moim, friend, chat, myInfo } from './routes/index'
+import Header from './components/Header'
 
 function App() {
+  // return <CounterContainer />
   return (
-    <div className="App">
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Welcome to React</h2>
+    <Router>
+      <div>
+        <Header />
+        <Switch>
+          <Route path="/" component={moim} />
+          <Route path="/friend" component={friend} />
+          <Route path="/chat" component={chat} />
+          <Route path="/myInfo" component={myInfo} />
+          <Redirect path="*" to="/" />
+        </Switch>
       </div>
-      <p className="App-intro">
-        To get started, edit <code>src/App.tsx</code> and save to reload.
-      </p>
-      <Hello name="TypeScript" />
-    </div>
-  );
+    </Router>
+  )
 }
 
-export default App;
-
+export default App

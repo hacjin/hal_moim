@@ -29,8 +29,8 @@ public class MoimServiceImp implements MoimService {
 	
 	// dis_filter는 거리기반 1,3,5km
 	@Override
-	public List<MoimResponseDto> findMoimByDist(User user,int dis_filter) {
-		User client = ur.findById(user.getUid()).orElseThrow(IllegalArgumentException::new);
+	public List<MoimResponseDto> findMoimByDist(int uid,int dis_filter) {
+		User client = ur.findById(uid).orElseThrow(IllegalArgumentException::new);
 		List<Moim> moims = mr.findByHostNot(client);
 		List<MoimResponseDto> result = new ArrayList<>();
 		double user_lat = client.getLatitude();
@@ -112,7 +112,7 @@ public class MoimServiceImp implements MoimService {
 	}
 
 	@Override
-	public List<User> findUsersByMid(int mid) {
+	public List<Participate> findUsersByMid(int mid) {
 		return pr.findByMoimMid(mid);
 	}
 
