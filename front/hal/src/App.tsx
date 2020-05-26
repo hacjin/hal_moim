@@ -1,38 +1,24 @@
 import React from 'react'
-import logo from './logo.svg'
-import './App.css'
-import Hello from './components/Hello'
+// import CounterContainer from './containers/CounterContainer'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { moim, friend, chat, myInfo } from './routes/index'
+import Header from './components/Header'
 
 function App() {
-  // return (
-  //   <div className="App">
-  //     <header className="App-header">
-  //       <img src={logo} className="App-logo" alt="logo" />
-  //       <p>
-  //         Edit <code>src/App.tsx</code> and save to reload.
-  //       </p>
-  //       <a
-  //         className="App-link"
-  //         href="https://reactjs.org"
-  //         target="_blank"
-  //         rel="noopener noreferrer"
-  //       >
-  //         Learn React
-  //       </a>
-  //     </header>
-  //   </div>
-  // );
+  // return <CounterContainer />
   return (
-    <div className="App">
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Welcome to React</h2>
+    <Router>
+      <div>
+        <Header />
+        <Switch>
+          <Route path="/" component={moim} />
+          <Route path="/friend" component={friend} />
+          <Route path="/chat" component={chat} />
+          <Route path="/myInfo" component={myInfo} />
+          <Redirect path="*" to="/" />
+        </Switch>
       </div>
-      <p className="App-intro">
-        To get started, edit <code>src/App.tsx</code> and save to reload.
-      </p>
-      <Hello name="TypeScript" />
-    </div>
+    </Router>
   )
 }
 
