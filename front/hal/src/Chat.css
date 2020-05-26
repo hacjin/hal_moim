@@ -15,7 +15,7 @@ body {
   z-index:200;
 }
 #view-code:hover{opacity:1;}
-#chatbox{
+/* #chatbox{
 	width:290px;
 	background:#fff;
 	border-radius:6px;
@@ -33,7 +33,7 @@ body {
 	left:0;
 	width:290px;
 	height:484px;
-}
+} */
 #topmenu{
 	height:69px;
 	width:290px;
