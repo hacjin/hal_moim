@@ -1,12 +1,23 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import './Nav.css'
 
 const Nav = () => {
   return (
-    <div className="navheader">
-      <img src = "https://lh3.googleusercontent.com/proxy/TA6mXIcp_KNnPZllAQ0T-3JTrw5VLQrn_d3c13-QJ0F83LPTrQoAY0o5bhdto9drdDgxmgUKnzmZLRE_lhxvOqZaP9jioM2_LuDUW5pk0r6F-pU3al8EnBmL"
-           width="100%" height="230px"/>
-    </div>
+    <div className="header">
+    <NavLink exact className="item" activeClassName="active" to="/moim">
+      모임
+    </NavLink>
+    <NavLink exact className="item" activeClassName="active" to="/friend">
+      친구
+    </NavLink>
+    <NavLink exact className="item" activeClassName="active" to="/chat">
+      채팅
+    </NavLink>
+    <NavLink exact className="item" activeClassName="active" to="/myInfo">
+      내정보
+    </NavLink>
+  </div>
   )
 }
 
