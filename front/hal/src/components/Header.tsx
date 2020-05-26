@@ -1,22 +1,11 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import './Header.css'
 
 const Header = () => {
   return (
-    <div className="header">
-      <NavLink exact className="item" activeClassName="active" to="/">
-        모임
-      </NavLink>
-      <NavLink exact className="item" activeClassName="active" to="/friend">
-        친구
-      </NavLink>
-      <NavLink exact className="item" activeClassName="active" to="/chat">
-        채팅
-      </NavLink>
-      <NavLink exact className="item" activeClassName="active" to="/myInfo">
-        내정보
-      </NavLink>
+    <div className="logoheader">
+      <img src = "https://lh3.googleusercontent.com/proxy/TA6mXIcp_KNnPZllAQ0T-3JTrw5VLQrn_d3c13-QJ0F83LPTrQoAY0o5bhdto9drdDgxmgUKnzmZLRE_lhxvOqZaP9jioM2_LuDUW5pk0r6F-pU3al8EnBmL"
+           width="100%" height="230px"/>
     </div>
   )
 }
