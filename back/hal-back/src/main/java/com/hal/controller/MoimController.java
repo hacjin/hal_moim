@@ -1,7 +1,6 @@
 package com.hal.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hal.model.dao.MoimRepository;
 import com.hal.model.dao.UserRepository;
 import com.hal.model.dto.Moim;
 import com.hal.model.dto.MoimRequestDto;
 import com.hal.model.dto.MoimResponseDto;
+import com.hal.model.dto.Participate;
 import com.hal.model.dto.ParticipateResponseDto;
-import com.hal.model.dto.Room;
-import com.hal.model.dto.RoomResponseDto;
 import com.hal.model.dto.User;
 import com.hal.model.dto.UserResponseDto;
 import com.hal.model.service.MoimService;
@@ -35,6 +34,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/moim")
 public class MoimController {
 	private UserRepository userRepository;
+	private MoimRepository moimRepository;
 	@Autowired
 	private MoimService moimService;
 
@@ -44,9 +44,9 @@ public class MoimController {
 			throws Exception {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			User user = userRepository.findById(uid).orElseThrow(IllegalArgumentException::new);
+//			User user = userRepository.findById(uid).orElseThrow(IllegalArgumentException::new);
 			resultMap.put("state", "Success");
-			resultMap.put("data", moimService.findMoimByDist(user, dis_filter));
+			resultMap.put("data", moimService.findMoimByDist(uid, dis_filter));
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		} catch (Exception e) {
 			String msg = e.getMessage();
@@ -85,19 +85,25 @@ public class MoimController {
 	}
 
 	@ApiOperation(value = "모임방 상태 변화 (폭파)")
-	@PostMapping("/updateState")
-	public ResponseEntity<Map<String, Object>> moimUpdate(@RequestBody MoimRequestDto requestMoim) {
+	@GetMapping("/updateState")
+	public ResponseEntity<Map<String, Object>> moimUpdate(@RequestParam int mid) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Moim moim;
 		try {
-			User user = userRepository.findById(requestMoim.getUid()).orElseThrow(IllegalArgumentException::new);
-			moim = requestMoim.toEntity(user, requestMoim);
-//			moim = new Moim(requestMoim.getMid(), requestMoim.getTitle(), new Date(), requestMoim.getLocation(),
-//					requestMoim.isState(), requestMoim.getLatitude(), requestMoim.getLongitude(), user);
+			moim = moimRepository.findById(mid);
+			moim.closeRoom();
 			moimService.updateMoim(moim);
+			MoimResponseDto data = MoimResponseDto.builder()
+					.mid(moim.getMid())
+					.title(moim.getTitle())
+					.location(moim.getLocation())
+					.state(moim.isState())
+					.latitude(moim.getLatitude())
+					.longitude(moim.getLongitude())
+					.build();
 			resultMap.put("state", "Success");
 			resultMap.put("message", "모임방 상태 수정 성공");
-			resultMap.put("data", requestMoim.toResponse(moim));
+			resultMap.put("data", data);
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		} catch (Exception e) {
 			String msg = e.getMessage();
@@ -136,9 +142,10 @@ public class MoimController {
 	public ResponseEntity<Map<String, Object>> moimFindParticipateAllUsers(@RequestParam int mid) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			List<User> users = moimService.findUsersByMid(mid);
+			List<Participate> users = moimService.findUsersByMid(mid);
 			List<UserResponseDto> data = new ArrayList<UserResponseDto>();
-			for (User user : users) {
+			for (Participate part : users) {
+				User user = userRepository.findById(part.getUser().getUid()).orElseThrow(IllegalArgumentException::new);
 				UserResponseDto tmpDto = UserResponseDto.builder().uid(user.getUid()).name(user.getName())
 						.birth(user.getBirth()).gender(user.getGender()).phone(user.getPhone()).addr(user.getAddr())
 						.profileImg(user.getProfileImg()).loginImg(user.getLoginImg()).latitude(user.getLatitude())
