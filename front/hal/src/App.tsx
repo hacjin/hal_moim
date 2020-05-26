@@ -11,7 +11,7 @@ function App() {
       <div>
         <Header />
         <Switch>
-          <Route path="/" component={moim} />
+          <Route path="/" exact component={moim} />
           <Route path="/friend" component={friend} />
           <Route path="/chat" component={chat} />
           <Route path="/myInfo" component={myInfo} />
