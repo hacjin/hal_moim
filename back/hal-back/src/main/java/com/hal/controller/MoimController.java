@@ -44,7 +44,6 @@ public class MoimController {
 			throws Exception {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-//			User user = userRepository.findById(uid).orElseThrow(IllegalArgumentException::new);
 			resultMap.put("state", "Success");
 			resultMap.put("data", moimService.findMoimByDist(uid, dis_filter));
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
@@ -67,8 +66,6 @@ public class MoimController {
 		try {
 			User user = userRepository.findById(requestMoim.getUid()).orElseThrow(IllegalArgumentException::new);
 			moim = requestMoim.toEntity(user, requestMoim);
-//			moim = new Moim(requestMoim.getMid(), requestMoim.getTitle(), new Date(), requestMoim.getLocation(),
-//					requestMoim.isState(), requestMoim.getLatitude(), requestMoim.getLongitude(), user);
 			moimService.addMoim(moim);
 			resultMap.put("state", "Success");
 			resultMap.put("message", "모임방 생성 성공");
