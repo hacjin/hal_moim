@@ -3,15 +3,17 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { moim, friend, chat, myInfo } from './routes/index'
 import Header from './components/Header'
+import Nav from './components/Nav'
 
 function App() {
   // return <CounterContainer />
   return (
     <Router>
       <div>
+        <Nav/>
         <Header />
         <Switch>
-          <Route path="/" component={moim} />
+          <Route path="/" exact component={moim} />
           <Route path="/friend" component={friend} />
           <Route path="/chat" component={chat} />
           <Route path="/myInfo" component={myInfo} />
