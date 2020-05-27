@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
@@ -59,7 +61,8 @@ public class ChatController {
 
 	@ApiOperation(value = "chat room 목록 조회")
 	@GetMapping("/findRoomListById")
-	public ResponseEntity<Map<String, Object>> findRoomListById(int uid) throws Exception {
+	public ResponseEntity<Map<String, Object>> findRoomListById(@RequestParam int uid) throws Exception {
+		System.out.println("uid>>>>>>"+uid);
 		return handleSuccess(rservice.findRoomListById(uid)); 
 	}
 	
