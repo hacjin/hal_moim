@@ -8,21 +8,6 @@ import '../styles/bootstrap.min.css'
 
 import contacts from './contacts.json';
 
-const MyHeader = () => {
-    return (
-        <ListViewHeader style={{color: 'rgb(160, 160, 160)', fontSize: 14}} className='pl-3 pb-2 pt-2'>
-            Contact list
-        </ListViewHeader>
-    );
-}
-
-const MyFooter = () => {
-    return (
-        <ListViewFooter style={{color: 'rgb(160, 160, 160)', fontSize: 14}} className='pl-3 pb-2 pt-2'>
-            25 unread messages in total
-        </ListViewFooter>
-    );
-}
 
 const MyItemRender = props => {
     let item = props.dataItem;
@@ -40,7 +25,7 @@ const MyItemRender = props => {
             <div className='col-4'>
                 <div className='k-chip k-chip-filled'>
                     <div className='k-chip-content'>
-                        {item.messages} new messages
+                        {item.messages} new
                     </div>
                 </div>
             </div>
@@ -53,11 +38,9 @@ class ChatList extends React.Component {
         return (
             <div>
                 <ListView
-                    data={contacts}
+                    data={contacts} //contacts : json데이터
                     item={MyItemRender}
                     style={{ width: "100%" }}
-                    header={MyHeader}
-                    footer={MyFooter}
                 />
             </div>
         );
