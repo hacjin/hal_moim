@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Launcher from './Launcher'
+import ChatList from '../containers/ChatList';
 
 class Chat extends Component {
 
@@ -30,7 +31,7 @@ class Chat extends Component {
 
   render() {
     return (<div>
-      <Launcher
+      <ChatList
         agentProfile={{
           teamName: 'react-chat-window',
           imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
