@@ -91,22 +91,23 @@ public class MoimServiceImp implements MoimService {
 	}
 
 	@Override
-	public ParticipateResponseDto updateParticipate(int uid, int mid, int check) {
-		User user = ur.findById(uid).orElseThrow(IllegalArgumentException::new);
-		Moim moim = mr.findById(mid);
-		Participate pc;
-		if(check == 1) {
-			pc = new Participate(0, moim, user);
-			// insert
-			pc = pr.save(pc);
-		}else {
-			pc = pr.findByUserUidAndMoimMid(uid, mid);
-			pr.delete(pc);
-		}
+	public ParticipateResponseDto deleteParticipate(int uid, int mid) {
+		Participate pc = pr.findByUserUidAndMoimMid(uid, mid);
+		pr.delete(pc);
 		ParticipateResponseDto result = ParticipateResponseDto.builder()
 				.pid(pc.getPid())
 				.user(pc.getUser())
 				.moim(pc.getMoim())
+				.build();
+		return result;
+	}
+	@Override
+	public ParticipateResponseDto addParticipate(Participate part) {
+		pr.save(part);
+		ParticipateResponseDto result = ParticipateResponseDto.builder()
+				.pid(part.getPid())
+				.user(part.getUser())
+				.moim(part.getMoim())
 				.build();
 		return result;
 	}
