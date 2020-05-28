@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../modules'
 import { is_moims } from '../modules/moim'
-import Moim from '../routes/Moim'
+import Moim from '../routes/tabs/Moim'
 
 function MoimContainer() {
   const moim = useSelector((state: RootState) => state.moim.moim)
