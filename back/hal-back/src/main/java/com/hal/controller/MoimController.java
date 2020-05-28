@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hal.model.dao.MoimRepository;
+import com.hal.model.dao.ParticipateRepository;
 import com.hal.model.dao.UserRepository;
 import com.hal.model.dto.Moim;
 import com.hal.model.dto.MoimRequestDto;
 import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Participate;
+import com.hal.model.dto.ParticipateRequestDto;
 import com.hal.model.dto.ParticipateResponseDto;
 import com.hal.model.dto.User;
 import com.hal.model.dto.UserResponseDto;
@@ -37,6 +39,7 @@ import lombok.AllArgsConstructor;
 @CrossOrigin("*")
 @RequestMapping("/moim")
 public class MoimController {
+	private ParticipateRepository partRepository;
 	private UserRepository userRepository;
 	@Autowired
 	private MoimService moimService;
@@ -113,14 +116,14 @@ public class MoimController {
 	}
 
 	@ApiOperation(value = "해당 모임에 특정 사용자 참여 추가 기능")
-	@PostMapping("/updateParticipate")
-	public ResponseEntity<Map<String, Object>> moimUpdateParticipate(@RequestBody Participate part) {
+	@PostMapping("/participate")
+	public ResponseEntity<Map<String, Object>> moimUpdateParticipate(@RequestBody ParticipateRequestDto part) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		ParticipateResponseDto data;
 		try {
 			data = moimService.addParticipate(part);
 			resultMap.put("state", "Success");
-			resultMap.put("message", "모임방 상태 수정 성공");
+			resultMap.put("message", "모임방 상태 추가 성공");
 			resultMap.put("data", data);
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		} catch (Exception e) {

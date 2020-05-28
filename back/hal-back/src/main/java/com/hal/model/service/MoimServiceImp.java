@@ -14,6 +14,7 @@ import com.hal.model.dao.UserRepository;
 import com.hal.model.dto.Moim;
 import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Participate;
+import com.hal.model.dto.ParticipateRequestDto;
 import com.hal.model.dto.ParticipateResponseDto;
 import com.hal.model.dto.User;
 
@@ -93,22 +94,30 @@ public class MoimServiceImp implements MoimService {
 	@Override
 	public ParticipateResponseDto deleteParticipate(int uid, int mid) {
 		Participate pc = pr.findByUserUidAndMoimMid(uid, mid);
-		pr.delete(pc);
-		ParticipateResponseDto result = ParticipateResponseDto.builder()
-				.pid(pc.getPid())
-				.user(pc.getUser())
-				.moim(pc.getMoim())
-				.build();
+		ParticipateResponseDto result;
+		if(pc!=null) {
+			pr.delete(pc);
+			result = ParticipateResponseDto.builder()
+					.pid(pc.getPid())
+					.user(pc.getUser())
+					.moim(pc.getMoim())
+					.build();
+		}else result = new ParticipateResponseDto(0,null,null);
 		return result;
 	}
 	@Override
-	public ParticipateResponseDto addParticipate(Participate part) {
-		pr.save(part);
-		ParticipateResponseDto result = ParticipateResponseDto.builder()
-				.pid(part.getPid())
-				.user(part.getUser())
-				.moim(part.getMoim())
-				.build();
+	public ParticipateResponseDto addParticipate(ParticipateRequestDto part) {
+		Participate pc = pr.findByUserUidAndMoimMid(part.getUid(), part.getMid());
+		ParticipateResponseDto result;
+		if(pc==null) {
+			Moim moim = mr.findById(part.getMid());
+			User user = ur.findById(part.getUid()).orElseThrow(IllegalArgumentException::new);
+			Participate addPart = new Participate(0, moim, user);
+			pr.save(addPart);
+			result = new ParticipateResponseDto(0,null,null);
+		}else {
+			result = ParticipateResponseDto.builder().pid(pc.getPid()).user(pc.getUser()).moim(pc.getMoim()).build();
+		}
 		return result;
 	}
 

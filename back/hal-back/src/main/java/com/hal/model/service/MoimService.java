@@ -5,6 +5,7 @@ import java.util.List;
 import com.hal.model.dto.Moim;
 import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Participate;
+import com.hal.model.dto.ParticipateRequestDto;
 import com.hal.model.dto.ParticipateResponseDto;
 
 public interface MoimService {
@@ -15,7 +16,7 @@ public interface MoimService {
 	// 모임방 상태 수정 ( front에서 넘어오는 파라미터를 판단해서 매개변수 바꾸어 줄 것 )
 	public Moim updateMoim(Moim moim);
 	// 모임 참여 여부 기능 ( insert )
-	public ParticipateResponseDto addParticipate(Participate part);
+	public ParticipateResponseDto addParticipate(ParticipateRequestDto part);
 	// 모임 참여 여부 기능 ( delete )
 	public ParticipateResponseDto deleteParticipate(int uid,int mid);
 	// 모임에 참여한 유저 목록 전체 조회
