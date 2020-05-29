@@ -114,7 +114,7 @@ public class MoimServiceImp implements MoimService {
 			User user = ur.findById(part.getUid()).orElseThrow(IllegalArgumentException::new);
 			Participate addPart = new Participate(0, moim, user);
 			pr.save(addPart);
-			result = new ParticipateResponseDto(0,null,null);
+			result = new ParticipateResponseDto(0,moim,user);
 		}else {
 			result = ParticipateResponseDto.builder().pid(pc.getPid()).user(pc.getUser()).moim(pc.getMoim()).build();
 		}

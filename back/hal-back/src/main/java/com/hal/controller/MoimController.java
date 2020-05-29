@@ -184,4 +184,29 @@ public class MoimController {
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@ApiOperation(value = "해당 유저가 참여한 모임 목록 조회")
+	@GetMapping("/participateListByUser")
+	public ResponseEntity<Map<String, Object>> moimFindParticipateByUsers(@RequestParam int uid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			List<Participate> moims = partRepository.findAllByUserUid(uid);
+			List<ParticipateResponseDto> data = new ArrayList<ParticipateResponseDto>();
+			for (Participate part : moims) {
+				ParticipateResponseDto tmpDto = ParticipateResponseDto.builder().pid(part.getPid()).user(part.getUser()).moim(part.getMoim()).build();
+				data.add(tmpDto);
+			}
+			resultMap.put("state", "Success");
+			resultMap.put("message", "모임방 상태 수정 성공");
+			resultMap.put("data", data);
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		} catch (Exception e) {
+			String msg = e.getMessage();
+			resultMap.put("state", "Client Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
+			e.printStackTrace();
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NOT_FOUND);
+		}
+	}
 }

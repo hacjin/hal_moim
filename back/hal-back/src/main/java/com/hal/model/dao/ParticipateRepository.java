@@ -14,4 +14,5 @@ public interface ParticipateRepository extends JpaRepository<Participate, Intege
 	Participate findByUserUidAndMoimMid(int uid,int mid);
 	// 해당 모임에 참여한 유저 목록
 	List<Participate> findByMoimMid(int mid);
+	List<Participate> findAllByUserUid(int uid);
 }

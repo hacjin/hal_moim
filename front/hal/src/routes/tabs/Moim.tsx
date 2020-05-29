@@ -25,7 +25,7 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
       setUpdate(true)
     }
     // console.log(moim)
-  }, [update])
+  })
 
   const getMoim = moim.map((data: any, index: number) => <CardList data={data} key={index} setUpdate={setUpdate} />)
   return (
