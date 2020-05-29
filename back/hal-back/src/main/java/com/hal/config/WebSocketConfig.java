@@ -16,12 +16,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/webSocket")
         		.setAllowedOrigins("*")
         		.withSockJS(); //SockJS사용
+     // URL//webSocket  <-웹소켓 연결 주소
     }
 
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/topic");	//메시지 브로커 등록
+        registry.setApplicationDestinationPrefixes("/app"); //메시지 보낼 url send /app/message
+        registry.enableSimpleBroker("/topic");	//메시지 브로커 등록  //sub용 sub topic/public
     }
 }
