@@ -28,7 +28,7 @@ public class UserController {
 	private UserService userServiceImp;
 	
 	@ApiOperation(value = "모든 User 목록 조회")
-	@GetMapping("/userAllList")
+	@GetMapping("/userlist")
 	public ResponseEntity<Map<String, Object>> userSearchAllList() throws Exception {
 	    return handleSuccess(userServiceImp.userSearchAllList());
 	}

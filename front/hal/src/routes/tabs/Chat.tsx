@@ -1,7 +1,10 @@
 import React from 'react'
+// import '../Chat.css'
+import ChatList from '../../containers/ChatList'
 
 const Chat = () => {
-  return <div>이 페이지는 채팅 페이지 입니다.</div>
+  
+  return <ChatList/>
 }
 
 export default Chat
