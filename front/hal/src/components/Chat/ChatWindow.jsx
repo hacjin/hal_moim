@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import MessageList from '../MessageList';
-import UserInput from '../UserInput';
-import ChatHeader from '../Chat/ChatHeader';
+import MessageList from './MessageList';
+import UserInput from './UserInput';
+import ChatHeader from './ChatHeader';
 
 
 class ChatWindow extends Component {

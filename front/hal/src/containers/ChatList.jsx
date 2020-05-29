@@ -5,7 +5,7 @@ import API from '../util/API'
 import ChatItem from '../components/Chat/ChatItem'
 // import PropTypes from 'prop-types';
 import ChatWindow from '../components/Chat/ChatWindow';
-import incomingMessageSound from './../assets/sounds/notification.mp3';
+import incomingMessageSound from '../components/Chat/assets/sounds/notification.mp3';
 import '../styles';
 import '../styles/all.css'
 import '../styles/bootstrap.min.css'
