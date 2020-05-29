@@ -9,7 +9,7 @@ const chat = () => {
 
     {/* <ChatRoomList></ChatRoomList> */}
     <ChatList/>
-    <Chat/>
+    {/* <Chat/> */}
   </div>
 }
 

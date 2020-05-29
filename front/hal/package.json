@@ -9,6 +9,7 @@
     "@progress/kendo-drawing": "1.7.0",
     "@progress/kendo-react-animation": "^3.13.0",
     "@progress/kendo-react-buttons": "^3.13.0",
+    "@progress/kendo-react-conversational-ui": "^3.14.0",
     "@progress/kendo-react-data-tools": "3.14.0",
     "@progress/kendo-react-dateinputs": "^3.13.0",
     "@progress/kendo-react-dropdowns": "3.14.0",
