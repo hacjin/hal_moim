@@ -27,6 +27,14 @@ class ChatList extends React.Component {
   
     // from Launcher를 사용하는 Chat.js 에서 가져옴
     _onMessageWasSent(message) {
+
+      //back에 메시지 보내기 
+      // API.get('chat/findRoomListById', {
+      //   params: {
+      //     message: message.text
+      //   }
+      // });
+
       this.setState({
         messageList: [...this.state.messageList, message]
       })
@@ -104,38 +112,13 @@ class ChatList extends React.Component {
       });
     }
 
-    handleClick() {
-      if (this.props.handleClick !== undefined) {
-        this.props.handleClick();
-      } else {
-        this.setState({
-          isOpen: !this.state.isOpen,
-        });
-      }
-    }
-
-    _onMessageWasSent(message) {
-      console.log("onmessageWasSent",message);
-      //back에 메시지 보내기 
-      // API.get('chat/findRoomListById', {
-      //   params: {
-      //     message: message.text
-      //   }
-      // });
-
-      this.setState({
-        messageList: [...this.state.messageList, message]
-      })
-    }
-
 
     MyCustomItem = props => <ChatItem {...props} openChatWindow={this._openChatWindow}/>
 
     render() {  
       // console.log(this.state.isOpen)
         return (
-            <div>
-<<<<<<< HEAD
+          <div>
 
           <SockJsClient 
           url={"http://localhost:8080/webSocket" }
@@ -146,8 +129,6 @@ class ChatList extends React.Component {
           <button onClick={this.handleClickSendTemplate.bind(this)}>SendTemplate</button>
 
 
-=======
->>>>>>> 1874c6f63e60e27a79a4af0bfddcad73512ce9bf
                 <ListView
                     data={this.state.receiverData} //contacts : json데이터
                     item={this.MyCustomItem}
@@ -155,26 +136,6 @@ class ChatList extends React.Component {
                     style={{ width: "100%" }}
                 />
                 
-<<<<<<< HEAD
-                <ChatWindow
-                  //messageList={this.props.messageList}
-                  messageList={this.state.messageList}
-                  // onUserInputSubmit={this.props.onMessageWasSent}
-                  onUserInputSubmit={this._onMessageWasSent.bind(this)}
-                  // onFilesSelected={this.props.onFilesSelected}
-                  // agentProfile={this.props.agentProfile}
-                  agentProfile={{
-                    teamName: this.state.receiverName,
-                    imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-                  }}
-                  isOpen={this.state.isOpen}
-                  onClose={this.handleClick.bind(this)}
-                  // showEmoji={this.props.showEmoji}
-                  showEmoji 
-                />
-
-            </div>
-=======
                 <div id='chat-launcher'>
                   <ChatWindow
                     messageList={this.state.messageList}
@@ -186,12 +147,10 @@ class ChatList extends React.Component {
                     }}
                     isOpen={this.state.isOpen}
                     onClose={this.handleClick.bind(this)}
-                    // onClose={this._openChatWindow.bind(this)}
-                    showEmoji={this.props.showEmoji}
+                    showEmoji={true}
                   />
                   </div>
                 </div>
->>>>>>> 1874c6f63e60e27a79a4af0bfddcad73512ce9bf
         );
     }
 }
