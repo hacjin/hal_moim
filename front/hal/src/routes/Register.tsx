@@ -101,10 +101,7 @@ const Register = () => {
         //'Content-Type' : 'application/json;charset=UTF-8',
       },
     })
-    .post('/user/add-user', {
-      data: JSON.stringify(formdata)
-      //data: formdata
-    })
+    .post('/user/add-user', formdata)
     .then( (res:any) => console.log(res))
 
   }

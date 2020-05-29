@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,31 +43,12 @@ public class UserController {
 													,  @RequestParam(value="myImg", required = false) MultipartFile myImg
 													,  @RequestParam(value="latitude", required = false) String latitude
 													,  @RequestParam(value="longitude", required = false) String longitude
-													) throws Exception {
+													) throws Exception {		
 		
-		System.out.println("111 : "+name);
-		System.out.println("111 : "+birth);
-		System.out.println("111 : "+gender);
-		System.out.println("111 : "+phone);
-		System.out.println("111 : "+addr);
-		System.out.println("111 : "+myImg.getName());
-		System.out.println("111 : "+latitude);
-		System.out.println("111 : "+longitude);
-		
-//		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, "2" , "2", Double.parseDouble(latitude), Double.parseDouble(longitude));
-//		
-//		System.out.println("=======================");
-//		System.out.println(user.getAddr());
-//		System.out.println(user.getBirth());
-//		System.out.println(user.getGender());
-//		System.out.println(user.getLatitude());
-//		System.out.println(user.getLoginImg());
-//		System.out.println(user.getName());
-//		System.out.println(user.getPhone());
-//		
-//		System.out.println(myImg.toString());
-		
-	    return handleSuccess(userServiceImp.userSearchAllList());
+		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, "2" , "2"
+				, Double.parseDouble(latitude), Double.parseDouble(longitude));
+			
+	    return handleSuccess(userServiceImp.addUser(user));
 	}
 	
 	@ApiOperation(value = "모든 Friend 조회")
