@@ -71,8 +71,8 @@ class ChatList extends React.Component {
     }
 
     handleMsg = msg => { console.log (msg); }; 
-    handleClickSendTo = () => { console.log("handleto")
-     this.websocket.current.sendMessage ('/sendMessage'); }
+    handleClickSendTo = () => { console.log("handleto",this.websocket)
+     this.websocket.current.sendMessage ('/app/sendMessage'); }
     handleClickSendTemplate = () => { 
       console.log("handleClickSendTemplate")
       this.websocket.current.sendMessage ('/sendMessage'); };
@@ -135,7 +135,6 @@ class ChatList extends React.Component {
       // console.log(this.state.isOpen)
         return (
             <div>
-<<<<<<< HEAD
 
           <SockJsClient 
           url={"http://localhost:8080/webSocket" }
@@ -146,8 +145,6 @@ class ChatList extends React.Component {
           <button onClick={this.handleClickSendTemplate.bind(this)}>SendTemplate</button>
 
 
-=======
->>>>>>> 1874c6f63e60e27a79a4af0bfddcad73512ce9bf
                 <ListView
                     data={this.state.receiverData} //contacts : json데이터
                     item={this.MyCustomItem}
@@ -155,26 +152,6 @@ class ChatList extends React.Component {
                     style={{ width: "100%" }}
                 />
                 
-<<<<<<< HEAD
-                <ChatWindow
-                  //messageList={this.props.messageList}
-                  messageList={this.state.messageList}
-                  // onUserInputSubmit={this.props.onMessageWasSent}
-                  onUserInputSubmit={this._onMessageWasSent.bind(this)}
-                  // onFilesSelected={this.props.onFilesSelected}
-                  // agentProfile={this.props.agentProfile}
-                  agentProfile={{
-                    teamName: this.state.receiverName,
-                    imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-                  }}
-                  isOpen={this.state.isOpen}
-                  onClose={this.handleClick.bind(this)}
-                  // showEmoji={this.props.showEmoji}
-                  showEmoji 
-                />
-
-            </div>
-=======
                 <div id='chat-launcher'>
                   <ChatWindow
                     messageList={this.state.messageList}
@@ -191,7 +168,6 @@ class ChatList extends React.Component {
                   />
                   </div>
                 </div>
->>>>>>> 1874c6f63e60e27a79a4af0bfddcad73512ce9bf
         );
     }
 }
