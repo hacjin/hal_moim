@@ -27,7 +27,6 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/chat")
 public class ChatController {
 	
