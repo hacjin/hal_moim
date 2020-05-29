@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class PopupWindow extends Component {
 
   componentDidMount() {
-    this.scLauncher = document.querySelector('#sc-launcher');
+    this.scLauncher = document.querySelector('#chat-launcher');
     this.scLauncher.addEventListener('click', this.interceptLauncherClick);
   }
 

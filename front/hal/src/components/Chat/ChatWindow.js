@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import MessageList from '../MessageList';
 import UserInput from '../UserInput';
-import Header from '../Header';
+import ChatHeader from '../Chat/ChatHeader';
 
 
 class ChatWindow extends Component {
   constructor(props) {
     super(props);
-    console.log("djfskl",props)
+    // console.log("djfskl",props)
   }
 
   onUserInputSubmit(message) {
@@ -20,22 +20,22 @@ class ChatWindow extends Component {
   }
 
   render() {
-    console.log("chatwindow",this.props)
+    // console.log("chatwindow",this.props)
     let messageList = this.props.messageList || [];
     let classList = [
       'sc-chat-window',
       (this.props.isOpen ? 'opened' : 'closed')
     ];
-    console.log("dd",this.props)
+    // console.log("dd",this.props)
     return (
       <div className={classList.join(' ')}>
-        뿅
-        <Header
+        {/* 뿅 */}
+        <ChatHeader
           teamName={this.props.agentProfile.teamName}
           imageUrl={this.props.agentProfile.imageUrl}
-          // onClose={this.props.onClose}
+          onClose={this.props.onClose}
         />
-        {/* <MessageList
+        <MessageList
           messages={messageList}
           imageUrl={this.props.agentProfile.imageUrl}
         />
@@ -43,7 +43,7 @@ class ChatWindow extends Component {
           onSubmit={this.onUserInputSubmit.bind(this)}
           onFilesSelected={this.onFilesSelected.bind(this)}
           showEmoji={this.props.showEmoji}
-        /> */}
+        />
       </div>
     );
   }
