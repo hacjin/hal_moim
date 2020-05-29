@@ -1,9 +1,9 @@
 import React from 'react'
 
-import friend from './Friend'
-import chat from './Chat'
-import myInfo from './MyInfo'
-import moim from './Moim'
+import Friend from './Friend'
+import Chat from './Chat'
+import MyInfo from './MyInfo'
+import Moim from './Moim'
 
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
@@ -19,13 +19,13 @@ const index = () => {
         <Nav />
         <Switch>
           <Route path="/moim" exact component={MoimContainer} />
-          <Route path="/friend" component={friend} />
-          <Route path="/chat" component={chat} />
-          <Route path="/myInfo" component={myInfo} />
+          <Route path="/friend" component={Friend} />
+          <Route path="/chat" component={Chat} />
+          <Route path="/myInfo" component={MyInfo} />
           <Redirect path="*" to="/moim" />
         </Switch>
       </Router>
     </div>
   )
 }
-export { index, moim, friend, chat, myInfo }
+export { index, Moim, Friend, Chat, MyInfo }
