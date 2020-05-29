@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Button, TextField, FormControl, FormLabel, RadioGroup, 
   FormControlLabel, Radio, Select } from '@material-ui/core';
-import axios from 'axios'
+import api from '../apis/api'
 
 declare var kakao:any
 
@@ -68,7 +68,7 @@ const Register = () => {
   const handleSubmit = (e:React.MouseEvent<any>) => {
     e.preventDefault();
     
-    // axios test
+    // formdata 셋팅
     let formdata = new FormData();
     formdata.append('name',name);
     formdata.append('phone', phone);
@@ -80,27 +80,19 @@ const Register = () => {
     formdata.append('myImg',myImg);
 
     doRegist(formdata);
-  
   }
 
   const doRegist = async (formdata:FormData) => {
+    // console.log("name!!",formdata.get('name'));
+    // console.log("phone!!",formdata.get('phone'));
+    // console.log("birth!!", formdata.get('birth'));
+    // console.log("gender!!",formdata.get('gender'));
+    // console.log("addr!!",formdata.get('addr'));
+    // console.log("lat!!", formdata.get('latitude'));
+    // console.log("lng!!", formdata.get('longitude'));
+    // console.log("myImg!!",formdata.get('myImg'));
 
-    console.log("name!!",formdata.get('name'));
-    console.log("phone!!",formdata.get('phone'));
-    console.log("birth!!", formdata.get('birth'));
-    console.log("gender!!",formdata.get('gender'));
-    console.log("addr!!",formdata.get('addr'));
-    console.log("lat!!", formdata.get('latitude'));
-    console.log("lng!!", formdata.get('longitude'));
-    console.log("myImg!!",formdata.get('myImg'));
-
-    await axios.create({
-      baseURL: 'http://localhost:8080',
-      headers: {
-        //'Content-Type' : 'multipart/form-data',
-        //'Content-Type' : 'application/json;charset=UTF-8',
-      },
-    })
+    await api
     .post('/user/add-user', formdata)
     .then( (res:any) => console.log(res))
 
