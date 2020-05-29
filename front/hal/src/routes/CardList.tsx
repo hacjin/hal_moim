@@ -65,7 +65,7 @@ const styles: any = (muiBaseTheme: any) => ({
   },
 })
 const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number) => {
-  console.log(mid, uid)
+  // console.log(mid, uid)
   e.preventDefault()
   await api
     .post('/moim/participate', {
@@ -74,11 +74,11 @@ const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number) 
       uid: uid,
     })
     .then((res: any) => {
-      console.log(res)
+      // console.log(res)
     })
 }
 const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number) => {
-  console.log(mid, uid)
+  // console.log(mid, uid)
   e.preventDefault()
   await api
     .delete('/moim/participate', {
@@ -88,7 +88,7 @@ const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number) 
       },
     })
     .then((res: any) => {
-      console.log(res)
+      // console.log(res)
     })
 }
 const getJoinMoim = async (uid: any, setJoin: React.Dispatch<any>) => {
@@ -108,25 +108,20 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
   const [button, setButton] = useState(false)
   useEffect(() => {
     if (didMountRef.current) {
+      console.log('조인길이', join.length)
       if (join.length > 0) {
-        join.map((bool: any) => {
-          console.log('넘어온 모임', bool.moim.mid)
+        join.map((bool: any, index: number) => {
+          console.log('넘어온 모임' + index, bool.moim.mid)
           if (bool.moim.mid === data.mid) {
-            if (!button) {
-              setButton(!button)
-            }
-          } else {
-            if (button) setButton(!button)
+            setButton(true)
           }
         })
-      } else {
-        if (button) setButton(!button)
       }
     } else {
       getJoinMoim(1, setJoin)
       didMountRef.current = true
     }
-  }, [button, data, join])
+  }, [join])
   const time = data.time.split(/[. : T -]/)
   return (
     <>
@@ -176,6 +171,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
                 handleDelParticipate(e, data.mid, 1)
                 setUpdate(false)
                 didMountRef.current = false
+                setButton(false)
               }}
             >
               취소
@@ -188,6 +184,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
                 handleAddParticipate(e, data.mid, 1)
                 setUpdate(false)
                 didMountRef.current = false
+                setButton(true)
               }}
             >
               참가
