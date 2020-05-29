@@ -33,17 +33,17 @@ class ChatWindow extends Component {
         <Header
           teamName={this.props.agentProfile.teamName}
           imageUrl={this.props.agentProfile.imageUrl}
-          // onClose={this.props.onClose}
+          onClose={this.props.onClose}
         />
-        {/* <MessageList
+        <MessageList
           messages={messageList}
           imageUrl={this.props.agentProfile.imageUrl}
         />
         <UserInput
           onSubmit={this.onUserInputSubmit.bind(this)}
           onFilesSelected={this.onFilesSelected.bind(this)}
-          showEmoji={this.props.showEmoji}
-        /> */}
+          // showEmoji={this.props.showEmoji}
+        />
       </div>
     );
   }
@@ -56,6 +56,10 @@ ChatWindow.propTypes = {
   onFilesSelected: PropTypes.func,
   onUserInputSubmit: PropTypes.func.isRequired,
   showEmoji: PropTypes.bool
+};
+
+ChatWindow.defaultProps = {
+  showEmoji: true
 };
 
 export default ChatWindow;
