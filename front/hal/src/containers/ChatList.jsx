@@ -9,7 +9,7 @@ import API from '../util/API'
 import ChatItem from '../components/Chat/ChatItem'
 
 import PropTypes from 'prop-types';
-import ChatWindow from './../components/ChatWindow';
+import ChatWindow from '../components/Chat/ChatWindow';
 import launcherIcon from './../assets/logo-no-bg.svg';
 import incomingMessageSound from './../assets/sounds/notification.mp3';
 import launcherIconActive from './../assets/close-icon.png';
@@ -42,12 +42,13 @@ class ChatList extends React.Component {
         });
     }
 
-    _openChatWindow = (e,uid)=>{
+    _openChatWindow = (e,receiverName)=>{
       console.log("didi")
-      console.log(e, uid)
+      console.log(e, receiverName)
       this.setState({
         ...this.state, ...{
           isOpen : e,
+          receiverName : receiverName
         }
       });
   }
@@ -73,7 +74,7 @@ class ChatList extends React.Component {
                   // onFilesSelected={this.props.onFilesSelected}
                   // agentProfile={this.props.agentProfile}
                   agentProfile={{
-                    teamName: 'react-chat-window',
+                    teamName: this.state.receiverName,
                     imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
                   }}
                   isOpen={this.state.isOpen}

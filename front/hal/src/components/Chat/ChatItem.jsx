@@ -1,39 +1,18 @@
 import React, {useState} from 'react';
-import { Route , Link } from 'react-router-dom';
 
 import { Avatar } from '@progress/kendo-react-layout';
-// import ChatWindow from './hhChatWindow';
 
-import ChatWindow from './ChatWindow';
-import { render } from '@testing-library/react';
 
 // import '../styles';
 
 
-// class ChatItem extends React.Component {
 const ChatItem = props => {
 
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //       receiverData:[],
-    //       isOpen: false,
-    //       text: ''
-            
-    //     }
-    // }
     let item = props.dataItem;
 
     console.log("chatitem props",props)
 
     const [isOpen, setIsOpen] = useState(false);
-
-    function _openChatWindow(){
-        console.log("자식",props)
-        setIsOpen(true);
-        // this.setState({isOpen:true})
-        console.log(isOpen)
-    }
 
     function _onFormSubmit(){
         console.log("확인")
@@ -43,9 +22,6 @@ const ChatItem = props => {
 
     return (
         <div className='row p-2 border-bottom align-middle' style={{ margin: 0}} onClick={_onFormSubmit}>
-            {/* <form openchatwindow={_onFormSubmit}>클릭클릭
-       			<button>버튼</button>
-            </form> */}
 
             <div className='col-2'>
                 <Avatar shape='circle' type='img'>
@@ -65,7 +41,6 @@ const ChatItem = props => {
             </div>
 
 
-            {/* <Route path="/ChatWindow" componenet={ChatWindow}/> */}
         </div>
 
 

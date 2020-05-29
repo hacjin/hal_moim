@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import MessageList from '../MessageList';
 import UserInput from '../UserInput';
-import Header from '../Header.js';
+import Header from '../Header';
 
 
 class ChatWindow extends Component {
   constructor(props) {
     super(props);
+    console.log("djfskl",props)
   }
 
   onUserInputSubmit(message) {
@@ -19,20 +20,22 @@ class ChatWindow extends Component {
   }
 
   render() {
-    console.log("chatwindow",this.props.agentProfile)
+    console.log("chatwindow",this.props)
     let messageList = this.props.messageList || [];
     let classList = [
       'sc-chat-window',
       (this.props.isOpen ? 'opened' : 'closed')
     ];
+    console.log("dd",this.props)
     return (
       <div className={classList.join(' ')}>
-        {/* <Header
+        뿅
+        <Header
           teamName={this.props.agentProfile.teamName}
           imageUrl={this.props.agentProfile.imageUrl}
-          onClose={this.props.onClose}
+          // onClose={this.props.onClose}
         />
-        <MessageList
+        {/* <MessageList
           messages={messageList}
           imageUrl={this.props.agentProfile.imageUrl}
         />
