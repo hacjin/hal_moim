@@ -27,6 +27,14 @@ class ChatList extends React.Component {
   
     // from Launcher를 사용하는 Chat.js 에서 가져옴
     _onMessageWasSent(message) {
+
+      //back에 메시지 보내기 
+      // API.get('chat/findRoomListById', {
+      //   params: {
+      //     message: message.text
+      //   }
+      // });
+
       this.setState({
         messageList: [...this.state.messageList, message]
       })
@@ -104,37 +112,13 @@ class ChatList extends React.Component {
       });
     }
 
-    handleClick() {
-      if (this.props.handleClick !== undefined) {
-        this.props.handleClick();
-      } else {
-        this.setState({
-          isOpen: !this.state.isOpen,
-        });
-      }
-    }
-
-    _onMessageWasSent(message) {
-      console.log("onmessageWasSent",message);
-      //back에 메시지 보내기 
-      // API.get('chat/findRoomListById', {
-      //   params: {
-      //     message: message.text
-      //   }
-      // });
-
-      this.setState({
-        messageList: [...this.state.messageList, message]
-      })
-    }
-
 
     MyCustomItem = props => <ChatItem {...props} openChatWindow={this._openChatWindow}/>
 
     render() {  
       // console.log(this.state.isOpen)
         return (
-            <div>
+          <div>
 
           <SockJsClient 
           url={"http://localhost:8080/webSocket" }
@@ -163,8 +147,7 @@ class ChatList extends React.Component {
                     }}
                     isOpen={this.state.isOpen}
                     onClose={this.handleClick.bind(this)}
-                    // onClose={this._openChatWindow.bind(this)}
-                    showEmoji={this.props.showEmoji}
+                    showEmoji={true}
                   />
                   </div>
                 </div>
