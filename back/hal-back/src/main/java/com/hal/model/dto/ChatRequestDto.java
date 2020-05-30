@@ -31,6 +31,6 @@ public class ChatRequestDto {
 	private String message;
 	private Date time;
 	private boolean state; //true: 읽음, false: 안읽음
-	private Room room;
-	private User sender;
+	private int roomId;
+	private int senderId;
 }

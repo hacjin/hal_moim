@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hal.model.dto.Chat;
+import com.hal.model.dto.ChatRequestDto;
 import com.hal.model.dto.User;
 import com.hal.model.service.RoomService;
 
@@ -47,10 +48,10 @@ public class ChatController {
 	 */
     @MessageMapping("/sendMessage")
     @SendTo("/topic/roomId")
-    public String sendMessage() {
-    	System.out.println("sendMessage::::::");
+    public String sendMessage(@Payload String msg) {
+    	System.out.println("sendMessage::::::"+msg);
     	//메세지 db에 넣기
-        return "d";
+        return msg;
     }
 
     @MessageMapping("/chat.addUser")

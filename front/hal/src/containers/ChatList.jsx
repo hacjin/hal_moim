@@ -35,6 +35,8 @@ class ChatList extends React.Component {
       //   }
       // });
 
+      console.log(message)
+      this.websocket.current.sendMessage ('/app/sendMessage',message.data.text);
       this.setState({
         messageList: [...this.state.messageList, message]
       })
@@ -79,8 +81,9 @@ class ChatList extends React.Component {
     }
 
     handleMsg = msg => { console.log (msg); }; 
-    handleClickSendTo = () => { console.log("handleto",this.websocket)
-     this.websocket.current.sendMessage ('/app/sendMessage'); }
+    handleClickSendTo = () => { console.log("handleto",this.websocket.current)
+    // this.websocket.current.context = "hi";
+     this.websocket.current.sendMessage ('/app/sendMessage',"안녕"); }
     handleClickSendTemplate = () => { 
       console.log("handleClickSendTemplate")
       this.websocket.current.sendMessage ('/sendMessage'); };
