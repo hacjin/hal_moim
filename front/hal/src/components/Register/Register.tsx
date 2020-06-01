@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Button, TextField, FormControl, FormLabel, RadioGroup, 
   FormControlLabel, Radio, Select } from '@material-ui/core';
-import api from '../apis/api'
+import api from '../../apis/api'
 
 declare var kakao:any
 
