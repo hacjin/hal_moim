@@ -6,12 +6,11 @@ const ChatItem = props => {
     let item = props.dataItem;
     const [isOpen, setIsOpen] = useState(false);
 
-    // console.log("chatitem props",props)
 
     function _onFormSubmit(){
-        // console.log("확인")
+        console.log("확인", props)
         setIsOpen(true);
-        props.openChatWindow(true,item.receiver.name);
+        props.openChatWindow(true,item.rid,item.receiver);
     }
 
 

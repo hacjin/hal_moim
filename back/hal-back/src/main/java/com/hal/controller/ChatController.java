@@ -46,8 +46,8 @@ public class ChatController {
 	 * 2. SimpMessagingTemplate사용
 	 *    리턴값은 void로 처리해야함
 	 */
-    @MessageMapping("/sendMessage")
-    @SendTo("/topic/roomId")
+    @MessageMapping("/sendMessage/{rid}")
+    @SendTo("/topic/roomId/{rid}")
     public String sendMessage(@Payload String msg) {
     	System.out.println("sendMessage::::::"+msg);
     	//메세지 db에 넣기

@@ -20,7 +20,9 @@ class ChatList extends React.Component {
         this.state = {
           receiverData:[],
           isOpen: false,
-          messageList: []
+          messageList: [],
+          receiver : '',
+          roomId: ''
         }
         this.websocket = React.createRef();
     }
@@ -28,18 +30,13 @@ class ChatList extends React.Component {
     // from Launcher를 사용하는 Chat.js 에서 가져옴
     _onMessageWasSent(message) {
 
-      //back에 메시지 보내기 
-      // API.get('chat/findRoomListById', {
-      //   params: {
-      //     message: message.text
-      //   }
-      // });
-
       console.log(message)
-      this.websocket.current.sendMessage ('/app/sendMessage',message.data.text);
-      this.setState({
-        messageList: [...this.state.messageList, message]
-      })
+      //back에 메시지 보내기 
+      this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,message.data.text);
+
+      // this.setState({
+      //   messageList: [...this.state.messageList, message]
+      // })
     }
   
     _sendMessage(text) {
@@ -80,13 +77,6 @@ class ChatList extends React.Component {
       }
     }
 
-    handleMsg = msg => { console.log (msg); }; 
-    handleClickSendTo = () => { console.log("handleto",this.websocket.current)
-    // this.websocket.current.context = "hi";
-     this.websocket.current.sendMessage ('/app/sendMessage',"안녕"); }
-    handleClickSendTemplate = () => { 
-      console.log("handleClickSendTemplate")
-      this.websocket.current.sendMessage ('/sendMessage'); };
 
     async componentDidMount() {
         // Load async data.
@@ -104,13 +94,14 @@ class ChatList extends React.Component {
           }
         });
     }
-    _openChatWindow = (e,receiverName)=>{
+    _openChatWindow = (flag,roomId,receiver)=>{
       // console.log("didi")
       // console.log(e, receiverName)
       this.setState({
         ...this.state, ...{
-          isOpen : e,
-          receiverName : receiverName
+          isOpen : flag,
+          receiver : receiver,
+          roomId: roomId
         }
       });
     }
@@ -118,18 +109,23 @@ class ChatList extends React.Component {
 
     MyCustomItem = props => <ChatItem {...props} openChatWindow={this._openChatWindow}/>
 
+    
     render() {  
       // console.log(this.state.isOpen)
+      console.log("props",this.state)
         return (
           <div>
 
           <SockJsClient 
           url={"http://localhost:8080/webSocket" }
-          topics={['/topic/roomId']} 
-          onMessage={msg => { console.log (msg); }} 
+          topics={['/topic/roomId/2']} 
+          onMessage={msg => { 
+            console.log ("reply",msg);
+            this.setState({
+              messageList: [...this.state.messageList, msg]
+            })
+          }} 
           ref={this.websocket} /> 
-          <button onClick={this.handleClickSendTo.bind(this)}>SendTo</button> 
-          <button onClick={this.handleClickSendTemplate.bind(this)}>SendTemplate</button>
 
 
                 <ListView
@@ -145,8 +141,8 @@ class ChatList extends React.Component {
                     onUserInputSubmit={this._onMessageWasSent.bind(this)}
                     onFilesSelected={this.props.onFilesSelected}
                     agentProfile={{
-                      teamName: this.state.receiverName,
-                      imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+                      teamName: this.state.receiver.name,
+                      imageUrl: this.state.receiver.profileImg //프로필 사진
                     }}
                     isOpen={this.state.isOpen}
                     onClose={this.handleClick.bind(this)}
