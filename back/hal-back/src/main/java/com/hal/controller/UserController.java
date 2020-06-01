@@ -51,6 +51,12 @@ public class UserController {
 	    return handleSuccess(userServiceImp.addUser(user));
 	}
 	
+	@ApiOperation(value = "로그인")
+	@GetMapping("/login")
+	public ResponseEntity<Map<String, Object>> userLogin(@RequestParam(value="phone", required = true) String phone) throws Exception {
+	    return handleSuccess(userServiceImp.userLogin(phone));
+	}
+	
 	@ApiOperation(value = "모든 Friend 조회")
 	@GetMapping("/friendsByDistance")
 	public ResponseEntity<Map<String, Object>> friendsAllList(@RequestParam int uid, @RequestParam int dis_filter) throws Exception {
