@@ -28,7 +28,12 @@ public class UserServiceImp implements UserService{
 	public User addUser(User user) {
 		return userRepository.save(user);
 	}
-
+	
+	@Override
+	public User userLogin(String phone) {
+		User user = userRepository.findByPhone(phone);
+		return user;
+	}
 
 	@Override
 	public List<UserResponseDto> findFriendByDistance(int uid, int dis_filter) {
