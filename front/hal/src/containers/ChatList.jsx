@@ -20,7 +20,7 @@ class ChatList extends React.Component {
         this.state = {
           receiverData:[],
           isOpen: false,
-          messageList: []
+          messageList: [],
         }
         this.websocket = React.createRef();
     }
@@ -34,9 +34,18 @@ class ChatList extends React.Component {
       //     message: message.text
       //   }
       // });
-
-      console.log(message)
-      this.websocket.current.sendMessage ('/app/sendMessage',message.data.text);
+      const chat = {message: "", 
+                    time: new Date(),
+                    roomId: this.state.rid,
+                    senderId: "1"};
+      console.log("38",message)
+      
+      if(message.type === 'text'){
+        chat.message = message.data.text
+      }else if(message.type === 'emoji'){
+        chat.message = message.data.emoji
+      }
+      this.websocket.current.sendMessage ('/app/sendMessage',JSON.stringify(chat));
       this.setState({
         messageList: [...this.state.messageList, message]
       })
@@ -104,13 +113,13 @@ class ChatList extends React.Component {
           }
         });
     }
-    _openChatWindow = (e,receiverName)=>{
-      // console.log("didi")
+    _openChatWindow = (e,receiverName, rid)=>{
       // console.log(e, receiverName)
       this.setState({
         ...this.state, ...{
           isOpen : e,
-          receiverName : receiverName
+          receiverName : receiverName,
+          rid : rid
         }
       });
     }
@@ -126,7 +135,7 @@ class ChatList extends React.Component {
           <SockJsClient 
           url={"http://localhost:8080/webSocket" }
           topics={['/topic/roomId']} 
-          onMessage={msg => { console.log (msg); }} 
+          onMessage={msg => { console.log ("msg : ",msg); }} 
           ref={this.websocket} /> 
           <button onClick={this.handleClickSendTo.bind(this)}>SendTo</button> 
           <button onClick={this.handleClickSendTemplate.bind(this)}>SendTemplate</button>

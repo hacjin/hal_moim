@@ -9,9 +9,8 @@ const ChatItem = props => {
     // console.log("chatitem props",props)
 
     function _onFormSubmit(){
-        // console.log("확인")
         setIsOpen(true);
-        props.openChatWindow(true,item.receiver.name);
+        props.openChatWindow(true,item.receiver.name, item.rid);
     }
 
 
