@@ -18,7 +18,8 @@ class ChatList extends React.Component {
         this.state = {
           receiverData:[],
           isOpen: false,
-          messageList: [],
+          // messageList: [],
+          totalmessageList:{},
           receiver : '',
           roomId: ''
         }
@@ -55,24 +56,24 @@ class ChatList extends React.Component {
       // })
     }
   
-    _sendMessage(text) {
-      if (text.length > 0) {
-        this.setState({
-          messageList: [...this.state.messageList, {
-            author: 'them',
-            type: 'text',
-            data: { text }
-          }]
-        })
-      }
-    }
+    // _sendMessage(text) {
+    //   if (text.length > 0) {
+    //     this.setState({
+    //       messageList: [...this.state.messageList, {
+    //         author: 'them',
+    //         type: 'text',
+    //         data: { text }
+    //       }]
+    //     })
+    //   }
+    // }
 
     // Launcher.js 함수
     componentWillReceiveProps(nextProps) {
       if (this.props.mute) { return; }
-      const nextMessage = nextProps.messageList[nextProps.messageList.length - 1];
+      const nextMessage = nextProps.totalmessageList[nextProps.totalmessageList.length - 1];
       const isIncoming = (nextMessage || {}).author === 'them';
-      const isNew = nextProps.messageList.length > this.props.messageList.length;
+      const isNew = nextProps.totalmessageList.length > this.props.totalmessageList.length;
       if (isIncoming && isNew) {
         this.playIncomingMessageSound();
       }
@@ -102,6 +103,8 @@ class ChatList extends React.Component {
           }
         });
 
+        // let totalChatData = await API.get('')
+
         // console.log(userData.data.data[0].receiver.name)
 
         this.setState({
@@ -128,12 +131,19 @@ class ChatList extends React.Component {
     render() {  
       // console.log(this.state.isOpen)
       console.log("props",this.state)
+      console.log("receiver data",this.state.receiverData)
+      var topics = []
+      this.state.receiverData.forEach(function(item,index,array) {
+        topics.push('/topic/roomId/'+item.rid)
+      })
+
+
         return (
           <div>
 
           <SockJsClient 
           url={"http://localhost:8080/webSocket" }
-          topics={['/topic/roomId/2']} 
+          topics={topics} 
           onMessage={msg => { 
             console.log ("reply",msg);
             var replytext 
@@ -143,12 +153,19 @@ class ChatList extends React.Component {
               replytext = {'emoji':msg.message}
             }
 
-            this.setState({           
-              messageList: [...this.state.messageList, {
-                author: 'them',
-                type: msg.type,
-                data: replytext
-            }]
+            var tmpMessageList = this.state.totalmessageList[this.state.roomId] ===undefined ? [] : this.state.totalmessageList[this.state.roomId]
+            tmpMessageList.push({
+              author: msg.senderId==1?'me':'them',
+              type: msg.type,
+              data: replytext
+              })
+            this.setState({
+              ...this.setState,
+              totalmessageList: {
+                ...this.state.totalmessageList,
+                [this.state.roomId] : tmpMessageList
+                  
+              }
             })
 
             console.log("msg.type",msg.type)
@@ -166,7 +183,7 @@ class ChatList extends React.Component {
                 
                 <div id='chat-launcher'>
                   <ChatWindow
-                    messageList={this.state.messageList}
+                    messageList={this.state.totalmessageList[this.state.roomId]}
                     onUserInputSubmit={this._onMessageWasSent.bind(this)}
                     onFilesSelected={this.props.onFilesSelected}
                     agentProfile={{

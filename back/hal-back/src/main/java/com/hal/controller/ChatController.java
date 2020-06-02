@@ -52,7 +52,9 @@ public class ChatController {
     public ChatRequestDto sendMessage(@Payload ChatRequestDto chat) {
     	System.out.println("sendMessage::::::"+chat);
     	//메세지 db에 넣기
-    	cservice.save(chat);
+//    	cservice.save(chat);
+    	
+    	// 저장 완료
         return chat;
     }
 
