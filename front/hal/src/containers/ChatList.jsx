@@ -34,9 +34,9 @@ class ChatList extends React.Component {
       //back에 메시지 보내기 
       this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,message.data.text);
 
-      // this.setState({
-      //   messageList: [...this.state.messageList, message]
-      // })
+      this.setState({
+        messageList: [...this.state.messageList, message]
+      })
     }
   
     _sendMessage(text) {
