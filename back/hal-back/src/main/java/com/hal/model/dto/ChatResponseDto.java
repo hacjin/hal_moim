@@ -30,6 +30,7 @@ import lombok.ToString;
 public class ChatResponseDto {
 	
 	private int cid;
+	private String type;
 	private String message;
 	private Date time;
 	private boolean state; //true: 읽음, false: 안읽음

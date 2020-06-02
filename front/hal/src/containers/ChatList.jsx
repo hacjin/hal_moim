@@ -138,6 +138,7 @@ class ChatList extends React.Component {
           topics={['/topic/roomId/2']} 
           onMessage={msg => { 
             console.log ("reply",msg);
+<<<<<<< HEAD
             var replytext 
             if(msg.type ==='text'){
               replytext = {'text':msg.message}
@@ -151,6 +152,14 @@ class ChatList extends React.Component {
                 type: msg.type,
                 data: replytext
             }]
+=======
+            this.setState({
+              messageList: [...this.state.messageList, {
+                author: 'them',
+                type: 'text',
+                data: { text: msg }
+              }]
+>>>>>>> 421ed062058484385c79c5e8e8dd8f1885c6277b
             })
 
             console.log("msg.type",msg.type)
