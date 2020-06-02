@@ -32,13 +32,6 @@ class ChatList extends React.Component {
 
       console.log(message)
       //back에 메시지 보내기 
-<<<<<<< HEAD
-      this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,message.data.text);
-
-      this.setState({
-        messageList: [...this.state.messageList, message]
-      })
-=======
       // API.get('chat/findRoomListById', {
       //   params: {
       //     message: message.text
@@ -55,11 +48,10 @@ class ChatList extends React.Component {
       }else if(message.type === 'emoji'){
         chat.message = message.data.emoji
       }
-      this.websocket.current.sendMessage ('/app/sendMessage',JSON.stringify(chat));
+      this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,JSON.stringify(chat));
       // this.setState({
       //   messageList: [...this.state.messageList, message]
       // })
->>>>>>> a3332836b9498d9e710f49505819b863f2f3a1da
     }
   
     _sendMessage(text) {
@@ -145,7 +137,11 @@ class ChatList extends React.Component {
           onMessage={msg => { 
             console.log ("reply",msg);
             this.setState({
-              messageList: [...this.state.messageList, msg]
+              messageList: [...this.state.messageList, {
+                author: 'them',
+                type: 'text',
+                data: { text: msg }
+              }]
             })
           }} 
           ref={this.websocket} /> 

@@ -33,4 +33,14 @@ public class ChatRequestDto {
 	private boolean state; //true: 읽음, false: 안읽음
 	private int roomId;
 	private int senderId;
+	
+	public Chat toEntity(ChatRequestDto request, Room room, User sender) {
+		Chat chat = new Chat(request.getCid(), 
+							request.getMessage(), 
+							request.getTime(), 
+							request.isState(), 
+							room, 
+							sender);
+		return chat;
+	}
 }
