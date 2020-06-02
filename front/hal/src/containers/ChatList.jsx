@@ -40,22 +40,8 @@ class ChatList extends React.Component {
         chat.message = message.data.emoji
       }
       this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,JSON.stringify(chat));
-      // this.setState({
-      //   messageList: [...this.state.messageList, message]
-      // })
+      
     }
-  
-    // _sendMessage(text) {
-    //   if (text.length > 0) {
-    //     this.setState({
-    //       messageList: [...this.state.messageList, {
-    //         author: 'them',
-    //         type: 'text',
-    //         data: { text }
-    //       }]
-    //     })
-    //   }
-    // }
 
     // Launcher.js 함수
     componentWillReceiveProps(nextProps) {
@@ -157,9 +143,8 @@ class ChatList extends React.Component {
 
 
                 <ListView
-                    data={this.state.receiverData} //contacts : json데이터
+                    data={this.state.receiverData}
                     item={this.MyCustomItem}
-                    // item={ChatItem}
                     style={{ width: "100%" }}
                 />
                 
@@ -170,7 +155,7 @@ class ChatList extends React.Component {
                     onFilesSelected={this.props.onFilesSelected}
                     agentProfile={{
                       teamName: this.state.receiver.name,
-                      imageUrl: this.state.receiver.profileImg //프로필 사진
+                      imageUrl: this.state.receiver.profileImg
                     }}
                     isOpen={this.state.isOpen}
                     onClose={this.handleClick.bind(this)}
