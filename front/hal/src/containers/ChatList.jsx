@@ -20,7 +20,7 @@ class ChatList extends React.Component {
           totalmessageList:{},
           receiver : '',
           roomId: '',
-          newMessageCount: 0
+          newMessagesCount: []
         }
         this.websocket = React.createRef();
     }
@@ -92,6 +92,10 @@ class ChatList extends React.Component {
           isOpen : flag,
           receiver : receiver,
           roomId: roomId,
+          newMessagesCount:{
+            ...this.state.newMessagesCount,
+            [roomId] : 0
+          },
           totalmessageList: {
             ...this.state.totalmessageList,
             [roomId] : totalChatData
@@ -134,6 +138,7 @@ class ChatList extends React.Component {
               })
             this.setState({
               ...this.setState,
+              newMessagesCount: newMessagesCount,
               totalmessageList: {
                 ...this.state.totalmessageList,
                 [this.state.roomId] : tmpMessageList
