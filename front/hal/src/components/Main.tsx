@@ -65,7 +65,7 @@ const Main = ( {history}:Props ) => {
         if(res.data.data == null) {
           // 회원가입 페이지
           alert("등록된 정보가 없어요! 회원가입을 진행해 주세요!");
-          history.push('/register');
+          history.push('/register', {phone: phone});
         } else {
           // 로그인 페이지(얼굴인식)
           history.push({

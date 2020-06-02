@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Button, TextField, FormControl, RadioGroup, 
   FormControlLabel, Radio, Grid, Container, Typography, 
   CssBaseline, Avatar } from '@material-ui/core';
@@ -20,6 +20,10 @@ const Register = ( {history}:Props ) => {
   const [myImg, setMyImg] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setlongitude] = useState('');
+
+  useEffect(() => {
+    console.log(history.location.state);
+  }, []);
 
   // ********
   const useStyles = makeStyles((theme) => ({
@@ -84,7 +88,11 @@ const Register = ( {history}:Props ) => {
   // *********************  현재 내 위치 찾기 끝 *********************
 
   const handlePhone = (e:any) => {
-    setPhone(e.target.value);
+    // 숫자 형식 변형
+    const onlyNums = e.target.value.replace(/[^0-9]+/g, '');
+    if(onlyNums.length <= 11) {
+      setPhone(e.target.value);
+    }
   }
   const handleName = (e:any) => {
     setName(e.target.value);
