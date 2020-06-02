@@ -12,5 +12,5 @@ import com.hal.model.dto.Room;
 import com.hal.model.dto.User;
 
 public interface ChatRepository extends JpaRepository<Chat, Integer>{
-
+	List<Chat> findByRoomRidOrderByTime(int rid);
 }

@@ -18,6 +18,7 @@ import com.hal.model.dao.RoomRepository;
 import com.hal.model.dao.UserRepository;
 import com.hal.model.dto.Chat;
 import com.hal.model.dto.ChatRequestDto;
+import com.hal.model.dto.ChatResponseDto;
 import com.hal.model.dto.Moim;
 import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Participate;
@@ -48,6 +49,26 @@ public class ChatServiceImp implements ChatService {
 			String msg = e.getMessage();
 		}
 
+	}
+	
+	public List<ChatResponseDto> findChatListById(int rid){
+		List<ChatResponseDto> chatList = new ArrayList<>();
+		List<Chat> tmpList = new ArrayList<>();
+		
+		tmpList = cr.findByRoomRidOrderByTime(rid);
+		for(Chat chat : tmpList) {
+			ChatResponseDto tmpchat = ChatResponseDto.builder()
+					.cid(chat.getCid())
+					.message(chat.getMessage())
+					.time(chat.getTime())
+					.state(chat.isState())
+					.room(chat.getRoom())
+					.sender(chat.getSender())
+					.type(chat.getType()).build();
+			chatList.add(tmpchat);
+		}
+		
+		return chatList;
 	}
 
 }

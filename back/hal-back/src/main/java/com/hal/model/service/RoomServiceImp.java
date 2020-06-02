@@ -1,5 +1,6 @@
 package com.hal.model.service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class RoomServiceImp implements RoomService {
 	private UserRepository userRepository;
 	
 	public List<RoomResponseDto> findRoomListById(int uid){
-		List<RoomResponseDto> roomList = new LinkedList<>();
-		List<Room> tmpList = new LinkedList<>();
+		List<RoomResponseDto> roomList = new ArrayList<>();
+		List<Room> tmpList = new ArrayList<>();
 		
 		tmpList = roomRepository.findByUser1Uid(uid); 
 		for (Room room : tmpList) {

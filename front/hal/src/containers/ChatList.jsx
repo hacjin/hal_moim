@@ -2,13 +2,11 @@ import React from 'react';
 import { ListView } from '@progress/kendo-react-listview';
 import API from '../apis/api'
 import ChatItem from '../components/Chat/ChatItem'
-// import PropTypes from 'prop-types';
 import ChatWindow from '../components/Chat/ChatWindow';
 import incomingMessageSound from '../components/Chat/assets/sounds/notification.mp3';
 import '../styles';
 import '../styles/all.css'
 import '../styles/bootstrap.min.css'
-
 import SockJsClient from 'react-stomp';
 
 
@@ -28,20 +26,11 @@ class ChatList extends React.Component {
   
     // from Launcher를 사용하는 Chat.js 에서 가져옴
     _onMessageWasSent(message) {
-
-      console.log(message)
-      //back에 메시지 보내기 
-      // API.get('chat/findRoomListById', {
-      //   params: {
-      //     message: message.text
-      //   }
-      // });
       const chat = {message: "",
                     type:"",
                     time: new Date(),
                     roomId: this.state.roomId,
                     senderId: "1"};
-      console.log("38",message)
       
       if(message.type === 'text'){
         chat.message = message.data.text
@@ -103,35 +92,32 @@ class ChatList extends React.Component {
           }
         });
 
-        // let totalChatData = await API.get('')
-
-        // console.log(userData.data.data[0].receiver.name)
-
         this.setState({
           ...this.state, ...{
             receiverData : userData.data.data,
           }
         });
+
     }
-    _openChatWindow = (flag,roomId,receiver)=>{
-      // console.log("didi")
-      // console.log(e, receiverName)
+    _openChatWindow = (flag,roomId,receiver, totalChatData)=>{
       this.setState({
         ...this.state, ...{
           isOpen : flag,
           receiver : receiver,
-          roomId: roomId
+          roomId: roomId,
+          totalmessageList: {
+            ...this.state.totalmessageList,
+            [roomId] : totalChatData
+          }
         }
       });
+
     }
 
 
     MyCustomItem = props => <ChatItem {...props} openChatWindow={this._openChatWindow}/>
     
     render() {  
-      // console.log(this.state.isOpen)
-      console.log("props",this.state)
-      console.log("receiver data",this.state.receiverData)
       var topics = []
       this.state.receiverData.forEach(function(item,index,array) {
         topics.push('/topic/roomId/'+item.rid)
@@ -145,7 +131,6 @@ class ChatList extends React.Component {
           url={"http://localhost:8080/webSocket" }
           topics={topics} 
           onMessage={msg => { 
-            console.log ("reply",msg);
             var replytext 
             if(msg.type ==='text'){
               replytext = {'text':msg.message}
@@ -167,9 +152,6 @@ class ChatList extends React.Component {
                   
               }
             })
-
-            console.log("msg.type",msg.type)
-            console.log('replytext',replytext)
           }}
           ref={this.websocket} /> 
 

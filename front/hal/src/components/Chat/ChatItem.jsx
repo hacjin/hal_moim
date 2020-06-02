@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Avatar } from '@progress/kendo-react-layout';
+import API from "../../apis/api"
 
 const ChatItem = props => {
 
@@ -7,10 +8,30 @@ const ChatItem = props => {
     const [isOpen, setIsOpen] = useState(false);
 
 
-    function _onFormSubmit(){
-        // console.log("확인", props)
+    async function _onFormSubmit(){
+        let totalChatData = await API.get('chat/findChatListById', {
+            params: {
+              rid : item.rid
+            }
+        })
+        var roomMessageList = []
+        
+        totalChatData.data.data.forEach(function(item, index, array){
+            var replytext 
+            if(item.type ==='text'){
+              replytext = {'text':item.message}
+            }else{
+              replytext = {'emoji':item.message}
+            }
+            roomMessageList.push({
+                author: item.sender.uid==1?'me':'them',
+                type: item.type,
+                data: replytext
+                })
+        })
+
         setIsOpen(true);
-        props.openChatWindow(true,item.rid,item.receiver);
+        props.openChatWindow(true,item.rid,item.receiver,roomMessageList);
     }
 
 
