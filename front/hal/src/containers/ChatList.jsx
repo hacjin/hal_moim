@@ -32,11 +32,34 @@ class ChatList extends React.Component {
 
       console.log(message)
       //back에 메시지 보내기 
+<<<<<<< HEAD
       this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,message.data.text);
 
       this.setState({
         messageList: [...this.state.messageList, message]
       })
+=======
+      // API.get('chat/findRoomListById', {
+      //   params: {
+      //     message: message.text
+      //   }
+      // });
+      const chat = {message: "", 
+                    time: new Date(),
+                    roomId: this.state.roomId,
+                    senderId: "1"};
+      console.log("38",message)
+      
+      if(message.type === 'text'){
+        chat.message = message.data.text
+      }else if(message.type === 'emoji'){
+        chat.message = message.data.emoji
+      }
+      this.websocket.current.sendMessage ('/app/sendMessage',JSON.stringify(chat));
+      // this.setState({
+      //   messageList: [...this.state.messageList, message]
+      // })
+>>>>>>> a3332836b9498d9e710f49505819b863f2f3a1da
     }
   
     _sendMessage(text) {

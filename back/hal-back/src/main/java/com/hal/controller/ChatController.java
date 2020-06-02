@@ -48,10 +48,10 @@ public class ChatController {
 	 */
     @MessageMapping("/sendMessage/{rid}")
     @SendTo("/topic/roomId/{rid}")
-    public String sendMessage(@Payload String msg) {
-    	System.out.println("sendMessage::::::"+msg);
+    public String sendMessage(@Payload ChatRequestDto chat) {
+    	System.out.println("sendMessage::::::"+chat);
     	//메세지 db에 넣기
-        return msg;
+        return "";
     }
 
     @MessageMapping("/chat.addUser")
