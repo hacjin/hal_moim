@@ -1,11 +1,17 @@
 import React, {useState} from 'react'
-import { Button, TextField, FormControl, FormLabel, RadioGroup, 
-  FormControlLabel, Radio, Select } from '@material-ui/core';
+import { Button, TextField, FormControl, RadioGroup, 
+  FormControlLabel, Radio, Grid, Container, Typography, 
+  CssBaseline, Avatar } from '@material-ui/core';
 import api from '../../apis/api'
+import { makeStyles } from '@material-ui/core/styles';
+import { deepOrange } from '@material-ui/core/colors';
+import { RouteComponentProps } from 'react-router-dom';
 
 declare var kakao:any
 
-const Register = () => {
+interface Props extends RouteComponentProps {}
+
+const Register = ( {history}:Props ) => {
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
   const [gender, setGender] = useState('');
@@ -14,6 +20,33 @@ const Register = () => {
   const [myImg, setMyImg] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setlongitude] = useState('');
+
+  // ********
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+    orange: {
+      color: theme.palette.getContrastText(deepOrange[500]),
+      backgroundColor: deepOrange[500],
+    },
+  }));
+  const classes = useStyles();
+  // ********
 
   // *********************  현재 내 위치 찾기 시작 *********************
   const options = {
@@ -94,65 +127,99 @@ const Register = () => {
 
     await api
     .post('/user/add-user', formdata)
-    .then( (res:any) => console.log(res))
+    .then( (res:any) => {
+      // 세션스토리지 저장
+      sessionStorage.setItem('user', res.data.data);
+      history.push('/moim');
+    })
 
   }
-
+  
   return (
-    <div>
-      <h1>회원가입</h1> 
-        <table>
-          <tr>
-            <td>핸드폰번호</td>
-            <td><TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={handlePhone}/></td>
-          </tr>
-          <tr>
-            <td>이름</td>
-            <td><TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={handleName}/></td>
-          </tr>
-          <tr>
-            <td>생년월일</td>
-            <td><Select
-                  native
-                  value={birth}
-                  onChange={handleBirth}
-                  label="생일년도"
-                >
-                  <option aria-label="None" value="" />
-                  <option value={1900}>1900</option>
-                  <option value={1901}>1901</option>
-                  <option value={1902}>1902</option>
-                  <option value={1903}>1903</option>
-                  <option value={1904}>1904</option>
-                </Select></td>
-          </tr>
-          <tr>
-            <td>성별</td>
-            <td>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">Gender</FormLabel>
-                <RadioGroup aria-label="gender" name="gender"  onChange={handleGender} row> 
-                  <FormControlLabel value="1" control={<Radio />} label="남자" />
-                  <FormControlLabel value="2" control={<Radio />} label="여자" />
-                </RadioGroup>
-              </FormControl>
-            </td>
-          </tr>
-          <tr>
-            <td>주소</td>
-            <td><Button id="addr" variant="contained" color="primary" onClick={handleLocation}>내위치 확인</Button></td>
-          </tr>
-          <tr>
-            <td>얼굴 등록 하기</td>
-            <td><Button id="addr" variant="contained" color="secondary" >
-                <input id={"file-input"}  type="file" name="imageFile" multiple
-                  onChange={handleMyImg} />
-                  얼굴 등록
-                </Button></td>
-          </tr>
-        </table>
-        <Button id="registSubmit" variant="contained" color="primary" onClick={handleSubmit}>등록하기</Button>
-    </div>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
+          Hal
+        </Avatar>
+        <Typography component="h1" variant="h4">
+          회원 가입
+        </Typography>
+        
+        <hr style={{
+          color: '#000000',
+          backgroundColor: '#000000',
+          height: .9,
+          borderColor : '#000000'
+        }}/>
+
+        <Grid container spacing={2}>
+          {/* 성 함 */}
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="name" variant="outlined" required fullWidth
+              id="name" label="성 함" autoFocus onChange={handleName} />
+          </Grid>
+
+          {/* 생일년도 */}
+          <Grid item xs={12} sm={6}>
+            <TextField
+              variant="outlined" required fullWidth
+              id="birth" type="number" label="생일년도" name="birth"
+              onInput = {(e:any) =>{
+                e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,4)
+              }}
+              onChange={handleBirth} />
+          </Grid>
+
+          {/* 핸드폰 번호 */}
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined" required fullWidth
+              id="phone" label="핸드폰 번호" name="phone" onChange={handlePhone} />
+          </Grid>
+
+          {/* 성 별 */}
+          <Grid item xs={12}>
+            <FormControl component="fieldset">
+              <RadioGroup aria-label="gender" name="gender" onChange={handleGender} row> 
+                <FormControlLabel value="1" control={<Radio />} label="남자" />
+                <FormControlLabel value="2" control={<Radio />} label="여자" />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+
+          {/* 내 위치 확인 */}
+          <Grid item xs={12} sm={4}>
+            <Button id="addr" variant="contained" color="secondary" 
+              fullWidth size="large"
+              onClick={handleLocation}>위치확인</Button>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <TextField
+              variant="outlined" required fullWidth disabled
+              id="location" label="지역" name="location" value={addr} />
+          </Grid>
+
+          {/* 얼굴사진 등록 */}
+          <Grid item xs={12}>
+            <Button id="addr" variant="contained" color="secondary" fullWidth size="large">
+              <input id={"file-input"}  type="file" name="imageFile" multiple
+              onChange={handleMyImg} />
+              얼굴 등록
+            </Button>
+          </Grid>
+        </Grid>
+        
+
+        {/* Register Submit */}
+        <Button
+          type="submit"  fullWidth variant="contained" color="primary" 
+          className={classes.submit} onClick={handleSubmit} >
+          가입하깅
+        </Button>        
+      </div>
+    </Container>
   )
 }
 
