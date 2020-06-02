@@ -32,19 +32,13 @@ class ChatList extends React.Component {
 
       console.log(message)
       //back에 메시지 보내기 
-<<<<<<< HEAD
-      this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,message.data.text);
-
-      this.setState({
-        messageList: [...this.state.messageList, message]
-      })
-=======
       // API.get('chat/findRoomListById', {
       //   params: {
       //     message: message.text
       //   }
       // });
-      const chat = {message: "", 
+      const chat = {message: "",
+                    type:"",
                     time: new Date(),
                     roomId: this.state.roomId,
                     senderId: "1"};
@@ -52,14 +46,15 @@ class ChatList extends React.Component {
       
       if(message.type === 'text'){
         chat.message = message.data.text
+        chat.type = 'text'
       }else if(message.type === 'emoji'){
+        chat.type = 'emoji'
         chat.message = message.data.emoji
       }
-      this.websocket.current.sendMessage ('/app/sendMessage',JSON.stringify(chat));
+      this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,JSON.stringify(chat));
       // this.setState({
       //   messageList: [...this.state.messageList, message]
       // })
->>>>>>> a3332836b9498d9e710f49505819b863f2f3a1da
     }
   
     _sendMessage(text) {
@@ -131,7 +126,6 @@ class ChatList extends React.Component {
 
 
     MyCustomItem = props => <ChatItem {...props} openChatWindow={this._openChatWindow}/>
-
     
     render() {  
       // console.log(this.state.isOpen)
@@ -144,10 +138,24 @@ class ChatList extends React.Component {
           topics={['/topic/roomId/2']} 
           onMessage={msg => { 
             console.log ("reply",msg);
-            this.setState({
-              messageList: [...this.state.messageList, msg]
+            var replytext 
+            if(msg.type ==='text'){
+              replytext = {'text':msg.message}
+            }else{
+              replytext = {'emoji':msg.message}
+            }
+
+            this.setState({           
+              messageList: [...this.state.messageList, {
+                author: 'them',
+                type: msg.type,
+                data: replytext
+            }]
             })
-          }} 
+
+            console.log("msg.type",msg.type)
+            console.log('replytext',replytext)
+          }}
           ref={this.websocket} /> 
 
 
