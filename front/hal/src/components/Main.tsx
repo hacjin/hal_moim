@@ -14,7 +14,7 @@ const Main = ( {history}:Props) => {
   }
 
   const login = async () => {
-    if(phone == '' || phone == null) {
+    if(phone === '' || phone === null) {
       alert("핸드폰 번호를 입력해주세요!!");
     } else {
       await api

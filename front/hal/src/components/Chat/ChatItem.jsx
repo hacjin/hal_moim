@@ -24,7 +24,7 @@ const ChatItem = props => {
               replytext = {'emoji':item.message}
             }
             roomMessageList.push({
-                author: item.sender.uid==1?'me':'them',
+                author: item.sender.uid===1?'me':'them',
                 type: item.type,
                 data: replytext
                 })
@@ -51,7 +51,7 @@ const ChatItem = props => {
 
                 <div className='col-2'>
                     <Avatar shape='circle' type='img'>
-                        <img src={`https://gist.github.com/simonssspirit/0db46d4292ea8e335eb18544718e2624/raw/2a595679acdb061105c80bd5eeeef58bb90aa5af/${item.receiver.profileImg}-round-40x40.png`} />
+                        <img src={`https://gist.github.com/simonssspirit/0db46d4292ea8e335eb18544718e2624/raw/2a595679acdb061105c80bd5eeeef58bb90aa5af/${item.receiver.profileImg}-round-40x40.png`}/>
                     </Avatar>
                 </div>
                 <div className='col-6'>
