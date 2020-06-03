@@ -57,7 +57,6 @@ public class MoimController {
 	public ResponseEntity<Map<String, Object>> moimAdd(@RequestParam(name = "mid") int mid,@RequestParam(name="title") String title,@RequestParam(name="time") String time
 			,@RequestParam(name="location") String location, @RequestParam(name="state") boolean state, @RequestParam(name="latitude") String latitude, @RequestParam(name="longitude") String longitude
 			,@RequestParam(name="coment") String coment,@RequestParam(name="file",required = false) MultipartFile file, @RequestParam(name="uid") int uid) {
-//		System.out.println("mid:"+mid+" title: "+title+" time : "+time+" latitude: "+latitude+" longitude: "+longitude+" state: "+state+" location: "+location+" coment: "+coment+" file: "+file.getOriginalFilename()+"uid: "+uid);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Moim moim;
 		try {
