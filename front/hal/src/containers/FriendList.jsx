@@ -3,6 +3,7 @@ import { ListView } from '@progress/kendo-react-listview';
 import API from '../apis/api'
 import FriendItem from '../components/Friend/FriendItem'
 import ChatWindow from '../components/Chat/ChatWindow';
+import DistanceSlider from '../components/Friend/DistanceSlider'
 import incomingMessageSound from '../components/Chat/assets/sounds/notification.mp3';
 import '../styles';
 import '../styles/all.css'
@@ -153,7 +154,7 @@ class FriendList extends React.Component {
           }}
           ref={this.websocket} /> 
 
-
+                <DistanceSlider/>
                 <ListView
                     data={this.state.friendsData} //contacts : json데이터
                     item={this.MyCustomItem}
