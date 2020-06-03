@@ -15,7 +15,7 @@ const Register = ( props:any ) => {
   const [gender, setGender] = useState('');
   const [birth, setBirth] = useState('');
   const [addr, setAddr] = useState('');
-  const [myImg, setMyImg] = useState('');
+  const [myImg, setMyImg] = useState(new Blob());
   const [latitude, setLatitude] = useState('');
   const [longitude, setlongitude] = useState('');
   const [open, setOpen] = useState(false);
@@ -103,7 +103,12 @@ const Register = ( props:any ) => {
     setGender(e.target.value);
   }
   const handleMyImg = (e:any) => {
-    setMyImg(e.target.files[0]);
+    //setMyImg(e.target.files[0]);
+    const bufferToBlob = new Blob([ 
+      JSON.stringify({e})
+    ], { type: 'application.json'});
+
+    setMyImg(bufferToBlob);
   }
   const handleOpen = () => {
     setOpen(true);
@@ -126,7 +131,7 @@ const Register = ( props:any ) => {
       formdata.append('addr',addr);
       formdata.append('latitude',latitude);
       formdata.append('longitude',longitude);
-      formdata.append('myImg',myImg);
+      formdata.append('myImg',myImg, phone+'.png');
 
       doRegist(formdata);
     }
@@ -230,7 +235,7 @@ const Register = ( props:any ) => {
             <Button id="addr" variant="contained" color="secondary" 
               size="large" fullWidth
               onClick={handleOpen} >사진등록</Button>
-            <Registface open={open} setOpen={setOpen}/>
+            <Registface open={open} setOpen={setOpen} imgValue={handleMyImg}/>
           </Grid>
         </Grid>
         
