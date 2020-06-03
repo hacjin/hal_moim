@@ -25,8 +25,8 @@ const Login_face = ( props ) => {
   const classes = useStyles()
   let videoRef = React.createRef();
 
-  // const phone = props.location.state.phone;
-  const phone = '01055679257';
+  const phone = props.location.state.user.phone;
+  // const phone = '01055679257';
 
 
   // const video = document.getElementById('video')
@@ -63,7 +63,7 @@ const Login_face = ( props ) => {
     //  container.append(canvas) 
      const displaySize = { width: video.width, height: video.height }
     //  faceapi.matchDimensions(canvas, displaySize)
-    document.body.append("로그인 중 15초 동안 로그인 안될시 메인페이지로?")
+    // document.body.append("로그인 중 15초 동안 로그인 안될시 메인페이지로?")
     video.addEventListener('play', async() => {
      var repeat = setInterval(async () => {
         //영상에서 얼굴을 식별한다
@@ -79,21 +79,33 @@ const Login_face = ( props ) => {
         // drawBox.draw(canvas)
         // console.log(result._label) 사진이름
         // console.log(result._distance) distance값
+
+        var login_flag = false;
+
         if(result._label===phone&&result._distance<0.4) {
           // document.body.append('로그인 성공')
+          login_flag=true;
           console.log('로그인 성공')
           console.log('result._label :: ' + result._label)
           console.log('distance :: ' + result._distance)
           clearInterval(repeat)
+          console.log(props);
 
+          // 세션에 유저정보 담기
+          sessionStorage.setItem("user", props.location.state.user);
+          // 페이지 이동
+          props.history.push('/moim');
         }else {
           setTimeout(() => {
             // document.body.append('로그인 실패')
-            console.log('15초 :: 로그인 실패')
-            console.log('result._label :: ' + result._label)
-            console.log('distance :: ' + result._distance)
-            clearInterval(repeat);
-           },15000);
+            if(login_flag==false){
+              console.log('10초 :: 로그인 실패')
+              console.log('result._label :: ' + result._label)
+              console.log('distance :: ' + result._distance)
+              clearInterval(repeat);
+              props.history.push('/');
+            }
+           },10000);
         }
       })
       }, 100)
