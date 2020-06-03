@@ -108,10 +108,8 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
   const [button, setButton] = useState(false)
   useEffect(() => {
     if (didMountRef.current) {
-      console.log('조인길이', join.length)
       if (join.length > 0) {
         join.map((bool: any, index: number) => {
-          console.log('넘어온 모임' + index, bool.moim.mid)
           if (bool.moim.mid === data.mid) {
             setButton(true)
           }
@@ -140,6 +138,9 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
               <Typography className={classes.subheading} variant={'caption'}>
                 시간 : {time[0]}년 {time[1]}월 {time[2]}일 {time[3]}시:{time[4]}분까지
               </Typography>
+              <Typography className={classes.heading} variant={'h6'}>
+                설명 : {data.coment}
+              </Typography>
             </CardContent>
           </div>
           <div className={classes.back}>
@@ -167,6 +168,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
             <Button
               variant="contained"
               color="primary"
+              style={{ width: '100%', fontSize: '20px' }}
               onClick={(e) => {
                 handleDelParticipate(e, data.mid, 1)
                 setUpdate(false)
@@ -180,6 +182,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
             <Button
               variant="contained"
               color="primary"
+              style={{ width: '100%', fontSize: '20px' }}
               onClick={(e) => {
                 handleAddParticipate(e, data.mid, 1)
                 setUpdate(false)
@@ -190,7 +193,8 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
               참가
             </Button>
           )}
-          <Typography style={{ display: 'inline-flex', flex: '9' }}>{data.count}명</Typography>
+          {/* <Typography style={{ display: 'inline-flex', flex: '1' }}>{data.count}명</Typography> */}
+          <Typography style={{ position: 'absolute', right: '32px', color: 'white' }}>{data.count}명</Typography>
         </CardActions>
       </Card>
       <br />
