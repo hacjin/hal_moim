@@ -5,6 +5,7 @@ import { Button, TextField, FormControl, RadioGroup,
 import api from '../../apis/api'
 import { makeStyles } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
+import Registface from './Registface';
 
 declare var kakao:any
 
@@ -17,6 +18,7 @@ const Register = ( props:any ) => {
   const [myImg, setMyImg] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setlongitude] = useState('');
+  const [open, setOpen] = useState(false);
 
   // useEffect(() => {
     
@@ -102,6 +104,9 @@ const Register = ( props:any ) => {
   }
   const handleMyImg = (e:any) => {
     setMyImg(e.target.files[0]);
+  }
+  const handleOpen = () => {
+    setOpen(true);
   }
   const handleSubmit = (e:React.MouseEvent<any>) => {
     e.preventDefault();
@@ -217,11 +222,15 @@ const Register = ( props:any ) => {
 
           {/* 얼굴사진 등록 */}
           <Grid item xs={12}>
-            <Button id="addr" variant="contained" color="secondary" fullWidth size="large">
+            {/* <Button id="addr" variant="contained" color="secondary" fullWidth size="large">
               <input id={"file-input"}  type="file" name="imageFile" multiple
               onChange={handleMyImg} />
               얼굴 등록
-            </Button>
+            </Button> */}
+            <Button id="addr" variant="contained" color="secondary" 
+              size="large" fullWidth
+              onClick={handleOpen} >사진등록</Button>
+            <Registface open={open} setOpen={setOpen}/>
           </Grid>
         </Grid>
         
