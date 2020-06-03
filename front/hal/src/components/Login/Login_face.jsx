@@ -21,9 +21,12 @@ const useStyles = makeStyles(()=>({
 
 
 
-const Login_face = () => {
+const Login_face = ( props ) => {
   const classes = useStyles()
   let videoRef = React.createRef();
+
+  // const phone = props.location.state.phone;
+  const phone = '01055679257';
 
 
   // const video = document.getElementById('video')
@@ -44,19 +47,7 @@ const Login_face = () => {
     const constraints = { video: true }
     navigator.mediaDevices.getUserMedia(constraints).then(
       (stream) => { video.srcObject = stream })
-    
-    // navigator.getUserMedia(
-    //   { video: {} },
-    //   stream => video.srcObject = stream,
-    //   err => console.error(err)
-    // )
 
-    // navigator.mediaDevices.getUserMedia({ video : true }).then((stream) => {
-    //   if(this.video.current) {
-    //     this.video.current.srcObject = stream;
-    //     // this.video.current.play();
-    //   }
-    // })
      // Canvas container 생성
      const container = document.createElement('div')
      container.style.position = 'relative'
@@ -72,7 +63,7 @@ const Login_face = () => {
     //  container.append(canvas) 
      const displaySize = { width: video.width, height: video.height }
     //  faceapi.matchDimensions(canvas, displaySize)
-  
+    document.body.append("로그인 중 15초 동안 로그인 안될시 메인페이지로?")
     video.addEventListener('play', async() => {
      var repeat = setInterval(async () => {
         //영상에서 얼굴을 식별한다
@@ -86,18 +77,23 @@ const Login_face = () => {
         const box = resizedDetections[i].detection.box
         const drawBox = new faceapi.draw.DrawBox(box, {label: result.toString()})
         // drawBox.draw(canvas)
-            // console.log(result._label) 사진이름
-            // console.log(result._distance) distance값
-        if(result._label=='01055679257'&&result._distance<0.4) {
-          document.body.append('로그인 성공')
+        // console.log(result._label) 사진이름
+        // console.log(result._distance) distance값
+        if(result._label===phone&&result._distance<0.4) {
+          // document.body.append('로그인 성공')
+          console.log('로그인 성공')
+          console.log('result._label :: ' + result._label)
+          console.log('distance :: ' + result._distance)
           clearInterval(repeat)
-          // console.log('로그인 성공')
+
         }else {
           setTimeout(() => {
-            console.log('10초::로그인 실패')
-            document.body.append('로그인 실패')
+            // document.body.append('로그인 실패')
+            console.log('15초 :: 로그인 실패')
+            console.log('result._label :: ' + result._label)
+            console.log('distance :: ' + result._distance)
             clearInterval(repeat);
-           },10000);
+           },15000);
         }
       })
       }, 100)
@@ -107,8 +103,8 @@ const Login_face = () => {
   function loadLabeledImage() {
       // 여기에 번호
       const labels = ['1','2']
-      labels.push('01055679257')
-      console.log(typeof(labels))
+      labels.push(phone)
+      // console.log(typeof(labels))
       return Promise.all(
           labels.map(async label => {
               const description = []
@@ -123,7 +119,7 @@ const Login_face = () => {
   }        
   return (
     <div>
-      <video id="video" width="180" height="140" ref={videoRef} autoPlay muted/>
+      <video id="video" width="360" height="280" ref={videoRef} autoPlay muted/>
     </div>
   );
 }
