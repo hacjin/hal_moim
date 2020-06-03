@@ -3,7 +3,9 @@ package com.hal.model.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,55 +32,66 @@ public class MoimServiceImp implements MoimService {
 	
 	// dis_filter는 거리기반 1,3,5km
 	@Override
-	public List<MoimResponseDto> findMoimByDist(int uid,int dis_filter) {
-		User client = ur.findById(uid).orElseThrow(IllegalArgumentException::new);
-		List<Moim> moims = mr.findByHostNot(client);
-		List<MoimResponseDto> result = new ArrayList<>();
-		double user_lat = client.getLatitude();
-		double user_long = client.getLongitude();
-		
-		double radius = 6371; // 지구 반지름(km)
-	    double toRadian = Math.PI / 180;
-	    
-	    double distance;
-		for (Moim moim : moims) {
-			double moim_lat = moim.getLatitude();
-			double moim_long = moim.getLongitude();
-			double deltaLatitude = Math.abs(user_lat - moim_lat) * toRadian;
-		    double deltaLongitude = Math.abs(user_long - moim_long) * toRadian;
+	public Map<String,Object> findMoimByDist(int uid,int dis_filter) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			User client = ur.findById(uid).orElseThrow(IllegalArgumentException::new);
+			List<Moim> moims = mr.findByHostNot(client);
+			List<MoimResponseDto> result = new ArrayList<>();
+			double user_lat = client.getLatitude();
+			double user_long = client.getLongitude();
+			
+			double radius = 6371; // 지구 반지름(km)
+		    double toRadian = Math.PI / 180;
+		    
+		    double distance;
+			for (Moim moim : moims) {
+				double moim_lat = moim.getLatitude();
+				double moim_long = moim.getLongitude();
+				double deltaLatitude = Math.abs(user_lat - moim_lat) * toRadian;
+			    double deltaLongitude = Math.abs(user_long - moim_long) * toRadian;
 
-		    double sinDeltaLat = Math.sin(deltaLatitude / 2);
-		    double sinDeltaLng = Math.sin(deltaLongitude / 2);
-		    double squareRoot = Math.sqrt(
-		        sinDeltaLat * sinDeltaLat +
-		        Math.cos(user_lat * toRadian) * Math.cos(moim_lat * toRadian) * sinDeltaLng * sinDeltaLng);
+			    double sinDeltaLat = Math.sin(deltaLatitude / 2);
+			    double sinDeltaLng = Math.sin(deltaLongitude / 2);
+			    double squareRoot = Math.sqrt(
+			        sinDeltaLat * sinDeltaLat +
+			        Math.cos(user_lat * toRadian) * Math.cos(moim_lat * toRadian) * sinDeltaLng * sinDeltaLng);
 
-		    distance = 2 * radius * Math.asin(squareRoot);
-		    if(distance <= dis_filter) {
-		    	MoimResponseDto tmpMoim = MoimResponseDto.builder()
-		    			.mid(moim.getMid())
-		    			.title(moim.getTitle())
-		    			.time(moim.getTime())
-		    			.location(moim.getLocation())
-		    			.state(moim.isState())
-		    			.latitude(moim_lat)
-		    			.longitude(moim_long)
-		    			.host(moim.getHost())
-		    			.distance(Math.round(distance*10)/10.0)
-		    			.count(pr.countByMoimMid(moim.getMid()))
-		    			.coment(moim.getComent())
-		    			.build();
-		    	result.add(tmpMoim);
-		    }
-		}
-		// result distance로 정렬
-		Collections.sort(result, new Comparator<MoimResponseDto>() {
-			@Override
-			public int compare(MoimResponseDto o1, MoimResponseDto o2) {
-				return (int)(o1.getDistance()-o2.getDistance());
+			    distance = 2 * radius * Math.asin(squareRoot);
+			    if(distance <= dis_filter) {
+			    	MoimResponseDto tmpMoim = MoimResponseDto.builder()
+			    			.mid(moim.getMid())
+			    			.title(moim.getTitle())
+			    			.time(moim.getTime())
+			    			.location(moim.getLocation())
+			    			.state(moim.isState())
+			    			.latitude(moim_lat)
+			    			.longitude(moim_long)
+			    			.host(moim.getHost())
+			    			.distance(Math.round(distance*10)/10.0)
+			    			.count(pr.countByMoimMid(moim.getMid()))
+			    			.coment(moim.getComent())
+			    			.build();
+			    	result.add(tmpMoim);
+			    }
 			}
-		});
-		return result;
+			// result distance로 정렬
+			Collections.sort(result, new Comparator<MoimResponseDto>() {
+				@Override
+				public int compare(MoimResponseDto o1, MoimResponseDto o2) {
+					return (int)(o1.getDistance()-o2.getDistance());
+				}
+			});
+			resultMap.put("state", "Success");
+			resultMap.put("data", result);
+		} catch (Exception e) {
+			String msg = e.getMessage();
+			resultMap.put("state", "Client Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
+			e.printStackTrace();
+		}
+		return resultMap;
 	}
 
 	@Override

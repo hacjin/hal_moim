@@ -49,19 +49,7 @@ public class MoimController {
 	@GetMapping("/allList")
 	public ResponseEntity<Map<String, Object>> moimFindAllList(@RequestParam int uid, @RequestParam int dis_filter)
 			throws Exception {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		try {
-			resultMap.put("state", "Success");
-			resultMap.put("data", moimService.findMoimByDist(uid, dis_filter));
-			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-		} catch (Exception e) {
-			String msg = e.getMessage();
-			resultMap.put("state", "Client Error");
-			resultMap.put("message", msg);
-			resultMap.put("data", "");
-			e.printStackTrace();
-			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NOT_FOUND);
-		}
+			return new ResponseEntity<Map<String, Object>>(moimService.findMoimByDist(uid, dis_filter), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "모임방 만들기")

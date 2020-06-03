@@ -1,6 +1,7 @@
 package com.hal.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hal.model.dto.Moim;
 import com.hal.model.dto.MoimResponseDto;
@@ -10,7 +11,7 @@ import com.hal.model.dto.ParticipateResponseDto;
 
 public interface MoimService {
 	// 사용자 위치를 기준으로 거리기반의 모임들을 불러오는 메소드 => 참여 인원 조회 추가
-	public List<MoimResponseDto> findMoimByDist(int uid,int dis_filter);
+	public Map<String,Object> findMoimByDist(int uid,int dis_filter);
 	// 사용자 번호와 form에서 넘어온 모임정보를 통해 모임방 만들기
 	public Moim addMoim(Moim moim);
 	// 모임방 상태 수정 ( front에서 넘어오는 파라미터를 판단해서 매개변수 바꾸어 줄 것 )
