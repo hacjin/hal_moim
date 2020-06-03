@@ -53,6 +53,7 @@ const Main = ( {history}:Props ) => {
       alert("핸드폰 번호를 입력해주세요!!");
     } else if(phone.length !== 13 || phone.substr(0,3) !== '010') {
       alert("정확한 핸드폰 번호를 입력해주세요..");
+      setPhone('');
     } else {
       const num = phone.replace(/-/gi,'');
       await api
@@ -65,7 +66,10 @@ const Main = ( {history}:Props ) => {
         if(res.data.data == null) {
           // 회원가입 페이지
           alert("등록된 정보가 없어요! 회원가입을 진행해 주세요!");
-          history.push('/register');
+          history.push({
+            pathname: '/register',
+            state: { phone: num }
+          })
         } else {
           // 로그인 페이지(얼굴인식)
           history.push({
@@ -101,9 +105,6 @@ const Main = ( {history}:Props ) => {
       <TextField
         variant="outlined" margin="normal" required fullWidth
         id="phone" label="핸드폰 번호" name="phone" autoComplete="phone"
-        inputProps={{
-          maxlength: 11,
-        }}
         value={phone}
         onChange={handlePhone} autoFocus/>
       <Button

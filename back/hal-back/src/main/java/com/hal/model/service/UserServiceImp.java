@@ -14,7 +14,7 @@ import com.hal.model.dto.UserResponseDto;
 
 @Service
 public class UserServiceImp implements UserService{
-
+	
 	@Autowired
 	private UserRepository userRepository;
 	

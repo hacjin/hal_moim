@@ -1,18 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Button, TextField, FormControl, RadioGroup, 
   FormControlLabel, Radio, Grid, Container, Typography, 
   CssBaseline, Avatar } from '@material-ui/core';
 import api from '../../apis/api'
 import { makeStyles } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
-import { RouteComponentProps } from 'react-router-dom';
 
 declare var kakao:any
 
-interface Props extends RouteComponentProps {}
-
-const Register = ( {history}:Props ) => {
-  const [phone, setPhone] = useState('');
+const Register = ( props:any ) => {
+  const [phone, setPhone] = useState(props.location.state.phone);
   const [name, setName] = useState('');
   const [gender, setGender] = useState('');
   const [birth, setBirth] = useState('');
@@ -20,6 +17,10 @@ const Register = ( {history}:Props ) => {
   const [myImg, setMyImg] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setlongitude] = useState('');
+
+  // useEffect(() => {
+    
+  // }, []);
 
   // ********
   const useStyles = makeStyles((theme) => ({
@@ -84,7 +85,11 @@ const Register = ( {history}:Props ) => {
   // *********************  현재 내 위치 찾기 끝 *********************
 
   const handlePhone = (e:any) => {
-    setPhone(e.target.value);
+    // 숫자 형식 변형
+    const onlyNums = e.target.value.replace(/[^0-9]+/g, '');
+    if(onlyNums.length <= 11) {
+      setPhone(onlyNums);
+    }
   }
   const handleName = (e:any) => {
     setName(e.target.value);
@@ -101,18 +106,25 @@ const Register = ( {history}:Props ) => {
   const handleSubmit = (e:React.MouseEvent<any>) => {
     e.preventDefault();
     
-    // formdata 셋팅
-    let formdata = new FormData();
-    formdata.append('name',name);
-    formdata.append('phone', phone);
-    formdata.append('birth',birth);
-    formdata.append('gender',gender);
-    formdata.append('addr',addr);
-    formdata.append('latitude',latitude);
-    formdata.append('longitude',longitude);
-    formdata.append('myImg',myImg);
+    if(name === null || name === '') alert("성함을 입력해주세요.");
+    else if(birth === null || birth === '') alert("생일년도를 입력해주세요.");
+    else if(phone === null || phone === '') alert("를 입력해주세요.");
+    else if(gender === null || gender === '') alert("를 입력해주세요.");
+    else if(addr === null || addr === '') alert("위치를 확인해주세요.");
+    else {
+      // formdata 셋팅
+      let formdata = new FormData();
+      formdata.append('name',name);
+      formdata.append('phone', phone);
+      formdata.append('birth',birth);
+      formdata.append('gender',gender);
+      formdata.append('addr',addr);
+      formdata.append('latitude',latitude);
+      formdata.append('longitude',longitude);
+      formdata.append('myImg',myImg);
 
-    doRegist(formdata);
+      doRegist(formdata);
+    }
   }
 
   const doRegist = async (formdata:FormData) => {
@@ -130,7 +142,7 @@ const Register = ( {history}:Props ) => {
     .then( (res:any) => {
       // 세션스토리지 저장
       sessionStorage.setItem('user', res.data.data);
-      history.push('/moim');
+      props.history.push('/moim');
     })
 
   }
@@ -176,7 +188,9 @@ const Register = ( {history}:Props ) => {
           <Grid item xs={12}>
             <TextField
               variant="outlined" required fullWidth
-              id="phone" label="핸드폰 번호" name="phone" onChange={handlePhone} />
+              id="phone" label="핸드폰 번호" name="phone" 
+              value={phone}
+              onChange={handlePhone} />
           </Grid>
 
           {/* 성 별 */}
@@ -217,7 +231,7 @@ const Register = ( {history}:Props ) => {
           type="submit"  fullWidth variant="contained" color="primary" 
           className={classes.submit} onClick={handleSubmit} >
           가입하깅
-        </Button>        
+        </Button>
       </div>
     </Container>
   )
