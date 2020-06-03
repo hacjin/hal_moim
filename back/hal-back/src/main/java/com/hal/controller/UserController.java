@@ -65,7 +65,8 @@ public class UserController {
 	@ApiOperation(value = "모든 Friend 조회")
 	@GetMapping("/friendsByDistance")
 	public ResponseEntity<Map<String, Object>> friendsAllList(@RequestParam int uid, @RequestParam int dis_filter) throws Exception {
-	    return handleSuccess(userServiceImp.findFriendByDistance(uid, dis_filter));
+	    System.out.println("friendsData:::::::::::"+uid);
+		return handleSuccess(userServiceImp.findFriendByDistance(uid, dis_filter));
 	}
 	
 	

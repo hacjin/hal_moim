@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListView } from '@progress/kendo-react-listview';
 import API from '../apis/api'
-import ChatItem from '../components/Chat/ChatItem'
+import FriendItem from '../components/Friend/FriendItem'
 import ChatWindow from '../components/Chat/ChatWindow';
 import incomingMessageSound from '../components/Chat/assets/sounds/notification.mp3';
 import '../styles';
@@ -10,11 +10,11 @@ import '../styles/bootstrap.min.css'
 import SockJsClient from 'react-stomp';
 
 
-class ChatList extends React.Component {
+class FriendList extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-          receiverData:[],
+          friendsData:[],
           isOpen: false,
           // messageList: [],
           totalmessageList:{},
@@ -26,6 +26,7 @@ class ChatList extends React.Component {
   
     // from Launcher를 사용하는 Chat.js 에서 가져옴
     _onMessageWasSent(message) {
+      console.log("메시지전송")
       const chat = {message: "",
                     type:"",
                     time: new Date(),
@@ -40,19 +41,19 @@ class ChatList extends React.Component {
         chat.message = message.data.emoji
       }
       this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,JSON.stringify(chat));
-      
     }
+  
 
-    // Launcher.js 함수
-    componentWillReceiveProps(nextProps) {
-      if (this.props.mute) { return; }
-      const nextMessage = nextProps.totalmessageList[nextProps.totalmessageList.length - 1];
-      const isIncoming = (nextMessage || {}).author === 'them';
-      const isNew = nextProps.totalmessageList.length > this.props.totalmessageList.length;
-      if (isIncoming && isNew) {
-        this.playIncomingMessageSound();
-      }
-    }
+    // // Launcher.js 함수
+    // componentWillReceiveProps(nextProps) {
+    //   if (this.props.mute) { return; }
+    //   const nextMessage = nextProps.totalmessageList[nextProps.totalmessageList.length - 1];
+    //   const isIncoming = (nextMessage || {}).author === 'them';
+    //   const isNew = nextProps.totalmessageList.length > this.props.totalmessageList.length;
+    //   if (isIncoming && isNew) {
+    //     this.playIncomingMessageSound();
+    //   }
+    // }
   
     playIncomingMessageSound() {
       var audio = new Audio(incomingMessageSound);
@@ -65,27 +66,32 @@ class ChatList extends React.Component {
       } else {
         this.setState({
           isOpen: !this.state.isOpen,
+          roomId: ''
         });
       }
     }
 
 
     async componentDidMount() {
+      console.log("디드마운트")
         // Load async data.
-        let userData = await API.get('chat/findRoomListById', {
+        let userData = await API.get('user/friendsByDistance', {
           params: {
-            uid: 1
+            uid: 5,
+            dis_filter : 10
           }
         });
 
         this.setState({
           ...this.state, ...{
-            receiverData : userData.data.data,
+            friendsData : userData.data.data,
           }
         });
 
     }
+
     _openChatWindow = (flag,roomId,receiver, totalChatData)=>{
+      console.log("_openChatWindow")
       this.setState({
         ...this.state, ...{
           isOpen : flag,
@@ -101,17 +107,24 @@ class ChatList extends React.Component {
     }
 
 
-    MyCustomItem = props => <ChatItem {...props} openChatWindow={this._openChatWindow}/>
+    MyCustomItem = props => <FriendItem {...props} openChatWindow={this._openChatWindow}/>
     
     render() {  
+      console.log("랜더")
       var topics = []
-      this.state.receiverData.forEach(function(item,index,array) {
-        topics.push('/topic/roomId/'+item.rid)
-      })
+      // this.state.friendsData.forEach(function(item,index,array) {
+      //   topics.push('/topic/roomId/'+item.rid)
+      // })
 
+      console.log("룸아이디");
+
+      if(this.state.roomId.length > 0) {
+        topics.push('/topic/roomId/'+this.state.roomId)
+      }
 
         return (
           <div>
+
           <SockJsClient 
           url={"http://localhost:8080/webSocket" }
           topics={topics} 
@@ -142,8 +155,9 @@ class ChatList extends React.Component {
 
 
                 <ListView
-                    data={this.state.receiverData}
+                    data={this.state.friendsData} //contacts : json데이터
                     item={this.MyCustomItem}
+                    // item={ChatItem}
                     style={{ width: "100%" }}
                 />
                 
@@ -154,7 +168,7 @@ class ChatList extends React.Component {
                     onFilesSelected={this.props.onFilesSelected}
                     agentProfile={{
                       teamName: this.state.receiver.name,
-                      imageUrl: this.state.receiver.profileImg
+                      imageUrl: this.state.receiver.profileImg //프로필 사진
                     }}
                     isOpen={this.state.isOpen}
                     onClose={this.handleClick.bind(this)}
@@ -166,5 +180,4 @@ class ChatList extends React.Component {
     }
 }
 
-
-export default ChatList
+export default FriendList

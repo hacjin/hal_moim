@@ -20,6 +20,11 @@ public interface RoomRepository extends JpaRepository<Room, Integer>{
 	@Query(value="select count(*) from room where (uid1 = ?1 and uid2 = ?2) or (uid1 = ?2 and uid2 = ?1)"
 			,nativeQuery = true)
 	int numOfRoom(int senderId, int receiverId);
+	
+	//존재하는 채팅방인지 확인
+	@Query(value="select rid from room where (uid1 = ?1 and uid2 = ?2) or (uid1 = ?2 and uid2 = ?1)"
+			,nativeQuery = true)
+	String isRoomExisted(int senderId, int receiverId);
 
 //	@Modifying
 //    @Query(value="insert into room(uid1, uid2) values (:senderId,:receiverId)"
