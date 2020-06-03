@@ -8,7 +8,6 @@ import ChatHeader from './ChatHeader';
 class ChatWindow extends Component {
   constructor(props) {
     super(props);
-    // console.log("djfskl",props)
   }
 
   onUserInputSubmit(message) {

@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -51,4 +52,7 @@ public class Chat {
 //	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
 	@JoinColumn(name = "uid",referencedColumnName = "uid")
 	private User sender;
+	
+	@Column(name = "type")
+	private String type;
 }

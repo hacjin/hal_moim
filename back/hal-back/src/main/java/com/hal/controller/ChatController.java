@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hal.model.dto.Chat;
+import com.hal.model.dto.ChatRequestDto;
 import com.hal.model.dto.User;
+import com.hal.model.service.ChatService;
 import com.hal.model.service.RoomService;
 
 import io.swagger.annotations.ApiOperation;
@@ -32,8 +34,8 @@ public class ChatController {
 	
 	@Autowired
 	private RoomService rservice;
-//	@Autowired
-//	private ChatService cservice;
+	@Autowired
+	private ChatService cservice;
 
 	/**이벤트 trigger방식(2가지)
 	 * 1. client소켓에서 sendMessage함수로 메시지 보낼경우 @MessageMapping으로 받을 수 있음
@@ -45,12 +47,14 @@ public class ChatController {
 	 * 2. SimpMessagingTemplate사용
 	 *    리턴값은 void로 처리해야함
 	 */
-    @MessageMapping("/sendMessage")
-    @SendTo("/topic/roomId")
-    public String sendMessage() {
-    	System.out.println("sendMessage::::::");
+    @MessageMapping("/sendMessage/{rid}")
+    @SendTo("/topic/roomId/{rid}")
+    public ChatRequestDto sendMessage(@Payload ChatRequestDto chat) {
     	//메세지 db에 넣기
-        return "d";
+    	cservice.save(chat);
+    	
+    	// 저장 완료
+        return chat;
     }
 
     @MessageMapping("/chat.addUser")
@@ -60,11 +64,18 @@ public class ChatController {
         return chatMessage;
     }
     
+    
 
+    @ApiOperation(value = "chat 목록 조회")
+    @GetMapping("/findChatListById")
+    public ResponseEntity<Map<String, Object>> findChatListById(@RequestParam int rid) throws Exception {
+    	return handleSuccess(cservice.findChatListById(rid)); 
+    }
+    
+    
 	@ApiOperation(value = "chat room 목록 조회")
 	@GetMapping("/findRoomListById")
 	public ResponseEntity<Map<String, Object>> findRoomListById(@RequestParam int uid) throws Exception {
-		System.out.println("uid>>>>>>"+uid);
 		return handleSuccess(rservice.findRoomListById(uid)); 
 	}
 	
@@ -72,7 +83,6 @@ public class ChatController {
 	@GetMapping("/addRoom")
 	public ResponseEntity<Map<String, Object>> addRoom(@RequestParam int senderId,@RequestParam int receiverId) throws Exception {
 		rservice.addRoom(senderId,receiverId);
-		
 		return handleSuccess("ok"); 
 	}
 	
