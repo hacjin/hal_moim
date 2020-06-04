@@ -5,39 +5,42 @@ import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
+    width: '100%',
+    padding : '0px 30px'
   },
 });
 
 const marks = [
   {
-    value: 10,
+    value: 1,
     label: '1km',
   },
   {
-    value: 20,
-    label: '2km',
-  },
-  {
-    value: 30,
+    value: 3,
     label: '3km',
   },
   {
-    value: 50,
+    value: 5,
     label: '5km',
   },
 ];
 
-function valuetext(value: number) {
-  return `${value}°C`;
-}
 
-function valueLabelFormat(value: number) {
-  return marks.findIndex((mark) => mark.value === value) + 1;
-}
 
-export default function DistanceSlider() {
+// function valueLabelFormat( value: number) {
+//   console.log("la",value)
+//   return marks.findIndex((mark) => mark.value === value) + 1;
+// }
+
+export default function DistanceSlider(props:any) {
   const classes = useStyles();
+  console.log("props",props)
+
+  function changeDistance(event:any, value: number |number[]) {
+    console.log(value)
+    props.distance(value)
+    // return `${value}°C`;
+  }
 
   return (
     <div className={classes.root}>
@@ -45,13 +48,16 @@ export default function DistanceSlider() {
         Restricted values
       </Typography> */}
       <Slider
-        defaultValue={20}
-        valueLabelFormat={valueLabelFormat}
-        getAriaValueText={valuetext}
+        min = {1}
+        max = {5}
+        defaultValue={3}
+        // valueLabelFormat={valueLabelFormat}
+        // getAriaValueText={valuetext}
         aria-labelledby="discrete-slider-restrict"
-        step={null}
+        // step={null}
         // valueLabelDisplay="auto"
         marks={marks}
+        onChange = {changeDistance}
       />
     </div>
   );

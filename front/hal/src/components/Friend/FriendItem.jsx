@@ -79,7 +79,6 @@ const FriendItem = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(props.dataItem)
 
   async function _onFormSubmit(){
 

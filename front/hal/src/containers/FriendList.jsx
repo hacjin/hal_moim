@@ -20,9 +20,12 @@ class FriendList extends React.Component {
           // messageList: [],
           totalmessageList:{},
           receiver : '',
-          roomId: ''
+          roomId: '',
+          dis:''
         }
         this.websocket = React.createRef();
+        this._getFriendList = this._getFriendList.bind(this)
+
     }
   
     // from Launcher를 사용하는 Chat.js 에서 가져옴
@@ -43,18 +46,6 @@ class FriendList extends React.Component {
       }
       this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,JSON.stringify(chat));
     }
-  
-
-    // // Launcher.js 함수
-    // componentWillReceiveProps(nextProps) {
-    //   if (this.props.mute) { return; }
-    //   const nextMessage = nextProps.totalmessageList[nextProps.totalmessageList.length - 1];
-    //   const isIncoming = (nextMessage || {}).author === 'them';
-    //   const isNew = nextProps.totalmessageList.length > this.props.totalmessageList.length;
-    //   if (isIncoming && isNew) {
-    //     this.playIncomingMessageSound();
-    //   }
-    // }
   
     playIncomingMessageSound() {
       var audio = new Audio(incomingMessageSound);
@@ -91,6 +82,14 @@ class FriendList extends React.Component {
 
     }
 
+    shouldComponentUpdate(nextProps, nextState){
+      console.log("update",this.state.dis,"d", nextState.dis)
+      if(this.state.dis !== nextState.dis | this.state.dis===''){
+        return true; //새로 렌더링
+      }
+      return false;
+    }
+
     _openChatWindow = (flag,roomId,receiver, totalChatData)=>{
       console.log("_openChatWindow")
       this.setState({
@@ -105,6 +104,24 @@ class FriendList extends React.Component {
         }
       });
 
+    }
+
+    async _getFriendList(dis){
+
+      let userData = await API.get('user/friendsByDistance', {
+        params: {
+          uid: 5,
+          dis_filter : dis
+        }
+      });
+
+      this.setState({
+        ...this.state, ...{
+          dis : dis,
+          friendsData : userData.data.data,
+        }
+      });
+      
     }
 
 
@@ -154,7 +171,7 @@ class FriendList extends React.Component {
           }}
           ref={this.websocket} /> 
 
-                <DistanceSlider/>
+                <DistanceSlider distance={this._getFriendList}/>
                 <ListView
                     data={this.state.friendsData} //contacts : json데이터
                     item={this.MyCustomItem}
