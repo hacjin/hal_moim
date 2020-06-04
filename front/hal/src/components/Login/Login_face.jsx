@@ -1,7 +1,9 @@
 import {useEffect} from 'react';
 import * as faceapi from 'face-api.js';
 import * as React from 'react';
-
+import { Button, TextField, FormControl, RadioGroup, 
+  FormControlLabel, Radio, Grid, Container, Typography, 
+  CssBaseline, Avatar } from '@material-ui/core';
 const videoStyle = {
   display : 'flex',
   height : '50vh',
@@ -13,7 +15,7 @@ const Login_face = ( props ) => {
 
   let videoRef = React.createRef();
   const phone = props.location.state.user.phone;
-  const video = React.createRef()
+  // const video = React.createRef()
 
   useEffect(() => {
     Promise.all([
@@ -76,7 +78,7 @@ const Login_face = ( props ) => {
           // 세션에 유저정보 담기
           sessionStorage.setItem("user", props.location.state.user);
           // 페이지 이동
-          props.history.push('/moim');
+          // props.history.push('/moim');
         }else {
           setTimeout(() => {
             // document.body.append('로그인 실패')
@@ -85,7 +87,7 @@ const Login_face = ( props ) => {
               console.log('result._label :: ' + result._label)
               console.log('distance :: ' + result._distance)
               clearInterval(repeat);
-              props.history.push('/');
+              // props.history.push('/');
             }
            },10000);
         }
@@ -112,16 +114,18 @@ const Login_face = ( props ) => {
       )
   }        
   return (
-    <div style={{background : '#fffcf0'}}>
-      <br/>
-        <h2 style = {{textAlign : 'center', color : '#FDE26C'}}>카메라를 응시해주세요</h2>
-        <div style={videoStyle}>
-         <video id="video" width="360" height="280" ref={videoRef} autoPlay muted/>
-        </div>
-        <h7 style={{textAlign : 'center', color : 'Black'}}> 로그인 성공시 자동으로 메인창으로 넘어갑니다 </h7><br/>
-        <h7 style={{textAlign : 'center', color : 'Black'}}> 로그인 실패 시 메인페이지로 돌아갑니다 </h7><br/>
-        <h7 style={{textAlign : 'center', color : 'Black'}}> 최대 15초 이상 걸릴 수 있으니 기다려주세요 </h7><br/>
-    </div>
+    <Grid xs={12} sm={6}>
+      <div style={{background : '#fffcf0'}}>
+        <br/>
+          <h2 style = {{textAlign : 'center', color : '#FDE26C'}}>카메라를 응시해주세요</h2>
+          <div style={videoStyle}>
+          <video id="video" width="360" height="280" ref={videoRef} autoPlay muted/>
+          </div>
+          <h7 style={{textAlign : 'center', color : 'Black'}}> 로그인 성공시 자동으로 메인창으로 넘어갑니다 </h7><br/>
+          <h7 style={{textAlign : 'center', color : 'Black'}}> 로그인 실패 시 메인페이지로 돌아갑니다 </h7><br/>
+          <h7 style={{textAlign : 'center', color : 'Black'}}> 최대 15초 이상 걸릴 수 있으니 기다려주세요 </h7><br/>
+      </div>
+    </Grid>
   )
 }
 
