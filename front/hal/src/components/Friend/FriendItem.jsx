@@ -20,10 +20,10 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     // maxWidth: 500,
     marginLeft: 'auto',
     overflow: 'initial',
-    background: '#ffffff',
+    background: '#fffcf0',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    // alignItems: 'center',
     paddingBottom: spacing(2),
     [breakpoints.up('xs')]: {
       flexDirection: 'row',
@@ -118,7 +118,7 @@ const FriendItem = (props) => {
     props.openChatWindow(true,roomId.data.data,item,roomMessageList);
 }
 
-
+ console.log(contentStyles)
   return (
     <Card className={cx(styles.root, shadowStyles.root)}>
       <CardMedia
@@ -128,9 +128,9 @@ const FriendItem = (props) => {
           // "../../public/logo.jpg"
         }
       />
-      <CardContent>
+      <CardContent style={{width:'400px'}}>
         <TextInfoContent
-          classes={contentStyles}
+          // classes={contentStyles}
           // overline={'28 MAR 2019'}
           heading={item.name}
           body={
@@ -138,7 +138,8 @@ const FriendItem = (props) => {
             // 'Git is a distributed version control system. Every dev has a working copy of the code and...'
           }
         />
-        <Button variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
+        <Button  variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
+        {/*  classes={{color:'blue'}} */}
       </CardContent>
     </Card>
   );
