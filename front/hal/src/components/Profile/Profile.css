@@ -1,0 +1,30 @@
+.arrow_box {
+	position: relative;
+	background: #975de4;
+    border: 4px solid #f5f7f8;
+    border-radius:30px 30px 30px 30px;
+    height: 150px;
+}
+.arrow_box:after, .arrow_box:before {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #ae45d8;
+	border-width: 20px;
+	margin-top: -20px;
+}
+.arrow_box:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-right-color: #ec72d8;
+	border-width: 26px;
+	margin-top: -26px;
+}

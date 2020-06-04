@@ -106,7 +106,7 @@ const Register = ( props:any ) => {
     //setMyImg(e.target.files[0]);
     const bufferToBlob = new Blob([ 
       JSON.stringify({e})
-    ], { type: 'application.json'});
+    ], { type: 'application/json'});
 
     setMyImg(bufferToBlob);
   }
@@ -131,7 +131,7 @@ const Register = ( props:any ) => {
       formdata.append('addr',addr);
       formdata.append('latitude',latitude);
       formdata.append('longitude',longitude);
-      formdata.append('myImg',myImg, phone+'.png');
+      formdata.append('myImg',myImg, '/login/'+phone+'.png');
 
       doRegist(formdata);
     }
