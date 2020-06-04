@@ -14,11 +14,13 @@ import com.hal.model.dao.MoimRepository;
 import com.hal.model.dao.ParticipateRepository;
 import com.hal.model.dao.UserRepository;
 import com.hal.model.dto.Moim;
+import com.hal.model.dto.MoimRequestDto;
 import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Participate;
 import com.hal.model.dto.ParticipateRequestDto;
 import com.hal.model.dto.ParticipateResponseDto;
 import com.hal.model.dto.User;
+import com.hal.model.dto.UserResponseDto;
 
 @Service
 public class MoimServiceImp implements MoimService {
@@ -95,49 +97,151 @@ public class MoimServiceImp implements MoimService {
 	}
 
 	@Override
-	public Moim addMoim(Moim moim) {
-		return mr.save(moim);
-	}
-
-	@Override
-	public Moim updateMoim(Moim moim) {
-		moim.closeRoom();
-		return mr.save(moim);
-	}
-
-	@Override
-	public ParticipateResponseDto deleteParticipate(int uid, int mid) {
-		Participate pc = pr.findByUserUidAndMoimMid(uid, mid);
-		ParticipateResponseDto result;
-		if(pc!=null) {
-			pr.delete(pc);
-			result = ParticipateResponseDto.builder()
-					.pid(pc.getPid())
-					.user(pc.getUser())
-					.moim(pc.getMoim())
-					.build();
-		}else result = new ParticipateResponseDto(0,null,null);
-		return result;
-	}
-	@Override
-	public ParticipateResponseDto addParticipate(ParticipateRequestDto part) {
-		Participate pc = pr.findByUserUidAndMoimMid(part.getUid(), part.getMid());
-		ParticipateResponseDto result;
-		if(pc==null) {
-			Moim moim = mr.findById(part.getMid());
-			User user = ur.findById(part.getUid()).orElseThrow(IllegalArgumentException::new);
-			Participate addPart = new Participate(0, moim, user);
-			pr.save(addPart);
-			result = new ParticipateResponseDto(0,moim,user);
-		}else {
-			result = ParticipateResponseDto.builder().pid(pc.getPid()).user(pc.getUser()).moim(pc.getMoim()).build();
+	public Map<String, Object> addMoim(int uid ,MoimRequestDto request) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			User user = ur.findById(uid).orElseThrow(IllegalArgumentException::new);
+			Moim moim = request.toEntity(user, request);
+			moim = mr.save(moim);
+			MoimResponseDto response = request.toResponse(moim);
+			resultMap.put("state", "Success");
+			resultMap.put("message", "모임방 생성 성공");
+			resultMap.put("data", response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg = e.getMessage();
+			resultMap.put("state", "Server Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
 		}
-		return result;
+		return resultMap;
 	}
 
 	@Override
-	public List<Participate> findUsersByMid(int mid) {
-		return pr.findByMoimMid(mid);
+	public Map<String, Object> updateMoim(Moim moim) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			moim.closeRoom();
+			moim = mr.save(moim);
+			MoimRequestDto request = new MoimRequestDto();
+			MoimResponseDto response = request.toResponse(moim);
+			resultMap.put("state", "Success");
+			resultMap.put("message", "모임방 상태 수정 성공");
+			resultMap.put("data", response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg = e.getMessage();
+			resultMap.put("state", "Server Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
+		}
+		return resultMap;
+	}
+
+	@Override
+	public Map<String,Object> addParticipate(ParticipateRequestDto part) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			Participate pc = pr.findByUserUidAndMoimMid(part.getUid(), part.getMid());
+			ParticipateResponseDto result;
+			if(pc==null) {
+				Moim moim = mr.findById(part.getMid());
+				User user = ur.findById(part.getUid()).orElseThrow(IllegalArgumentException::new);
+				Participate addPart = new Participate(0, moim, user);
+				pr.save(addPart);
+				result = new ParticipateResponseDto(0,moim,user);
+			}else {
+				result = ParticipateResponseDto.builder().pid(pc.getPid()).user(pc.getUser()).moim(pc.getMoim()).build();
+			}
+			resultMap.put("state", "Success");
+			resultMap.put("message", "모임방 상태 추가 성공");
+			resultMap.put("data", result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg = e.getMessage();
+			resultMap.put("state", "Server Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
+		}
+		
+		return resultMap;
+	}
+	
+	@Override
+	public Map<String,Object> deleteParticipate(int uid, int mid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			Participate pc = pr.findByUserUidAndMoimMid(uid, mid);
+			ParticipateResponseDto result;
+			if(pc!=null) {
+				pr.delete(pc);
+				result = ParticipateResponseDto.builder()
+						.pid(pc.getPid())
+						.user(pc.getUser())
+						.moim(pc.getMoim())
+						.build();
+			}else result = new ParticipateResponseDto(0,null,null);
+			resultMap.put("state", "Success");
+			resultMap.put("message", "모임방 상태 삭제 성공");
+			resultMap.put("data", result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg = e.getMessage();
+			resultMap.put("state", "Server Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
+		}
+		return resultMap;
+	}
+
+	@Override
+	public Map<String,Object> findUsersByMid(int mid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			List<Participate> users = pr.findByMoimMid(mid);
+			List<UserResponseDto> data = new ArrayList<UserResponseDto>();
+			for (Participate part : users) {
+				User user = ur.findById(part.getUser().getUid()).orElseThrow(IllegalArgumentException::new);
+				UserResponseDto tmpDto = UserResponseDto.builder().uid(user.getUid()).name(user.getName())
+						.birth(user.getBirth()).gender(user.getGender()).phone(user.getPhone()).addr(user.getAddr())
+						.profileImg(user.getProfileImg()).loginImg(user.getLoginImg()).latitude(user.getLatitude())
+						.longitude(user.getLongitude()).build();
+				data.add(tmpDto);
+			}
+			resultMap.put("state", "Success");
+			resultMap.put("message", "모임방 상태 수정 성공");
+			resultMap.put("data", data);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg = e.getMessage();
+			resultMap.put("state", "Client Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
+		}
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> findPartsByUid(int uid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			List<Participate> moims = pr.findAllByUserUid(uid);
+			List<ParticipateResponseDto> data = new ArrayList<ParticipateResponseDto>();
+			for (Participate part : moims) {
+				ParticipateResponseDto tmpDto = ParticipateResponseDto.builder().pid(part.getPid()).user(part.getUser()).moim(part.getMoim()).build();
+				data.add(tmpDto);
+			}
+			resultMap.put("state", "Success");
+			resultMap.put("message", "해당 유저가 참여한 모임 목록 조회 성공");
+			resultMap.put("data", data);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg = e.getMessage();
+			resultMap.put("state", "Client Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
+		}
+		return resultMap;
 	}
 
 }
