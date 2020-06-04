@@ -41,7 +41,7 @@ public class MoimController {
 	public ResponseEntity<Map<String, Object>> moimAdd(@RequestParam(name = "mid") int mid,@RequestParam(name="title") String title,@RequestParam(name="time") String time
 			,@RequestParam(name="location") String location, @RequestParam(name="state") boolean state, @RequestParam(name="latitude") String latitude, @RequestParam(name="longitude") String longitude
 			,@RequestParam(name="coment") String coment,@RequestParam(name="file",required = false) MultipartFile file, @RequestParam(name="uid") int uid) {
-			MoimRequestDto requestMoim = new MoimRequestDto(0,title,time,location,state,Double.parseDouble(latitude),Double.parseDouble(longitude),coment,file.getOriginalFilename(),uid);
+			MoimRequestDto requestMoim = new MoimRequestDto(0,title,time,location,state,Double.parseDouble(latitude),Double.parseDouble(longitude),coment,"/moim/"+file.getOriginalFilename(),uid);
 			return new ResponseEntity<Map<String, Object>>(moimService.addMoim(uid,requestMoim), HttpStatus.OK);
 	}
 
