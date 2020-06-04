@@ -1,45 +1,27 @@
 import {useEffect} from 'react';
 import * as faceapi from 'face-api.js';
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core';
 
-
-const useStyles = makeStyles(()=>({
-  body: {
-    margin: '0',
-    padding: '0',
-    width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  canvas: {
-    position: 'absolute',
-  },
-}))
-
-
+const videoStyle = {
+  display : 'flex',
+  height : '50vh',
+  justifyContent : 'center',
+  alignItems : 'center'
+}
 
 const Login_face = ( props ) => {
-  const classes = useStyles()
+
   let videoRef = React.createRef();
-
   const phone = props.location.state.user.phone;
-  // const phone = '01055679257';
-
-
-  // const video = document.getElementById('video')
   const video = React.createRef()
+
   useEffect(() => {
     Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
       faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
       faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
       faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
-    ])
-    // .then(res=>{console.log("dd",res)})
-    .then(startVideo)
+    ]).then(startVideo)
   }, [])
 
   async function startVideo() {
@@ -114,13 +96,13 @@ const Login_face = ( props ) => {
   
   function loadLabeledImage() {
       // 여기에 번호
-      const labels = ['1','2']
+      const labels = []
       labels.push(phone)
       // console.log(typeof(labels))
       return Promise.all(
           labels.map(async label => {
               const description = []
-              const img = await faceapi.fetchImage('user_img/' + label + '.jpg')
+              const img = await faceapi.fetchImage('user_img/' + label + '.png')
               const detections = await faceapi.detectSingleFace(img)
                                   .withFaceLandmarks()
                                   .withFaceDescriptor()
@@ -130,10 +112,17 @@ const Login_face = ( props ) => {
       )
   }        
   return (
-    <div>
-      <video id="video" width="360" height="280" ref={videoRef} autoPlay muted/>
+    <div style={{background : '#fffcf0'}}>
+      <br/>
+        <h2 style = {{textAlign : 'center', color : '#FDE26C'}}>카메라를 응시해주세요</h2>
+        <div style={videoStyle}>
+         <video id="video" width="360" height="280" ref={videoRef} autoPlay muted/>
+        </div>
+        <h7 style={{textAlign : 'center', color : 'Black'}}> 로그인 성공시 자동으로 메인창으로 넘어갑니다 </h7><br/>
+        <h7 style={{textAlign : 'center', color : 'Black'}}> 로그인 실패 시 메인페이지로 돌아갑니다 </h7><br/>
+        <h7 style={{textAlign : 'center', color : 'Black'}}> 최대 15초 이상 걸릴 수 있으니 기다려주세요 </h7><br/>
     </div>
-  );
+  )
 }
 
 export default Login_face
