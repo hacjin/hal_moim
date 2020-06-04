@@ -25,4 +25,5 @@ public class UserResponseDto {
 	private double latitude;
 	private double longitude;
 	private double distance;
+	private String description;
 }

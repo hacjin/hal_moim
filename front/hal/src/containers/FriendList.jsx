@@ -28,24 +28,7 @@ class FriendList extends React.Component {
 
     }
   
-    // from Launcher를 사용하는 Chat.js 에서 가져옴
-    _onMessageWasSent(message) {
-      console.log("메시지전송")
-      const chat = {message: "",
-                    type:"",
-                    time: new Date(),
-                    roomId: this.state.roomId,
-                    senderId: "1"};
-      
-      if(message.type === 'text'){
-        chat.message = message.data.text
-        chat.type = 'text'
-      }else if(message.type === 'emoji'){
-        chat.type = 'emoji'
-        chat.message = message.data.emoji
-      }
-      this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,JSON.stringify(chat));
-    }
+
   
     playIncomingMessageSound() {
       var audio = new Audio(incomingMessageSound);
@@ -83,28 +66,12 @@ class FriendList extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState){
-      console.log("update",this.state.dis,"d", nextState.dis)
       if(this.state.dis !== nextState.dis | this.state.dis===''){
         return true; //새로 렌더링
       }
       return false;
     }
 
-    _openChatWindow = (flag,roomId,receiver, totalChatData)=>{
-      console.log("_openChatWindow")
-      this.setState({
-        ...this.state, ...{
-          isOpen : flag,
-          receiver : receiver,
-          roomId: roomId,
-          totalmessageList: {
-            ...this.state.totalmessageList,
-            [roomId] : totalChatData
-          }
-        }
-      });
-
-    }
 
     async _getFriendList(dis){
 
@@ -125,16 +92,47 @@ class FriendList extends React.Component {
     }
 
 
+    _openChatWindow = (flag,roomId,receiver, totalChatData)=>{
+      console.log("_openChatWindow")
+      this.setState({
+        ...this.state, ...{
+          isOpen : flag,
+          receiver : receiver,
+          roomId: roomId,
+          totalmessageList: {
+            ...this.state.totalmessageList,
+            [roomId] : totalChatData
+          }
+        }
+      });
+
+    }
+
+        // from Launcher를 사용하는 Chat.js 에서 가져옴
+        _onMessageWasSent(message) {
+          console.log("메시지전송")
+          const chat = {message: "",
+                        type:"",
+                        time: new Date(),
+                        roomId: this.state.roomId,
+                        senderId: "1"};
+          
+          if(message.type === 'text'){
+            chat.message = message.data.text
+            chat.type = 'text'
+          }else if(message.type === 'emoji'){
+            chat.type = 'emoji'
+            chat.message = message.data.emoji
+          }
+          this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,JSON.stringify(chat));
+        }
+
+
+
     MyCustomItem = props => <FriendItem {...props} openChatWindow={this._openChatWindow}/>
     
     render() {  
-      console.log("랜더")
       var topics = []
-      // this.state.friendsData.forEach(function(item,index,array) {
-      //   topics.push('/topic/roomId/'+item.rid)
-      // })
-
-      console.log("룸아이디");
 
       if(this.state.roomId.length > 0) {
         topics.push('/topic/roomId/'+this.state.roomId)

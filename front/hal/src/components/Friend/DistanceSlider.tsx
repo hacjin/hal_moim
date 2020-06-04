@@ -26,12 +26,6 @@ const marks = [
 ];
 
 
-
-// function valueLabelFormat( value: number) {
-//   console.log("la",value)
-//   return marks.findIndex((mark) => mark.value === value) + 1;
-// }
-
 export default function DistanceSlider(props:any) {
   const classes = useStyles();
   console.log("props",props)
@@ -39,23 +33,17 @@ export default function DistanceSlider(props:any) {
   function changeDistance(event:any, value: number |number[]) {
     console.log(value)
     props.distance(value)
-    // return `${value}°C`;
   }
 
   return (
     <div className={classes.root}>
-      {/* <Typography id="discrete-slider-restrict" gutterBottom>
-        Restricted values
-      </Typography> */}
+
       <Slider
         min = {1}
         max = {5}
         defaultValue={3}
-        // valueLabelFormat={valueLabelFormat}
-        // getAriaValueText={valuetext}
         aria-labelledby="discrete-slider-restrict"
-        // step={null}
-        // valueLabelDisplay="auto"
+        step={2}
         marks={marks}
         onChange = {changeDistance}
       />
