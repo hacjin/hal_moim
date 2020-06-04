@@ -37,5 +37,7 @@ public class MoimResponseDto {
 	private User host; // host 정보
 	private double distance;
 	private int count;
+	private String coment;
+	private String moimImg;
 
 }

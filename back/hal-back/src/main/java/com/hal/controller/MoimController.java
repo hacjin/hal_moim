@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hal.model.dao.MoimRepository;
 import com.hal.model.dao.ParticipateRepository;
@@ -65,17 +66,21 @@ public class MoimController {
 
 	@ApiOperation(value = "모임방 만들기")
 	@PostMapping("/add")
-	public ResponseEntity<Map<String, Object>> moimAdd(@RequestBody MoimRequestDto requestMoim) {
-		System.out.println(requestMoim.toString());
+	public ResponseEntity<Map<String, Object>> moimAdd(@RequestParam(name = "mid") int mid,@RequestParam(name="title") String title,@RequestParam(name="time") String time
+			,@RequestParam(name="location") String location, @RequestParam(name="state") boolean state, @RequestParam(name="latitude") String latitude, @RequestParam(name="longitude") String longitude
+			,@RequestParam(name="coment") String coment,@RequestParam(name="file",required = false) MultipartFile file, @RequestParam(name="uid") int uid) {
+//		System.out.println("mid:"+mid+" title: "+title+" time : "+time+" latitude: "+latitude+" longitude: "+longitude+" state: "+state+" location: "+location+" coment: "+coment+" file: "+file.getOriginalFilename()+"uid: "+uid);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Moim moim;
 		try {
-			User user = userRepository.findById(requestMoim.getUid()).orElseThrow(IllegalArgumentException::new);
+			User user = userRepository.findById(uid).orElseThrow(IllegalArgumentException::new);
+			MoimRequestDto requestMoim = new MoimRequestDto(0,title,time,location,state,Double.parseDouble(latitude),Double.parseDouble(longitude),coment,file.getOriginalFilename(),uid);
+			System.out.println(requestMoim.toString());
 			moim = requestMoim.toEntity(user, requestMoim);
-			moimService.addMoim(moim);
+			Moim result = moimService.addMoim(moim);
 			resultMap.put("state", "Success");
 			resultMap.put("message", "모임방 생성 성공");
-			resultMap.put("data", requestMoim.toResponse(moim));
+			resultMap.put("data", requestMoim.toResponse(result));
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		} catch (Exception e) {
 			String msg = e.getMessage();

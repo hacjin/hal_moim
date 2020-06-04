@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hal.model.dto.User;
+//import com.hal.model.service.ImageService;
 import com.hal.model.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +27,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userServiceImp;
+	//@Autowired
+	//private ImageService imageService;
 	
 	@ApiOperation(value = "모든 User 목록 조회")
 	@GetMapping("/userlist")
@@ -45,9 +48,11 @@ public class UserController {
 													,  @RequestParam(value="longitude", required = false) String longitude
 													) throws Exception {		
 		
-		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, "2" , "2"
+		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, "tmpProfile" ,myImg.getOriginalFilename() 
 				, Double.parseDouble(latitude), Double.parseDouble(longitude));
-			
+		
+		//imageService.saveMyImage(myImg);
+		
 	    return handleSuccess(userServiceImp.addUser(user));
 	}
 	
@@ -60,7 +65,8 @@ public class UserController {
 	@ApiOperation(value = "모든 Friend 조회")
 	@GetMapping("/friendsByDistance")
 	public ResponseEntity<Map<String, Object>> friendsAllList(@RequestParam int uid, @RequestParam int dis_filter) throws Exception {
-	    return handleSuccess(userServiceImp.findFriendByDistance(uid, dis_filter));
+	    System.out.println("friendsData:::::::::::"+uid);
+		return handleSuccess(userServiceImp.findFriendByDistance(uid, dis_filter));
 	}
 	
 	

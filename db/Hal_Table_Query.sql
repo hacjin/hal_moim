@@ -21,8 +21,10 @@ CREATE TABLE `hal`.`moim` (
   `state` TINYINT NULL DEFAULT 1,
   `latitude` DOUBLE NOT NULL,
   `longitude` DOUBLE NOT NULL,
+  `coment` VARCHAR(3000) NULL,
+  `moim_img` VARCHAR(1000) NULL DEFAULT 'default.jpg',
   PRIMARY KEY (`mid`),
-  INDEX `uid_idx` (`uid` ASC) VISIBLE,
+  INDEX `uid_idx` (`uid` ASC),
   CONSTRAINT `moimfkuid`
     FOREIGN KEY (`uid`)
     REFERENCES `hal`.`user` (`uid`)
@@ -35,8 +37,8 @@ CREATE TABLE `hal`.`participate` (
   `mid` INT NOT NULL,
   `uid` INT NOT NULL,
   PRIMARY KEY (`pid`),
-  INDEX `mid_idx` (`mid` ASC) VISIBLE,
-  INDEX `uid_idx` (`uid` ASC) VISIBLE,
+  INDEX `mid_idx` (`mid` ASC),
+  INDEX `uid_idx` (`uid` ASC),
   CONSTRAINT `partfkmid`
     FOREIGN KEY (`mid`)
     REFERENCES `hal`.`moim` (`mid`)
@@ -54,8 +56,8 @@ CREATE TABLE `hal`.`room` (
   `uid1` INT NOT NULL,
   `uid2` INT NOT NULL,
   PRIMARY KEY (`rid`),
-  INDEX `roomfkuid1_idx` (`uid1` ASC) VISIBLE,
-  INDEX `roomfkuid2_idx` (`uid2` ASC) VISIBLE,
+  INDEX `roomfkuid1_idx` (`uid1` ASC),
+  INDEX `roomfkuid2_idx` (`uid2` ASC),
   CONSTRAINT `roomfkuid1`
     FOREIGN KEY (`uid1`)
     REFERENCES `hal`.`user` (`uid`)
@@ -76,8 +78,8 @@ CREATE TABLE `hal`.`chat` (
   `rid` INT NOT NULL,
   `uid` INT NOT NULL,
   PRIMARY KEY (`cid`),
-  INDEX `chatfkrid_idx` (`rid` ASC) VISIBLE,
-  INDEX `chatfkuid_idx` (`uid` ASC) VISIBLE,
+  INDEX `chatfkrid_idx` (`rid` ASC),
+  INDEX `chatfkuid_idx` (`uid` ASC),
   CONSTRAINT `chatfkrid`
     FOREIGN KEY (`rid`)
     REFERENCES `hal`.`room` (`rid`)

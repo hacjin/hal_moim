@@ -1,5 +1,7 @@
 package com.hal.model.dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -31,21 +33,28 @@ import lombok.ToString;
 public class MoimRequestDto {
 	private int mid;
 	private String title;
-	private Date time;
+	private String time;
 	private String location;
 	private boolean state; // true : 모임 있는지, false: 방폭
 	private double latitude;
 	private double longitude;
+	private String coment;
+	private String moimImg;
 	private int uid; // host 정보
 	
-	public Moim toEntity(User user, MoimRequestDto request) {
+	public Moim toEntity(User user, MoimRequestDto request) throws ParseException{
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = simple.parse(request.getTime());
+		System.out.println(date);
 		Moim moim = new Moim(request.getMid()
 				,request.getTitle()
-				,new Date()
+				,date
 				,request.getLocation()
 				,request.isState()
 				,request.getLatitude()
 				,request.getLongitude()
+				,request.getComent()
+				,request.getMoimImg()
 				,user);
 		return moim;
 	}
@@ -58,6 +67,8 @@ public class MoimRequestDto {
 				.state(moim.isState())
 				.latitude(moim.getLatitude())
 				.longitude(moim.getLongitude())
+				.coment(moim.getComent())
+				.moimImg(moim.getMoimImg())
 				.host(moim.getHost())
 				.build();
 		return result;

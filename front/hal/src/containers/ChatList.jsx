@@ -112,7 +112,6 @@ class ChatList extends React.Component {
 
         return (
           <div>
-
           <SockJsClient 
           url={"http://localhost:8080/webSocket" }
           topics={topics} 

@@ -50,6 +50,7 @@ public class ChatController {
     @MessageMapping("/sendMessage/{rid}")
     @SendTo("/topic/roomId/{rid}")
     public ChatRequestDto sendMessage(@Payload ChatRequestDto chat) {
+    	System.out.println(chat.toString());
     	//메세지 db에 넣기
     	cservice.save(chat);
     	
@@ -69,6 +70,7 @@ public class ChatController {
     @ApiOperation(value = "chat 목록 조회")
     @GetMapping("/findChatListById")
     public ResponseEntity<Map<String, Object>> findChatListById(@RequestParam int rid) throws Exception {
+    	System.out.println("chat list"+rid);
     	return handleSuccess(cservice.findChatListById(rid)); 
     }
     
@@ -82,10 +84,11 @@ public class ChatController {
 	@ApiOperation(value = "chat room 만들기")
 	@GetMapping("/addRoom")
 	public ResponseEntity<Map<String, Object>> addRoom(@RequestParam int senderId,@RequestParam int receiverId) throws Exception {
-		rservice.addRoom(senderId,receiverId);
-		return handleSuccess("ok"); 
+		//방이 있는지 없는지 확인하고 없으면 방 만들어줌, 리턴값은 room id
+		return handleSuccess(rservice.addRoom(senderId,receiverId)); 
 	}
 	
+
 	  
 	
 	// Fail
