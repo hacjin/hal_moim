@@ -48,7 +48,7 @@ public class UserController {
 													,  @RequestParam(value="longitude", required = false) String longitude
 													) throws Exception {		
 		
-		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, "tmpProfile" ,myImg.getName() 
+		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, "tmpProfile" ,myImg.getOriginalFilename() 
 				, Double.parseDouble(latitude), Double.parseDouble(longitude));
 		
 		//imageService.saveMyImage(myImg);
