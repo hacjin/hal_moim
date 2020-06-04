@@ -36,15 +36,15 @@ public class ImageService {
 		// 파일 이름
 		String fileName = "";
 		String fileUri = "";
-		OutputStream out = null;
+		FileOutputStream out = null;
 		PrintWriter printWriter = null;
 
 		try { // 파일명에 부적합 문자가 있는지 확인한다.
 			fileName = StringUtils.cleanPath(eFile.getOriginalFilename());
 			byte[] bytes = eFile.getBytes();
-			fileUri = fileStorageLocation + "/" + subPath + "/" + fileName;
-			
-			File file = new File(fileUri);
+			fileUri = fileStorageLocation + "/" + subPath;
+			System.out.println("파일경로 : "+fileUri);
+			File file = new File(fileUri,fileName);
 			
 			if (fileName.contains("..")) {
 				throw new FileStorageException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
@@ -56,6 +56,11 @@ public class ImageService {
 					Files.copy(eFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 				}
 			}
+			// 경로 확인후 폴더가 존재하지 않을때 생성
+			File path = new File(fileUri);
+			if(!path.exists()) path.mkdir();
+			
+			// 폴더 생성 후 저장
 			out = new FileOutputStream(file);
 			out.write(bytes);
 		} catch (Exception e) {
