@@ -24,4 +24,5 @@ public class UserRequestDto {
 	private String loginImg;
 	private double latitude;
 	private double longitude;
+	private String description;
 }

@@ -79,7 +79,6 @@ const FriendItem = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(props.dataItem)
 
   async function _onFormSubmit(){
 
@@ -125,8 +124,8 @@ const FriendItem = (props) => {
       <CardMedia
         className={styles.media}
         image={
-          // item.profileImg
-          "../../public/logo.jpg"
+          item.profileImg
+          // "../../public/logo.jpg"
         }
       />
       <CardContent>
@@ -135,7 +134,8 @@ const FriendItem = (props) => {
           // overline={'28 MAR 2019'}
           heading={item.name}
           body={
-            'Git is a distributed version control system. Every dev has a working copy of the code and...'
+            item.description
+            // 'Git is a distributed version control system. Every dev has a working copy of the code and...'
           }
         />
         <Button variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>

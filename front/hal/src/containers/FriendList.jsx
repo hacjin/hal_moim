@@ -3,6 +3,7 @@ import { ListView } from '@progress/kendo-react-listview';
 import API from '../apis/api'
 import FriendItem from '../components/Friend/FriendItem'
 import ChatWindow from '../components/Chat/ChatWindow';
+import DistanceSlider from '../components/Friend/DistanceSlider'
 import incomingMessageSound from '../components/Chat/assets/sounds/notification.mp3';
 import '../styles';
 import '../styles/all.css'
@@ -19,41 +20,15 @@ class FriendList extends React.Component {
           // messageList: [],
           totalmessageList:{},
           receiver : '',
-          roomId: ''
+          roomId: '',
+          dis:''
         }
         this.websocket = React.createRef();
-    }
-  
-    // from Launcher를 사용하는 Chat.js 에서 가져옴
-    _onMessageWasSent(message) {
-      console.log("메시지전송")
-      const chat = {message: "",
-                    type:"",
-                    time: new Date(),
-                    roomId: this.state.roomId,
-                    senderId: "1"};
-      
-      if(message.type === 'text'){
-        chat.message = message.data.text
-        chat.type = 'text'
-      }else if(message.type === 'emoji'){
-        chat.type = 'emoji'
-        chat.message = message.data.emoji
-      }
-      this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,JSON.stringify(chat));
+        this._getFriendList = this._getFriendList.bind(this)
+
     }
   
 
-    // // Launcher.js 함수
-    // componentWillReceiveProps(nextProps) {
-    //   if (this.props.mute) { return; }
-    //   const nextMessage = nextProps.totalmessageList[nextProps.totalmessageList.length - 1];
-    //   const isIncoming = (nextMessage || {}).author === 'them';
-    //   const isNew = nextProps.totalmessageList.length > this.props.totalmessageList.length;
-    //   if (isIncoming && isNew) {
-    //     this.playIncomingMessageSound();
-    //   }
-    // }
   
     playIncomingMessageSound() {
       var audio = new Audio(incomingMessageSound);
@@ -90,6 +65,33 @@ class FriendList extends React.Component {
 
     }
 
+    shouldComponentUpdate(nextProps, nextState){
+      if(this.state.dis !== nextState.dis | this.state.dis===''){
+        return true; //새로 렌더링
+      }
+      return false;
+    }
+
+
+    async _getFriendList(dis){
+
+      let userData = await API.get('user/friendsByDistance', {
+        params: {
+          uid: 5,
+          dis_filter : dis
+        }
+      });
+
+      this.setState({
+        ...this.state, ...{
+          dis : dis,
+          friendsData : userData.data.data,
+        }
+      });
+      
+    }
+
+
     _openChatWindow = (flag,roomId,receiver, totalChatData)=>{
       console.log("_openChatWindow")
       this.setState({
@@ -106,17 +108,31 @@ class FriendList extends React.Component {
 
     }
 
+        // from Launcher를 사용하는 Chat.js 에서 가져옴
+        _onMessageWasSent(message) {
+          console.log("메시지전송")
+          const chat = {message: "",
+                        type:"",
+                        time: new Date(),
+                        roomId: this.state.roomId,
+                        senderId: "1"};
+          
+          if(message.type === 'text'){
+            chat.message = message.data.text
+            chat.type = 'text'
+          }else if(message.type === 'emoji'){
+            chat.type = 'emoji'
+            chat.message = message.data.emoji
+          }
+          this.websocket.current.sendMessage ('/app/sendMessage/'+this.state.roomId,JSON.stringify(chat));
+        }
+
+
 
     MyCustomItem = props => <FriendItem {...props} openChatWindow={this._openChatWindow}/>
     
     render() {  
-      console.log("랜더")
       var topics = []
-      // this.state.friendsData.forEach(function(item,index,array) {
-      //   topics.push('/topic/roomId/'+item.rid)
-      // })
-
-      console.log("룸아이디");
 
       if(this.state.roomId.length > 0) {
         topics.push('/topic/roomId/'+this.state.roomId)
@@ -153,7 +169,7 @@ class FriendList extends React.Component {
           }}
           ref={this.websocket} /> 
 
-
+                <DistanceSlider distance={this._getFriendList}/>
                 <ListView
                     data={this.state.friendsData} //contacts : json데이터
                     item={this.MyCustomItem}

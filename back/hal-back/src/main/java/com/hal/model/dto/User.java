@@ -52,4 +52,7 @@ public class User {
 	@Column(name = "longitude")
 	private double longitude;
 	
+	@Column(name = "description")
+	private String description;
+	
 }

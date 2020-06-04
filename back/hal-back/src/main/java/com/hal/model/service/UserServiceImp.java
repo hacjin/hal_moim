@@ -73,6 +73,7 @@ public class UserServiceImp implements UserService{
 		    			.loginImg(friend.getLoginImg())
 		    			.latitude(friend.getLatitude())
 		    			.longitude(friend.getLongitude())
+		    			.description(friend.getDescription())
 		    			.distance(Math.round(distance*10)/10.0)
 		    			.build();
 		    	result.add(tmpFriend);
