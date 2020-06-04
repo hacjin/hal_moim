@@ -1,7 +1,11 @@
 
 package com.hal.model.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.nio.file.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,24 +32,48 @@ public class ImageService {
 		}
 	}
 
-	public void saveImage(MultipartFile eFile,String subPath) {
+	public void saveImage(MultipartFile eFile, String subPath) {
 		// 파일 이름
-		String fileName = StringUtils.cleanPath(eFile.getOriginalFilename());
-		String fileUri = fileStorageLocation+"/"+ subPath+"/"+ fileName;
+		String fileName = "";
+		String fileUri = "";
+		OutputStream out = null;
+		PrintWriter printWriter = null;
 
 		try { // 파일명에 부적합 문자가 있는지 확인한다.
+			fileName = StringUtils.cleanPath(eFile.getOriginalFilename());
+			byte[] bytes = eFile.getBytes();
+			fileUri = fileStorageLocation + "/" + subPath + "/" + fileName;
+			
+			File file = new File(fileUri);
+			
 			if (fileName.contains("..")) {
 				throw new FileStorageException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
 			}
-			// 동일한 파일 이름이 존재한다면 copy 대체
-			Path targetLocation = this.fileStorageLocation.resolve(fileName);
-			Files.copy(eFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-		} catch (IOException ex) {
-			throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+			if (fileName != null && !fileName.equals("")) {
+				if (file.exists()) {
+					// 동일한 파일 이름이 존재한다면 copy 대체
+					Path targetLocation = this.fileStorageLocation.resolve(fileName);
+					Files.copy(eFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+				}
+			}
+			out = new FileOutputStream(file);
+			out.write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+				if (printWriter != null) {
+					printWriter.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new FileStorageException("Could not store file " + fileName + ". Please try again!", e);
+			}
 		}
 	}
-	
 
 	public void deleteImage(String imageName) {
 		try {
