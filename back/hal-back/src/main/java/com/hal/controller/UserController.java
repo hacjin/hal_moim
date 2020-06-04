@@ -49,7 +49,7 @@ public class UserController {
 													) throws Exception {		
 		
 		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, "tmpProfile" ,myImg.getOriginalFilename() 
-				, Double.parseDouble(latitude), Double.parseDouble(longitude));
+				, Double.parseDouble(latitude), Double.parseDouble(longitude), "");
 		
 		//imageService.saveMyImage(myImg);
 		
