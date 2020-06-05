@@ -69,7 +69,7 @@ const styles: any = (muiBaseTheme: any) => ({
     width: '100%', fontSize: '20px'
   },
 })
-const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number) => {
+const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
   // console.log(mid, uid)
   e.preventDefault()
   await api
@@ -82,7 +82,7 @@ const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number) 
       // console.log(res)
     })
 }
-const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number) => {
+const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
   // console.log(mid, uid)
   e.preventDefault()
   await api
@@ -121,20 +121,20 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
         })
       }
     } else {
-      getJoinMoim(1, setJoin)
+      getJoinMoim(user.uid, setJoin)
       didMountRef.current = true
     }
   }, [join])
   const time = data.time.split(/[. : T -]/)
-
-  console.log(classes)
+  let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
+  console.log('모임 이미지 경로', data)
   return (
     <>
       {data.state ? (
         <Card elevation={1} className={classes.card}>
           <div className={classes.cardWrapper}>
             <div className={classes.front}>
-              <CardMedia className={classes.media} component={'img'} image={'https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg'} />
+              <CardMedia className={classes.media} component={'img'} image={data.moimImg} />
               <CardContent className={classes.content}>
                 <Typography className={classes.heading} variant={'h6'} gutterBottom>
                   {data.title}
@@ -152,7 +152,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
               </CardContent>
             </div>
             <div className={classes.back}>
-              <CardMedia className={classes.media} component={'img'} image={'https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg'} />
+              <CardMedia className={classes.media} component={'img'} image={data.moimImg} />
               <CardContent className={classes.content}>
                 <Typography className={classes.heading} variant={'h6'} gutterBottom>
                   주최자 : {data.host.name}
@@ -178,7 +178,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
                 // style={{ width: '100%', fontSize: '20px'}}
                 // color = 'secondary' variant = 'contained'
                 onClick={(e) => {
-                  handleDelParticipate(e, data.mid, 1)
+                  handleDelParticipate(e, data.mid, user.uid)
                   setUpdate(false)
                   didMountRef.current = false
                   setButton(false)
@@ -191,7 +191,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
                 style={{ width: '100%', fontSize: '20px'}}
                 color = 'primary' variant = 'contained'
                 onClick={(e) => {
-                  handleAddParticipate(e, data.mid, 1)
+                  handleAddParticipate(e, data.mid, user.uid)
                   setUpdate(false)
                   didMountRef.current = false
                   setButton(true)

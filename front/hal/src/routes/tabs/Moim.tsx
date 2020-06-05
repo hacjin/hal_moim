@@ -18,13 +18,21 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
   const [update, setUpdate] = useState(false)
   const [open, setOpen] = useState(false)
   const classes = useStyles(scrollPosition)
+  let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
 
   const handleScroll = () => {
     const clientHeight = document.documentElement.clientHeight
     const position = window.pageYOffset
     const result = (position / clientHeight) * 100
+    const scrollHeight = document.documentElement.scrollHeight
 
     setScrollPosition(90 + result)
+    const fabBtn = document.getElementsByTagName('button').item(2) || null
+    if (scrollHeight - clientHeight === Math.round(position)) {
+      if (fabBtn !== null) fabBtn.style.display = 'none'
+    } else {
+      if (fabBtn !== null) fabBtn.style.display = 'inline-flex'
+    }
   }
 
   const handleClickOpen = () => {
@@ -49,7 +57,7 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
         window.removeEventListener('scroll', handleScroll)
       }
     } else {
-      getMoimList(10, 2)
+      getMoimList(10, user.uid)
       setUpdate(true)
     }
   })
