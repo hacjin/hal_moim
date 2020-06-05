@@ -1,7 +1,8 @@
 import React, { useEffect, useState} from 'react'
 import api from '../../apis/api'
 import MyInfoMoimList from '../../containers/MyInfoMoimList'
-
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 const MyInfo = () => {
   const [moimMe, setMoimMe] = useState([])
@@ -41,12 +42,17 @@ const MyInfo = () => {
   })
 
   return (
-    <div>이 페이지는 내 정보페이지입니다.
-      <h2>내가 개설한 모임</h2>
+    <div>
+      <Typography gutterBottom variant="subtitle1" style={{marginTop:'10px'}}>
+      내가 개설한 모임
+      </Typography>
       <MyInfoMoimList
       moims = {moimMe}
       />
-      <h2>내가 참여한 모임</h2>
+      <Divider variant="middle" />
+      <Typography gutterBottom variant="subtitle1" style={{marginTop:'10px'}}>
+      내가 참여한 모임
+      </Typography>
       <MyInfoMoimList
       moims = {moimOther}
       />
