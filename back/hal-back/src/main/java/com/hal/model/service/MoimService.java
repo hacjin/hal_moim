@@ -3,6 +3,7 @@ package com.hal.model.service;
 import java.util.List;
 
 import com.hal.model.dto.Moim;
+import com.hal.model.dto.MoimRequestDto;
 import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Participate;
 import com.hal.model.dto.ParticipateRequestDto;
@@ -21,4 +22,8 @@ public interface MoimService {
 	public ParticipateResponseDto deleteParticipate(int uid,int mid);
 	// 모임에 참여한 유저 목록 전체 조회
 	public List<Participate> findUsersByMid(int mid);
+	// 사용자 번호로 해당 유저가 생성한 모임 목록 조회
+	public List<Moim> findMoimByMe(int uid);
+	// 사용자 번호로 해당 유저가 참여한 모임 목록 조회
+	public List<Moim> findMoimByOther(int uid);
 }

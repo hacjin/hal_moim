@@ -3,7 +3,11 @@ package com.hal.model.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import com.hal.model.dto.Moim;
+import com.hal.model.dto.MoimRequestDto;
 import com.hal.model.dto.Participate;
 import com.hal.model.dto.User;
 
@@ -14,5 +18,7 @@ public interface ParticipateRepository extends JpaRepository<Participate, Intege
 	Participate findByUserUidAndMoimMid(int uid,int mid);
 	// 해당 모임에 참여한 유저 목록
 	List<Participate> findByMoimMid(int mid);
+	
 	List<Participate> findAllByUserUid(int uid);
+	
 }

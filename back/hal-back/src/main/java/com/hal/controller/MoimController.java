@@ -214,4 +214,22 @@ public class MoimController {
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@ApiOperation(value = "해당 유저가 생성한 모임 목록 조회")
+	@GetMapping("/listByMe")
+	public ResponseEntity<Map<String, Object>> moimFindListByMe(@RequestParam int uid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("state", "Success");
+		resultMap.put("data", moimService.findMoimByMe(uid));
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "해당 유저가 참가한 모임 목록 조회")
+	@GetMapping("/listByOther")
+	public ResponseEntity<Map<String, Object>> moimFindListByOther(@RequestParam int uid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("state", "Success");
+		resultMap.put("data", moimService.findMoimByOther(uid));
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
 }

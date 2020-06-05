@@ -3,6 +3,7 @@ package com.hal.model.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.hal.model.dao.MoimRepository;
 import com.hal.model.dao.ParticipateRepository;
 import com.hal.model.dao.UserRepository;
 import com.hal.model.dto.Moim;
+import com.hal.model.dto.MoimRequestDto;
 import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Participate;
 import com.hal.model.dto.ParticipateRequestDto;
@@ -125,6 +127,25 @@ public class MoimServiceImp implements MoimService {
 	@Override
 	public List<Participate> findUsersByMid(int mid) {
 		return pr.findByMoimMid(mid);
+	}
+	
+	public List<Moim> findMoimByMe(int uid){
+		User client = ur.findById(uid).orElseThrow(IllegalArgumentException::new);
+		List<Moim> moims = mr.findByHostAndTimeAfterOrderByTimeDesc(client, new Date());
+		
+		return moims;
+	}
+	
+	public List<Moim> findMoimByOther(int uid){
+		List<Participate> parts = pr.findAllByUserUid(uid);
+		
+		List<Moim> moims = new ArrayList<Moim>();
+		
+		for(Participate p : parts) {
+			moims.add(p.getMoim());
+		}
+		
+		return moims;
 	}
 
 }
