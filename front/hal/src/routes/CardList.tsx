@@ -63,6 +63,11 @@ const styles: any = (muiBaseTheme: any) => ({
       marginLeft: -muiBaseTheme.spacing(1),
     },
   },
+  btn: {
+    backgroundColor: '#FDE26C',
+    color: 'black',
+    width: '100%', fontSize: '20px'
+  },
 })
 const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number) => {
   // console.log(mid, uid)
@@ -121,6 +126,8 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
     }
   }, [join])
   const time = data.time.split(/[. : T -]/)
+
+  console.log(classes)
   return (
     <>
       {data.state ? (
@@ -166,10 +173,10 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
           </div>
           <CardActions>
             {button ? (
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ width: '100%', fontSize: '20px' }}
+              <Button            
+                style={{ width: '100%', fontSize: '20px',  backgroundColor: '#eb9f9f',  color: 'black',}}
+                // style={{ width: '100%', fontSize: '20px'}}
+                // color = 'secondary' variant = 'contained'
                 onClick={(e) => {
                   handleDelParticipate(e, data.mid, 1)
                   setUpdate(false)
@@ -181,9 +188,8 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
               </Button>
             ) : (
               <Button
-                variant="contained"
-                color="primary"
-                style={{ width: '100%', fontSize: '20px' }}
+                style={{ width: '100%', fontSize: '20px'}}
+                color = 'primary' variant = 'contained'
                 onClick={(e) => {
                   handleAddParticipate(e, data.mid, 1)
                   setUpdate(false)
