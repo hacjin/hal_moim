@@ -11,6 +11,9 @@ import SockJsClient from 'react-stomp';
 
 
 class ChatList extends React.Component {
+
+  user = JSON.parse(sessionStorage.getItem('user') || '{}');
+
     constructor(props){
         super(props);
         this.state = {
@@ -19,7 +22,8 @@ class ChatList extends React.Component {
           // messageList: [],
           totalmessageList:{},
           receiver : '',
-          roomId: ''
+          roomId: '',
+          newMessagesCount: []
         }
         this.websocket = React.createRef();
     }
@@ -30,7 +34,7 @@ class ChatList extends React.Component {
                     type:"",
                     time: new Date(),
                     roomId: this.state.roomId,
-                    senderId: "1"};
+                    senderId: this.user.uid};
       
       if(message.type === 'text'){
         chat.message = message.data.text
@@ -74,7 +78,7 @@ class ChatList extends React.Component {
         // Load async data.
         let userData = await API.get('chat/findRoomListById', {
           params: {
-            uid: 1
+            uid: this.user.uid
           }
         });
 
@@ -91,6 +95,10 @@ class ChatList extends React.Component {
           isOpen : flag,
           receiver : receiver,
           roomId: roomId,
+          newMessagesCount:{
+            ...this.state.newMessagesCount,
+            [roomId] : 0
+          },
           totalmessageList: {
             ...this.state.totalmessageList,
             [roomId] : totalChatData
@@ -101,7 +109,7 @@ class ChatList extends React.Component {
     }
 
 
-    MyCustomItem = props => <ChatItem {...props} openChatWindow={this._openChatWindow}/>
+    MyCustomItem = props => <ChatItem {...props} userId = {this.user.uid} openChatWindow={this._openChatWindow}/>
     
     render() {  
       var topics = []
@@ -116,6 +124,7 @@ class ChatList extends React.Component {
           url={"http://localhost:8080/webSocket" }
           topics={topics} 
           onMessage={msg => { 
+            const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1;
             var replytext 
             if(msg.type ==='text'){
               replytext = {'text':msg.message}
@@ -125,12 +134,13 @@ class ChatList extends React.Component {
 
             var tmpMessageList = this.state.totalmessageList[this.state.roomId] ===undefined ? [] : this.state.totalmessageList[this.state.roomId]
             tmpMessageList.push({
-              author: msg.senderId==1?'me':'them',
+              author: msg.senderId==this.user.uid?'me':'them',
               type: msg.type,
               data: replytext
               })
             this.setState({
               ...this.setState,
+              newMessagesCount: newMessagesCount,
               totalmessageList: {
                 ...this.state.totalmessageList,
                 [this.state.roomId] : tmpMessageList

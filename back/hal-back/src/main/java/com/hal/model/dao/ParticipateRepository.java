@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.hal.model.dto.Participate;
-import com.hal.model.dto.User;
 
 public interface ParticipateRepository extends JpaRepository<Participate, Integer> {
 	// 해당모임에 포함된 유저수

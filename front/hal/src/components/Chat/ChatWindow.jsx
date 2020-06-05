@@ -6,9 +6,6 @@ import ChatHeader from './ChatHeader';
 
 
 class ChatWindow extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onUserInputSubmit(message) {
     this.props.onUserInputSubmit(message);

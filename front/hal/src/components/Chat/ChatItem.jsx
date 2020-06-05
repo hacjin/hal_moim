@@ -5,6 +5,7 @@ import API from "../../apis/api"
 const ChatItem = props => {
 
     let item = props.dataItem;
+    let userId = props.userId
     const [isOpen, setIsOpen] = useState(false);
 
 
@@ -24,7 +25,7 @@ const ChatItem = props => {
               replytext = {'emoji':item.message}
             }
             roomMessageList.push({
-                author: item.sender.uid==1?'me':'them',
+                author: item.sender.uid==userId?'me':'them',
                 type: item.type,
                 data: replytext
                 })
@@ -44,18 +45,18 @@ const ChatItem = props => {
     (isOpen ? 'opened' : ''),
    ];
 
-
+   console.log("ddd",item.receiver.profileImg)
     return (
         
-            <div className={classList.join(' ')} style={{ margin: 0}} onClick={_onFormSubmit}>
+            <div className={classList.join(' ')} style={{ margin: 10}} onClick={_onFormSubmit}>
 
                 <div className='col-2'>
                     <Avatar shape='circle' type='img'>
-                        <img src={`https://gist.github.com/simonssspirit/0db46d4292ea8e335eb18544718e2624/raw/2a595679acdb061105c80bd5eeeef58bb90aa5af/${item.receiver.profileImg}-round-40x40.png`} />
+                        <img src={`${item.receiver.profileImg}`} width='200%'/>
                     </Avatar>
                 </div>
                 <div className='col-6'>
-                    <h2 style={{fontSize: 14, color: '#454545', marginBottom: 0}} className="text-uppercase">{item.receiver.name}</h2>
+                    <h2 style={{fontSize: 20, color: '#454545', marginBottom: 0}} className="text-uppercase">{item.receiver.name}</h2>
                     <div style={{fontSize: 12, color: "#a0a0a0"}}>{}</div>
                 </div>
                 <div className='col-4'>

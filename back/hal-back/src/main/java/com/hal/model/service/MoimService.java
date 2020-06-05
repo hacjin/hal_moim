@@ -26,4 +26,8 @@ public interface MoimService {
 	public Map<String,Object> findUsersByMid(int mid);
 	// 해당 유저가 참여한 모임 목록 조회
 	public Map<String,Object> findPartsByUid(int uid);
+	// 사용자 번호로 해당 유저가 생성한 모임 목록 조회
+	public Map<String,Object> findMoimByMe(int uid);
+	// 사용자 번호로 해당 유저가 참여한 모임 목록 조회
+	public Map<String,Object> findMoimByOther(int uid);
 }

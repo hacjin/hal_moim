@@ -105,6 +105,7 @@ const Main = ( {history}:Props ) => {
         할 모 임
       </Typography>
       <TextField
+        color = 'secondary'
         variant="outlined" margin="normal" required fullWidth
         id="phone" label="핸드폰 번호" name="phone" autoComplete="phone"
         value={phone}
