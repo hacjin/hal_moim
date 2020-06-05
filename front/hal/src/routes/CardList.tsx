@@ -116,7 +116,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
         })
       }
     } else {
-      getJoinMoim(1, setJoin)
+      getJoinMoim(user.uid, setJoin)
       didMountRef.current = true
     }
   }, [join])

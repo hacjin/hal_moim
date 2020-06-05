@@ -3,7 +3,6 @@ import { makeStyles, Theme, Dialog, DialogTitle, DialogContent, TextField, Butto
 import DateFnsUtils from '@date-io/date-fns'
 import convert from 'date-fns/locale/ko'
 import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers'
-import { RouteComponentProps } from 'react-router-dom'
 import api from '../apis/api'
 import Moment from 'moment'
 
@@ -32,9 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-interface Props extends RouteComponentProps {}
-
-function MakeMoim(props: any, { history }: Props) {
+function MakeMoim(props: any) {
   const [location, setLocation] = useState('')
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
@@ -47,6 +44,8 @@ function MakeMoim(props: any, { history }: Props) {
     //
   )
   const classes = useStyles()
+  const user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
+
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
   }
@@ -80,7 +79,7 @@ function MakeMoim(props: any, { history }: Props) {
   }
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
-    let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
+
     const data = new FormData()
     data.append('mid', JSON.stringify(0))
     data.append('title', title)
@@ -93,7 +92,7 @@ function MakeMoim(props: any, { history }: Props) {
     if (file) {
       data.append('file', file[0])
     }
-    data.append('uid', JSON.stringify(1))
+    data.append('uid', JSON.stringify(user.uid))
     // 만들기 전송
     await api.post('/moim/add', data).then((res) => {
       console.log(res)
