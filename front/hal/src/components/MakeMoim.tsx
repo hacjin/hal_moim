@@ -29,6 +29,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '300px',
     height: '200px',
   },
+  btn: {
+    variant: "contained",
+    backgroundColor: '#FDE26C'
+  },
+  btnPink: {
+    variant: "contained",
+    backgroundColor: '#eb9f9f'
+  },
 }))
 
 function MakeMoim(props: any) {
@@ -138,7 +146,7 @@ function MakeMoim(props: any) {
               onChange={handleImg}
             />
             <label htmlFor="contained-button-file">
-              <Button variant="contained" color="primary" component="span">
+              <Button variant="contained" color='primary' component="span">
                 이미지 업로드
               </Button>
             </label>
@@ -192,13 +200,14 @@ function MakeMoim(props: any) {
             />
 
             <div>
-              <Button color="primary" variant="contained" onClick={handleSubmit}>
-                만들기
-              </Button>
-              &emsp;
-              <Button color="primary" variant="contained" onClick={handleClose}>
+              <Button className={classes.btnPink} onClick={handleClose}>
                 취소
               </Button>
+              &emsp;
+              <Button className={classes.btn} onClick={handleSubmit}>
+                만들기
+              </Button>
+              
             </div>
           </div>
         </DialogContent>

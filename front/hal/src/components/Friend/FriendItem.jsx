@@ -65,24 +65,30 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     marginTop: 24,
     textTransform: 'initial',
   },
-}))
 
-const FriendItem = (props) => {
+}));
+
+const FriendItem = (props) => 
+{ 
   const item = props.dataItem
-  const styles = useStyles()
-  const { button: buttonStyles, ...contentStyles } = useBlogTextInfoContentStyles()
-  const shadowStyles = useOverShadowStyles()
+  const userId = props.userId
+  const styles = useStyles();
+  const {
+    button: buttonStyles,
+    ...contentStyles
+  } = useBlogTextInfoContentStyles();
+  const shadowStyles = useOverShadowStyles();
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
-  async function _onFormSubmit() {
-    console.log('onform', item)
+
+  async function _onFormSubmit(){
     //이친구와 방이 있나 확인(있으면 방 번호 리턴, 없으면 방 만들고 방번호 리턴)
-    const roomId = await API.get('chat/addRoom', {
-      params: {
-        senderId: 1, //세션
-        receiverId: item.uid,
-      },
+    const roomId = await API.get('chat/addRoom',{
+        params:{
+            senderId: userId, //세션
+            receiverId: item.uid
+        }
     })
 
     //채팅방 메시지 불러오기
@@ -92,26 +98,26 @@ const FriendItem = (props) => {
       },
     })
     var roomMessageList = []
-
-    totalChatData.data.data.forEach(function (item, index, array) {
-      var replytext
-      if (item.type === 'text') {
-        replytext = { text: item.message }
-      } else {
-        replytext = { emoji: item.message }
-      }
-      roomMessageList.push({
-        author: item.sender.uid === 1 ? 'me' : 'them',
-        type: item.type,
-        data: replytext,
-      })
+    
+    totalChatData.data.data.forEach(function(item, index, array){
+        var replytext 
+        if(item.type ==='text'){
+          replytext = {'text':item.message}
+        }else{
+          replytext = {'emoji':item.message}
+        }
+        roomMessageList.push({
+            author: item.sender.uid==userId?'me':'them',
+            type: item.type,
+            data: replytext
+            })
     })
 
     setIsOpen(true)
     props.openChatWindow(true, roomId.data.data, item, roomMessageList)
   }
 
-  console.log(contentStyles)
+
   return (
     <Card className={cx(styles.root, shadowStyles.root)}>
       <CardMedia
@@ -128,13 +134,10 @@ const FriendItem = (props) => {
           heading={item.name}
           body={
             item.description
-            // 'Git is a distributed version control system. Every dev has a working copy of the code and...'
           }
         />
-        <Button variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>
-          메세지 보내기
-        </Button>
-        {/*  classes={{color:'blue'}} */}
+        {/* <Button className={styles.btn} fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button> */}
+        <Button  variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
       </CardContent>
     </Card>
   )

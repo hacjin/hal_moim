@@ -12,6 +12,9 @@ import SockJsClient from 'react-stomp';
 
 
 class FriendList extends React.Component {
+
+  user = JSON.parse(sessionStorage.getItem('user') || '{}');
+
     constructor(props){
         super(props);
         this.state = {
@@ -21,14 +24,15 @@ class FriendList extends React.Component {
           totalmessageList:{},
           receiver : '',
           roomId: '',
-          dis:''
+          dis:'',
+          // userId: this.user.uid ,
         }
         this.websocket = React.createRef();
         this._getFriendList = this._getFriendList.bind(this)
 
     }
   
-
+    
   
     playIncomingMessageSound() {
       var audio = new Audio(incomingMessageSound);
@@ -48,11 +52,10 @@ class FriendList extends React.Component {
 
 
     async componentDidMount() {
-      console.log("디드마운트")
         // Load async data.
         let userData = await API.get('user/friendsByDistance', {
           params: {
-            uid: 5,
+            uid: this.user.uid,
             dis_filter : 10
           }
         });
@@ -60,6 +63,7 @@ class FriendList extends React.Component {
         this.setState({
           ...this.state, ...{
             friendsData : userData.data.data,
+            userId: this.user.uid
           }
         });
 
@@ -77,7 +81,7 @@ class FriendList extends React.Component {
 
       let userData = await API.get('user/friendsByDistance', {
         params: {
-          uid: 5,
+          uid: this.user.uid,
           dis_filter : dis
         }
       });
@@ -129,7 +133,7 @@ class FriendList extends React.Component {
 
 
 
-    MyCustomItem = props => <FriendItem {...props} openChatWindow={this._openChatWindow}/>
+    MyCustomItem = props => <FriendItem {...props} userId = {this.user.uid} openChatWindow={this._openChatWindow}/>
     
     render() {  
       var topics = []
@@ -154,7 +158,7 @@ class FriendList extends React.Component {
 
             var tmpMessageList = this.state.totalmessageList[this.state.roomId] ===undefined ? [] : this.state.totalmessageList[this.state.roomId]
             tmpMessageList.push({
-              author: msg.senderId==1?'me':'them',
+              author: msg.senderId==this.user.uid?'me':'them',
               type: msg.type,
               data: replytext
               })

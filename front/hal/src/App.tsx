@@ -5,8 +5,23 @@ import Main from './components/Main'
 import Register from './components/Register/Register'
 import Login_face from './components/Login/Login_face'
 
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+
+
+const theme = createMuiTheme({
+  palette:{
+    primary : {
+      main:'#FDE26C'
+    },
+    secondary:{
+      main: '#6a60a9'//'#eb9f9f'
+    }
+  }
+})
+
 function App() {
   return (
+    <MuiThemeProvider theme={theme}>
     <Router>
       <div>
         <Switch>
@@ -17,10 +32,12 @@ function App() {
           <Route path="/friend" component={index} />
           <Route path="/chat" component={index} />
           <Route path="/myInfo" component={index} />
+          <Route path="/ProfileUpdate" component={index} />
           <Redirect path="*" to="/" />
         </Switch>
       </div>
     </Router>
+    </MuiThemeProvider>
   )
 }
 
