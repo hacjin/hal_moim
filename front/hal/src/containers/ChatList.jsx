@@ -23,6 +23,7 @@ class ChatList extends React.Component {
           totalmessageList:{},
           receiver : '',
           roomId: '',
+          newMessagesCount: []
         }
         this.websocket = React.createRef();
     }
@@ -94,6 +95,10 @@ class ChatList extends React.Component {
           isOpen : flag,
           receiver : receiver,
           roomId: roomId,
+          newMessagesCount:{
+            ...this.state.newMessagesCount,
+            [roomId] : 0
+          },
           totalmessageList: {
             ...this.state.totalmessageList,
             [roomId] : totalChatData
@@ -119,6 +124,7 @@ class ChatList extends React.Component {
           url={"http://localhost:8080/webSocket" }
           topics={topics} 
           onMessage={msg => { 
+            const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1;
             var replytext 
             if(msg.type ==='text'){
               replytext = {'text':msg.message}
@@ -134,6 +140,7 @@ class ChatList extends React.Component {
               })
             this.setState({
               ...this.setState,
+              newMessagesCount: newMessagesCount,
               totalmessageList: {
                 ...this.state.totalmessageList,
                 [this.state.roomId] : tmpMessageList
