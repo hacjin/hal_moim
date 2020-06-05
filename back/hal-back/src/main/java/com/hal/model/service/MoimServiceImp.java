@@ -73,6 +73,7 @@ public class MoimServiceImp implements MoimService {
 			    			.distance(Math.round(distance*10)/10.0)
 			    			.count(pr.countByMoimMid(moim.getMid()))
 			    			.coment(moim.getComent())
+			    			.moimImg(moim.getMoimImg())
 			    			.build();
 			    	result.add(tmpMoim);
 			    }

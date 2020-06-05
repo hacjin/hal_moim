@@ -64,7 +64,7 @@ const styles: any = (muiBaseTheme: any) => ({
     },
   },
 })
-const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number) => {
+const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
   // console.log(mid, uid)
   e.preventDefault()
   await api
@@ -77,7 +77,7 @@ const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number) 
       // console.log(res)
     })
 }
-const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number) => {
+const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
   // console.log(mid, uid)
   e.preventDefault()
   await api
@@ -121,13 +121,15 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
     }
   }, [join])
   const time = data.time.split(/[. : T -]/)
+  let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
+  console.log('모임 이미지 경로', data)
   return (
     <>
       {data.state ? (
         <Card elevation={1} className={classes.card}>
           <div className={classes.cardWrapper}>
             <div className={classes.front}>
-              <CardMedia className={classes.media} component={'img'} image={'https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg'} />
+              <CardMedia className={classes.media} component={'img'} image={data.moimImg} />
               <CardContent className={classes.content}>
                 <Typography className={classes.heading} variant={'h6'} gutterBottom>
                   {data.title}
@@ -145,7 +147,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
               </CardContent>
             </div>
             <div className={classes.back}>
-              <CardMedia className={classes.media} component={'img'} image={'https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg'} />
+              <CardMedia className={classes.media} component={'img'} image={data.moimImg} />
               <CardContent className={classes.content}>
                 <Typography className={classes.heading} variant={'h6'} gutterBottom>
                   주최자 : {data.host.name}
@@ -171,7 +173,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
                 color="primary"
                 style={{ width: '100%', fontSize: '20px' }}
                 onClick={(e) => {
-                  handleDelParticipate(e, data.mid, 1)
+                  handleDelParticipate(e, data.mid, user.uid)
                   setUpdate(false)
                   didMountRef.current = false
                   setButton(false)
@@ -185,7 +187,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
                 color="primary"
                 style={{ width: '100%', fontSize: '20px' }}
                 onClick={(e) => {
-                  handleAddParticipate(e, data.mid, 1)
+                  handleAddParticipate(e, data.mid, user.uid)
                   setUpdate(false)
                   didMountRef.current = false
                   setButton(true)

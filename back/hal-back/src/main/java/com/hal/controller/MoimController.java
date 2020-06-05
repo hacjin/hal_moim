@@ -49,10 +49,10 @@ public class MoimController {
 			@RequestParam(name = "file", required = false) MultipartFile file, @RequestParam(name = "uid") int uid) {
 		String fileName = "";
 		if (file != null) {
-			fileName = "/moim/" + file.getOriginalFilename();
+			fileName = "/images/moim/" + file.getOriginalFilename();
 			imgService.saveImage(file, "moim");
 		}else {
-			fileName = "/moim/default.jpg";
+			fileName = "/images/moim/default.jpg";
 		}
 		MoimRequestDto requestMoim = new MoimRequestDto(0, title, time, location, state, Double.parseDouble(latitude),
 				Double.parseDouble(longitude), coment, fileName, uid);
