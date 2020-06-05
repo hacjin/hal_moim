@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -241,6 +242,48 @@ public class MoimServiceImp implements MoimService {
 			resultMap.put("message", msg);
 			resultMap.put("data", "");
 		}
+		return resultMap;
+	}
+	
+	public Map<String,Object> findMoimByMe(int uid){
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		try {
+			List<Moim> moims = mr.findByHostUidAndTimeAfterOrderByTimeDesc(uid, new Date());
+
+			resultMap.put("state", "Success");
+			resultMap.put("message", "해당 유저가 생성한 모임 목록 조회 성공");
+			resultMap.put("data", moims);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg = e.getMessage();
+			resultMap.put("state", "Client Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
+		}
+		return resultMap;
+		
+	}
+	
+	public Map<String,Object> findMoimByOther(int uid){
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		try {
+			List<Participate> parts = pr.findAllByUserUid(uid);
+			List<Moim> moims = new ArrayList<Moim>();
+			
+			for(Participate p : parts) {
+				moims.add(p.getMoim());
+			}
+			resultMap.put("state", "Success");
+			resultMap.put("message", "해당 유저가 참여한 모임 목록 조회 성공");
+			resultMap.put("data", moims);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg = e.getMessage();
+			resultMap.put("state", "Client Error");
+			resultMap.put("message", msg);
+			resultMap.put("data", "");
+		}
+		
 		return resultMap;
 	}
 
