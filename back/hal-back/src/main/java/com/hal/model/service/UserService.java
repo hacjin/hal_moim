@@ -12,6 +12,15 @@ public interface UserService {
 	// 회원가입
 	public User addUser(User user);
 	
+	// 프로필 수정
+	public int updateUser(User user);
+	
+	// 모든 사용자 폰번호 조회
+	public List<String> findAllPhone();
+	
+	// 사용자 조회
+	public User findUserById(int uid);
+	
 	// 로그인
 	public User userLogin(String phone);
 	

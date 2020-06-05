@@ -58,19 +58,34 @@ const Registface = ( props ) => {
       }
     };
 
-    const handleRetake = (e) => {
-      setRetake(false);
-    }
-    const handleSave = (e) => {
-      const buffer = Buffer.from(url, 'base64');
-
-      props.imgValue(buffer); // 부모 컴포넌트로 값을 넘긴다.
-      handleClose(); // Dialog 닫기
-    }
-
     const handleClose = () => {
       props.setOpen(false);
     }
+
+    const handleRetake = () => {
+      setRetake(false);
+    }
+    const handleSave = () => {
+      const file = dataURLtoFile(url, props.phone+".png");
+      props.imgValue(file); // 부모 컴포넌트(Register.tsx)로 값을 넘긴다.
+      handleClose(); // Dialog 닫기
+    }
+
+    // base64image -> file 변환 함수
+    function dataURLtoFile(dataurl, filename) {
+      var arr = dataurl.split(','),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]), 
+          n = bstr.length, 
+          u8arr = new Uint8Array(n);
+            
+      while(n--){
+          u8arr[n] = bstr.charCodeAt(n);
+      }
+        
+      return new File([u8arr], filename, {type:mime});
+    }
+    
 
     const videoConstraints = {
       width:  200,
