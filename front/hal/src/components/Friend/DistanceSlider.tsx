@@ -6,8 +6,11 @@ import Slider from '@material-ui/core/Slider';
 const useStyles = makeStyles({
   root: {
     width: '100%',
-    padding : '0px 30px'
+    padding : '0px 30px',
   },
+  slider:{
+    color: '#336714'
+  }
 });
 
 const marks = [
@@ -37,7 +40,9 @@ export default function DistanceSlider(props:any) {
 
   return (
     <div className={classes.root}>
-
+      <Typography id="discrete-slider-restrict" >
+        친구와의 거리
+      </Typography>
       <Slider
         min = {1}
         max = {5}
@@ -46,6 +51,7 @@ export default function DistanceSlider(props:any) {
         step={2}
         marks={marks}
         onChange = {changeDistance}
+        className = {classes.slider}
       />
     </div>
   );

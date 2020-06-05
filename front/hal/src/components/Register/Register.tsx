@@ -42,10 +42,20 @@ const Register = ( props:any ) => {
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      variant: "contained",
+      backgroundColor: '#FDE26C',
+      color : 'black'
     },
     orange: {
       color: theme.palette.getContrastText(deepOrange[500]),
       backgroundColor: deepOrange[500],
+    },
+    primaryColor: {
+      borderColor: '#FDE26C',
+    },
+    btn: {
+      variant: "contained",
+      backgroundColor: '#FDE26C'
     },
   }));
   const classes = useStyles();
@@ -179,6 +189,7 @@ const Register = ( props:any ) => {
           {/* 성 함 */}
           <Grid item xs={12} sm={6}>
             <TextField
+              className={classes.primaryColor}
               name="name" variant="outlined" required fullWidth
               id="name" label="성 함" autoFocus onChange={handleName} />
           </Grid>
@@ -186,6 +197,7 @@ const Register = ( props:any ) => {
           {/* 생일년도 */}
           <Grid item xs={12} sm={6}>
             <TextField
+              color = 'secondary'
               variant="outlined" required fullWidth
               id="birth" type="number" label="생일년도" name="birth"
               onInput = {(e:any) =>{
@@ -243,7 +255,7 @@ const Register = ( props:any ) => {
         {/* Register Submit */}
         <Button
           type="submit"  fullWidth variant="contained" color="primary" 
-          className={classes.submit} onClick={handleSubmit} >
+            className={classes.submit} onClick={handleSubmit} >
           가입하깅
         </Button>
       </div>

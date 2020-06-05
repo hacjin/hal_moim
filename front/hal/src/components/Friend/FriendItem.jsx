@@ -65,6 +65,10 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     marginTop: 24,
     textTransform: 'initial',
   },
+  btn: {
+    variant: "contained",
+    backgroundColor: '#FDE26C'//'#eb9f9f'
+  },
 }));
 
 const FriendItem = (props) => {
@@ -138,7 +142,8 @@ const FriendItem = (props) => {
             // 'Git is a distributed version control system. Every dev has a working copy of the code and...'
           }
         />
-        <Button  variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
+        <Button className={styles.btn} fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
+        {/* <Button  variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button> */}
         {/*  classes={{color:'blue'}} */}
       </CardContent>
     </Card>
