@@ -1,6 +1,6 @@
 .arrow_box {
 	position: relative;
-	background: #edf76a;
+	background: #FDE26C;
     border: 4px solid #f5f7f8;
     border-radius:30px 30px 30px 30px;
     height: '90%';
@@ -18,13 +18,13 @@
 
 .arrow_box:after {
 	border-color: rgba(136, 183, 213, 0);
-	border-right-color: #f0ee7b;
+	border-right-color: #FDE26C;
 	border-width: 20px;
 	margin-top: -20px;
 }
 .arrow_box:before {
 	border-color: rgba(194, 225, 245, 0);
-	border-right-color: #f1f7a9;
+	border-right-color: #FDE26C;
 	border-width: 26px;
 	margin-top: -26px;
 }

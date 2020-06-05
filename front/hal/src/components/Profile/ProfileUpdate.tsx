@@ -73,7 +73,7 @@ const ProfileUpdate = ( props:any ) => {
     },
     notchedOutline: {
       borderWidth: "2px",
-      borderColor: "#E0F511 !important"
+      borderColor: "orange !important"
     },
   }));
   const classes = useStyles();
@@ -199,6 +199,7 @@ const ProfileUpdate = ( props:any ) => {
                   vertical: 'bottom',
                   horizontal: 'right',
                 }}
+                className={classes.large}
                 badgeContent={
                   // 사진 업로드
                   <Button className={classes.small} component="label">
@@ -210,7 +211,7 @@ const ProfileUpdate = ( props:any ) => {
                 {/* 미리 보기 */}
                 {base64Img === '' ? 
                 // 기존사진 
-                <Avatar alt="프로필 사진" src=''
+                <Avatar alt="프로필 사진" src={profileImg}
                   className={classes.large} />
                 : 
                 // 수정사진

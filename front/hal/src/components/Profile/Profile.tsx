@@ -51,7 +51,7 @@ const Profile = ( props:any ) => {
         <Grid container spacing={1}>
             {/* 사 진 */}
             <Grid item xs>
-              <Avatar alt="프로필 사진" src=''
+              <Avatar alt="프로필 사진" src={user.profileImg}
                   className={classes.large} />
             </Grid>
 
