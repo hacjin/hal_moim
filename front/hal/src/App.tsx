@@ -17,6 +17,7 @@ function App() {
           <Route path="/friend" component={index} />
           <Route path="/chat" component={index} />
           <Route path="/myInfo" component={index} />
+          <Route path="/ProfileUpdate" component={index} />
           <Redirect path="*" to="/" />
         </Switch>
       </div>

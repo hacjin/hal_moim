@@ -9,13 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hal.model.dto.User;
-//import com.hal.model.service.ImageService;
+import com.hal.model.service.ImageService;
 import com.hal.model.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -27,8 +28,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userServiceImp;
-	//@Autowired
-	//private ImageService imageService;
+	@Autowired
+	private ImageService imageService;
 	
 	@ApiOperation(value = "모든 User 목록 조회")
 	@GetMapping("/userlist")
@@ -38,22 +39,59 @@ public class UserController {
 	
 	@ApiOperation(value = "회원가입")
 	@PostMapping("/add-user")
-	public ResponseEntity<Map<String, Object>> addUser(@RequestParam(value="name", required = false) String name
-													,  @RequestParam(value="birth", required = false) String birth
-													,  @RequestParam(value="gender", required = false) String gender
-													,  @RequestParam(value="phone", required = false) String phone
-													,  @RequestParam(value="addr", required = false) String addr
+	public ResponseEntity<Map<String, Object>> addUser(@RequestParam(value="name", required = true) String name
+													,  @RequestParam(value="birth", required = true) String birth
+													,  @RequestParam(value="gender", required = true) String gender
+													,  @RequestParam(value="phone", required = true) String phone
+													,  @RequestParam(value="addr", required = true) String addr
 													,  @RequestParam(value="myImg", required = false) MultipartFile myImg
-													,  @RequestParam(value="latitude", required = false) String latitude
-													,  @RequestParam(value="longitude", required = false) String longitude
+													,  @RequestParam(value="latitude", required = true) String latitude
+													,  @RequestParam(value="longitude", required = true) String longitude
 													) throws Exception {		
 		
-		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, "tmpProfile" ,myImg.getOriginalFilename() 
-				, Double.parseDouble(latitude), Double.parseDouble(longitude), "");
+		String profile_filename = "default.jpg";
+		String login_filename = "/login/";
+		if(myImg != null) login_filename += myImg.getOriginalFilename();
+		else login_filename += "default.jpg";
 		
-		//imageService.saveMyImage(myImg);
+		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, profile_filename ,login_filename 
+				, Double.parseDouble(latitude), Double.parseDouble(longitude), null);
+		
+		imageService.saveImage(myImg, "login");
 		
 	    return handleSuccess(userServiceImp.addUser(user));
+	}
+	
+	@ApiOperation(value = "프로필 수정")
+	@PutMapping("/update-user")
+	public ResponseEntity<Map<String, Object>> updateUser( @RequestParam(value="phone", required = true) String phone
+													,  @RequestParam(value="addr", required = true) String addr
+													,  @RequestParam(value="profileImg", required = false) MultipartFile profileImg
+													,  @RequestParam(value="latitude", required = true) String latitude
+													,  @RequestParam(value="longitude", required = true) String longitude
+													,  @RequestParam(value="description", required = false) String description
+													,  @RequestParam(value="uid", required = true) String uid
+													) throws Exception {
+		String profile_filename = "/profile/";
+		if(profileImg != null) { // 사진 변경하고자 할 때
+			profile_filename = profileImg.getOriginalFilename();
+			imageService.saveImage(profileImg, "profile");
+		}
+		
+		int tmpNum = 0;
+		String tmpVal = "";
+		User user = new User(Integer.parseInt(uid), tmpVal, tmpVal, tmpNum, phone, addr, profile_filename ,tmpVal
+				, Double.parseDouble(latitude), Double.parseDouble(longitude), description);
+		
+		userServiceImp.updateUser(user);
+		
+	    return handleSuccess(userServiceImp.findUserById(Integer.parseInt(uid)));
+	}
+	
+	@ApiOperation(value = "모든 회원 폰번호 조회")
+	@GetMapping("/findall-phone")
+	public ResponseEntity<Map<String, Object>> findAllPhoneList() throws Exception {
+	    return handleSuccess(userServiceImp.findAllPhone());
 	}
 	
 	@ApiOperation(value = "로그인")

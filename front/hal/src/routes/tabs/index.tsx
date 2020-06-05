@@ -4,6 +4,7 @@ import Friend from './Friend'
 import Chat from './Chat'
 import MyInfo from './MyInfo'
 import Moim from './Moim'
+import ProfileUpdate from '../../components/Profile/ProfileUpdate'
 
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
@@ -22,6 +23,7 @@ const index = () => {
           <Route path="/friend" component={Friend} />
           <Route path="/chat" component={Chat} />
           <Route path="/myInfo" component={MyInfo} />
+          <Route path="/profileUpdate" component={ProfileUpdate} />
           <Redirect path="*" to="/moim" />
         </Switch>
       </Router>

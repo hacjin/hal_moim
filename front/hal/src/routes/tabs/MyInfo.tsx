@@ -2,10 +2,10 @@ import React from 'react'
 import Profile from '../../components/Profile/Profile';
 
 
-const MyInfo = () => {
+const MyInfo = ( props:any ) => {
   return (
     <div>
-      <Profile />
+      <Profile {...props}/>
     </div>
   )
 }

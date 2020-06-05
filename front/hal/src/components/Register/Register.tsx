@@ -103,12 +103,7 @@ const Register = ( props:any ) => {
     setGender(e.target.value);
   }
   const handleMyImg = (e:any) => {
-    //setMyImg(e.target.files[0]);
-    const bufferToBlob = new Blob([ 
-      JSON.stringify({e})
-    ], { type: 'application/json'});
-
-    setMyImg(bufferToBlob);
+    setMyImg(e); // Dialog에서 값을 셋팅해준다. (하위컴포넌트 props -> 상위컴포넌트)
   }
   const handleOpen = () => {
     setOpen(true);
@@ -131,27 +126,18 @@ const Register = ( props:any ) => {
       formdata.append('addr',addr);
       formdata.append('latitude',latitude);
       formdata.append('longitude',longitude);
-      formdata.append('myImg',myImg, '/login/'+phone+'.png');
+      formdata.append('myImg',myImg, phone+'.png');
 
       doRegist(formdata);
     }
   }
 
   const doRegist = async (formdata:FormData) => {
-    // console.log("name!!",formdata.get('name'));
-    // console.log("phone!!",formdata.get('phone'));
-    // console.log("birth!!", formdata.get('birth'));
-    // console.log("gender!!",formdata.get('gender'));
-    // console.log("addr!!",formdata.get('addr'));
-    // console.log("lat!!", formdata.get('latitude'));
-    // console.log("lng!!", formdata.get('longitude'));
-    // console.log("myImg!!",formdata.get('myImg'));
-
     await api
     .post('/user/add-user', formdata)
     .then( (res:any) => {
       // 세션스토리지 저장
-      sessionStorage.setItem('user', res.data.data);
+      sessionStorage.setItem('user', JSON.stringify(res.data.data));
       props.history.push('/moim');
     })
 
@@ -221,21 +207,19 @@ const Register = ( props:any ) => {
           </Grid>
           <Grid item xs={12} sm={8}>
             <TextField
-              variant="outlined" required fullWidth disabled
+              variant="outlined" required fullWidth
+              inputProps={{
+                readOnly: true,
+              }}
               id="location" label="지역" name="location" value={addr} />
           </Grid>
 
           {/* 얼굴사진 등록 */}
           <Grid item xs={12}>
-            {/* <Button id="addr" variant="contained" color="secondary" fullWidth size="large">
-              <input id={"file-input"}  type="file" name="imageFile" multiple
-              onChange={handleMyImg} />
-              얼굴 등록
-            </Button> */}
             <Button id="addr" variant="contained" color="secondary" 
               size="large" fullWidth
               onClick={handleOpen} >사진등록</Button>
-            <Registface open={open} setOpen={setOpen} imgValue={handleMyImg}/>
+            <Registface open={open} setOpen={setOpen} imgValue={handleMyImg} phone={phone}/>
           </Grid>
         </Grid>
         
