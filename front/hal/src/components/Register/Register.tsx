@@ -50,8 +50,9 @@ const Register = ( props:any ) => {
       color: theme.palette.getContrastText(deepOrange[500]),
       backgroundColor: deepOrange[500],
     },
-    primaryColor: {
+    baseColor: {
       borderColor: '#FDE26C',
+
     },
     btn: {
       variant: "contained",
@@ -189,7 +190,7 @@ const Register = ( props:any ) => {
           {/* 성 함 */}
           <Grid item xs={12} sm={6}>
             <TextField
-              className={classes.primaryColor}
+              color = 'secondary'
               name="name" variant="outlined" required fullWidth
               id="name" label="성 함" autoFocus onChange={handleName} />
           </Grid>
@@ -209,6 +210,7 @@ const Register = ( props:any ) => {
           {/* 핸드폰 번호 */}
           <Grid item xs={12}>
             <TextField
+              color = 'secondary'
               variant="outlined" required fullWidth
               id="phone" label="핸드폰 번호" name="phone" 
               value={phone}

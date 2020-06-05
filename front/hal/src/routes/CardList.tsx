@@ -175,7 +175,8 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
             {button ? (
               <Button            
                 style={{ width: '100%', fontSize: '20px',  backgroundColor: '#eb9f9f',  color: 'black',}}
-                // className={styles.btn}
+                // style={{ width: '100%', fontSize: '20px'}}
+                // color = 'secondary' variant = 'contained'
                 onClick={(e) => {
                   handleDelParticipate(e, data.mid, 1)
                   setUpdate(false)
@@ -187,8 +188,8 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
               </Button>
             ) : (
               <Button
-                style={{ width: '100%', fontSize: '20px',  backgroundColor: '#FDE26C',  color: 'black',}}
-                // className={classes.btn}
+                style={{ width: '100%', fontSize: '20px'}}
+                color = 'primary' variant = 'contained'
                 onClick={(e) => {
                   handleAddParticipate(e, data.mid, 1)
                   setUpdate(false)

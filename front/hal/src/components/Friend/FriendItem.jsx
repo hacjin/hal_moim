@@ -65,15 +65,13 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     marginTop: 24,
     textTransform: 'initial',
   },
-  btn: {
-    variant: "contained",
-    backgroundColor: '#FDE26C'//'#eb9f9f'
-  },
+
 }));
 
-const FriendItem = (props) => {
-
+const FriendItem = (props) => 
+{ 
   const item = props.dataItem
+  const userId = props.userId
   const styles = useStyles();
   const {
     button: buttonStyles,
@@ -85,12 +83,10 @@ const FriendItem = (props) => {
 
 
   async function _onFormSubmit(){
-
-    console.log("onform", item)
     //이친구와 방이 있나 확인(있으면 방 번호 리턴, 없으면 방 만들고 방번호 리턴)
     const roomId = await API.get('chat/addRoom',{
         params:{
-            senderId: 1, //세션
+            senderId: userId, //세션
             receiverId: item.uid
         }
     })
@@ -111,7 +107,7 @@ const FriendItem = (props) => {
           replytext = {'emoji':item.message}
         }
         roomMessageList.push({
-            author: item.sender.uid==1?'me':'them',
+            author: item.sender.uid==userId?'me':'them',
             type: item.type,
             data: replytext
             })
@@ -122,7 +118,7 @@ const FriendItem = (props) => {
     props.openChatWindow(true,roomId.data.data,item,roomMessageList);
 }
 
- console.log(contentStyles)
+
   return (
     <Card className={cx(styles.root, shadowStyles.root)}>
       <CardMedia
@@ -139,12 +135,10 @@ const FriendItem = (props) => {
           heading={item.name}
           body={
             item.description
-            // 'Git is a distributed version control system. Every dev has a working copy of the code and...'
           }
         />
-        <Button className={styles.btn} fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
-        {/* <Button  variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button> */}
-        {/*  classes={{color:'blue'}} */}
+        {/* <Button className={styles.btn} fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button> */}
+        <Button  variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
       </CardContent>
     </Card>
   );
