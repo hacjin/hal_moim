@@ -5,7 +5,7 @@ import MyInfoMoimList from '../../containers/MyInfoMoimList'
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
-const MyInfo = () => {
+const MyInfo = ( props:any ) => {
   const [moimMe, setMoimMe] = useState([])
   const [moimOther, setMoimOther] = useState([])
   const [update, setUpdate] = useState(false)
@@ -44,7 +44,7 @@ const MyInfo = () => {
 
   return (
     <div>
-      <Profile />
+      <Profile {...props}/>
       <Typography gutterBottom variant="subtitle1" style={{marginTop:'10px'}}>
       내가 개설한 모임
       </Typography>
