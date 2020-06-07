@@ -30,8 +30,7 @@ const Main = ( {history}:Props ) => {
   const classes = useStyles();
   const [phone, setPhone] = useState('');
   
-  const handlePhone = (e:any) => {
-
+  const handlePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 숫자 형식 변형
     const onlyNums = e.target.value.replace(/[^0-9]+/g, '');
     if(onlyNums.length < 11) {
@@ -46,8 +45,8 @@ const Main = ( {history}:Props ) => {
     }
   }
 
-  const login = async (e:React.MouseEvent<any>) => {
-    e.preventDefault();
+  const login = async (e: any) => {
+    e.preventDefault(); // React.MouseEvent<any> | React.KeyboardEvent<HTMLDivElement>
 
     if(phone === '' || phone === null) {
       alert("핸드폰 번호를 입력해주세요!!");
@@ -109,6 +108,11 @@ const Main = ( {history}:Props ) => {
         variant="outlined" margin="normal" required fullWidth
         id="phone" label="핸드폰 번호" name="phone" autoComplete="phone"
         value={phone}
+        onKeyUp={(event) => {
+          if (event.key== 'Enter') {
+            login(event);
+          }  
+        }}
         onChange={handlePhone} autoFocus/>
       <Button
         id="login" type="submit" fullWidth variant="contained"

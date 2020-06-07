@@ -30,6 +30,22 @@ public class UserServiceImp implements UserService{
 	}
 	
 	@Override
+	public int updateUser(User user) {
+		return userRepository.updateUser(user);
+	}
+	
+	@Override
+	public List<String> findAllPhone() {
+		return userRepository.findAllPhone();
+	}
+	
+	@Override
+	public User findUserById(int uid) {
+		User user = userRepository.findById(uid).orElseThrow(IllegalArgumentException::new);
+		return user;
+	}
+	
+	@Override
 	public User userLogin(String phone) {
 		User user = userRepository.findByPhone(phone);
 		return user;

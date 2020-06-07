@@ -1,14 +1,14 @@
-import React,{useState} from 'react';
-import cx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import TextInfoContent from '@mui-treasury/components/content/textInfo';
-import { useBlogTextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/blog';
-import { useOverShadowStyles } from '@mui-treasury/styles/shadow/over';
-import API from "../../apis/api"
+import React, { useState } from 'react'
+import cx from 'clsx'
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import TextInfoContent from '@mui-treasury/components/content/textInfo'
+import { useBlogTextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/blog'
+import { useOverShadowStyles } from '@mui-treasury/styles/shadow/over'
+import API from '../../apis/api'
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   root: {
@@ -93,9 +93,9 @@ const FriendItem = (props) =>
 
     //채팅방 메시지 불러오기
     let totalChatData = await API.get('chat/findChatListById', {
-        params: {
-          rid : roomId.data.data
-        }
+      params: {
+        rid: roomId.data.data,
+      },
     })
     var roomMessageList = []
     
@@ -113,10 +113,9 @@ const FriendItem = (props) =>
             })
     })
 
-    
-    setIsOpen(true);
-    props.openChatWindow(true,roomId.data.data,item,roomMessageList);
-}
+    setIsOpen(true)
+    props.openChatWindow(true, roomId.data.data, item, roomMessageList)
+  }
 
 
   return (
@@ -128,7 +127,7 @@ const FriendItem = (props) =>
           // "../../public/logo.jpg"
         }
       />
-      <CardContent style={{width:'400px'}}>
+      <CardContent style={{ width: '400px' }}>
         <TextInfoContent
           // classes={contentStyles}
           // overline={'28 MAR 2019'}
@@ -141,7 +140,7 @@ const FriendItem = (props) =>
         <Button  variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default FriendItem;
+export default FriendItem
