@@ -14,7 +14,7 @@ import com.hal.model.dto.UserResponseDto;
 
 @Service
 public class UserServiceImp implements UserService{
-
+	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -28,7 +28,28 @@ public class UserServiceImp implements UserService{
 	public User addUser(User user) {
 		return userRepository.save(user);
 	}
-
+	
+	@Override
+	public int updateUser(User user) {
+		return userRepository.updateUser(user);
+	}
+	
+	@Override
+	public List<String> findAllPhone() {
+		return userRepository.findAllPhone();
+	}
+	
+	@Override
+	public User findUserById(int uid) {
+		User user = userRepository.findById(uid).orElseThrow(IllegalArgumentException::new);
+		return user;
+	}
+	
+	@Override
+	public User userLogin(String phone) {
+		User user = userRepository.findByPhone(phone);
+		return user;
+	}
 
 	@Override
 	public List<UserResponseDto> findFriendByDistance(int uid, int dis_filter) {
@@ -68,6 +89,7 @@ public class UserServiceImp implements UserService{
 		    			.loginImg(friend.getLoginImg())
 		    			.latitude(friend.getLatitude())
 		    			.longitude(friend.getLongitude())
+		    			.description(friend.getDescription())
 		    			.distance(Math.round(distance*10)/10.0)
 		    			.build();
 		    	result.add(tmpFriend);

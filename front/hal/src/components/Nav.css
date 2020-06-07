@@ -10,9 +10,10 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   display: table-cell;
-  color: white;
+  color: black;
   text-decoration: none;
   font-size: 1.1rem;
+  background-color: #FDE26C;
 }
 
 .item:hover {
@@ -22,5 +23,5 @@
 .item:active,
 .item.active {
   background: white;
-  color: #5c7cfa;
+  color: black;
 }

@@ -6,10 +6,6 @@ import ChatHeader from './ChatHeader';
 
 
 class ChatWindow extends Component {
-  constructor(props) {
-    super(props);
-    // console.log("djfskl",props)
-  }
 
   onUserInputSubmit(message) {
     this.props.onUserInputSubmit(message);
@@ -29,7 +25,6 @@ class ChatWindow extends Component {
     // console.log("dd",this.props)
     return (
       <div className={classList.join(' ')}>
-        {/* 뿅 */}
         <ChatHeader
           teamName={this.props.agentProfile.teamName}
           imageUrl={this.props.agentProfile.imageUrl}

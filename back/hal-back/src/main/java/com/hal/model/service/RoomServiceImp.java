@@ -1,5 +1,6 @@
 package com.hal.model.service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class RoomServiceImp implements RoomService {
 	private UserRepository userRepository;
 	
 	public List<RoomResponseDto> findRoomListById(int uid){
-		List<RoomResponseDto> roomList = new LinkedList<>();
-		List<Room> tmpList = new LinkedList<>();
+		List<RoomResponseDto> roomList = new ArrayList<>();
+		List<Room> tmpList = new ArrayList<>();
 		
 		tmpList = roomRepository.findByUser1Uid(uid); 
 		for (Room room : tmpList) {
@@ -49,16 +50,18 @@ public class RoomServiceImp implements RoomService {
 	
 	@Override
 	public String addRoom(int senderId, int receiverId) {
-		if(roomRepository.numOfRoom(senderId, receiverId)<1) {
-			System.out.println(senderId + " // " + receiverId);
-			System.out.println(roomRepository.numOfRoom(senderId, receiverId));
+		//방이 만들어져있는지 확인 있으면 rid값 없으면 null값 리턴
+		String roomId = roomRepository.isRoomExisted(senderId, receiverId);
+		
+		if(roomId==null) { //방이 안만들어진 상태면
 			
 			User sender = userRepository.findById(senderId).orElseThrow(IllegalArgumentException::new);
-			User receiver = userRepository.findById(receiverId).orElseThrow(IllegalArgumentException::new);
-			
+			User receiver = userRepository.findById(receiverId).orElseThrow(IllegalArgumentException::new);			
 			Room room = new Room(0,sender,receiver);
 			roomRepository.save(room);
+			
+			roomId = roomRepository.isRoomExisted(senderId, receiverId);
 		}
-		return "ok";
+		return roomId;
 	}
 }

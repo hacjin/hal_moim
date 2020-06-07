@@ -43,15 +43,15 @@
 }
 
 .sc-message--content.sent .sc-message--text {
-  color: white;
-  background-color: #4e8cff;
+  color: #263238;
+  background-color: #eb9f9f;
   max-width: calc(100% - 120px);
   word-wrap: break-word;
 }
 
 .sc-message--content.received .sc-message--text {
   color: #263238;
-  background-color: #f4f7f9;
+  background-color: #f8ecc9;
   margin-right: 40px;
 }
 

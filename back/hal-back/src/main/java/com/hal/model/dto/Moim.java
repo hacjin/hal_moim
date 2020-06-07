@@ -50,6 +50,12 @@ public class Moim {
 	@Column(name = "longitude")
 	private double longitude;
 
+	@Column(name = "coment")
+	private String coment;
+	
+	@Column(name="moim_img")
+	private String moimImg;
+	
 	@OneToOne
 //	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
 	@JoinColumn(name = "uid",referencedColumnName = "uid")
