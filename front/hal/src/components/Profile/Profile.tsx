@@ -137,7 +137,7 @@ const Profile = ( props:any ) => {
 
         {/* Register Submit */}
         <Button
-          type="submit"  fullWidth variant="contained" color="primary" 
+          type="submit"  fullWidth variant="contained" color="secondary" 
           className={classes.submit} onClick={handleProfileUpdate}>
           정보를 수정할래요!
         </Button>

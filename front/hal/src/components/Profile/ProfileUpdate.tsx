@@ -73,7 +73,8 @@ const ProfileUpdate = ( props:any ) => {
     },
     notchedOutline: {
       borderWidth: "2px",
-      borderColor: "orange !important"
+      // borderColor: "orange !important"
+      borderColor: "#6a60a9 !important"
     },
   }));
   const classes = useStyles();
@@ -245,6 +246,7 @@ const ProfileUpdate = ( props:any ) => {
             {/* 성 함 */}
             <Grid item xs>
             <TextField
+                color='secondary'
                 id="name" label="성 함" name="name" required fullWidth
                 variant="outlined"
                 inputProps={{
@@ -256,6 +258,7 @@ const ProfileUpdate = ( props:any ) => {
             {/* 생일년도 */}
             <Grid item xs>
             <TextField
+            color='secondary'
                 id="birth"  label="생일년도" name="birth" required fullWidth 
                 variant="outlined"  
                 type="number"
@@ -268,6 +271,7 @@ const ProfileUpdate = ( props:any ) => {
             {/* 성 별 */}
             <Grid item xs>
                 <TextField
+                color='secondary'
                 variant="outlined" required fullWidth
                 id="gender" label="성별" name="gender"
                 inputProps={{
@@ -303,7 +307,7 @@ const ProfileUpdate = ( props:any ) => {
             </Grid>
             <Grid item xs={12} sm={4}>
                 <Button
-                variant="outlined" size='large' style={{marginTop:5, marginLeft:5}}
+                variant="outlined" color='secondary' size='large' style={{marginTop:5, marginLeft:5}}
                 onClick={handleAddr}>위치변경</Button>
             </Grid>
         </Grid>
@@ -311,7 +315,7 @@ const ProfileUpdate = ( props:any ) => {
 
         {/* Register Submit */}
         <Button
-          type="submit"  fullWidth variant="contained" color="secondary" 
+          type="submit"  fullWidth variant="contained" color="primary" 
           className={classes.submit} onClick={handleProfileUpdate} >
           정보수정을 완료할래요!
         </Button>
