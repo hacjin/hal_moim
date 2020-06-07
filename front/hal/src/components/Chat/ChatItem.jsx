@@ -51,7 +51,7 @@ const ChatItem = props => {
             <div className={classList.join(' ')} style={{ margin: 10}} onClick={_onFormSubmit}>
 
                 <div className='col-2'>
-                    <Avatar shape='circle' type='img'>
+                    <Avatar shape='circle' type='img' src='{item.receiver.profileImg}'>
                         <img src={`${item.receiver.profileImg}`} width='200%'/>
                     </Avatar>
                 </div>
