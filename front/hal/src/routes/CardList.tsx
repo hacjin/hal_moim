@@ -71,7 +71,6 @@ const styles: any = (muiBaseTheme: any) => ({
   },
 })
 const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
-  // console.log(mid, uid)
   e.preventDefault()
   await api
     .post('/moim/participate', {
@@ -79,12 +78,9 @@ const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number |
       mid: mid,
       uid: uid,
     })
-    .then((res: any) => {
-      // console.log(res)
-    })
+    .then((res: any) => {})
 }
 const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
-  // console.log(mid, uid)
   e.preventDefault()
   await api
     .delete('/moim/participate', {
@@ -93,9 +89,7 @@ const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number |
         uid: uid,
       },
     })
-    .then((res: any) => {
-      // console.log(res)
-    })
+    .then((res: any) => {})
 }
 const getJoinMoim = async (uid: any, setJoin: React.Dispatch<any>) => {
   await api
@@ -125,10 +119,9 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
       getJoinMoim(user.uid, setJoin)
       didMountRef.current = true
     }
-  }, [join])
+  }, [join, data])
   const time = data.time.split(/[. : T -]/)
   let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
-  console.log('불러온 모임', data)
   return (
     <>
       {data.state ? (

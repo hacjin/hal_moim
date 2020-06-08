@@ -30,10 +30,8 @@ const marks = [
 
 export default function DistanceSlider(props: any) {
   const classes = useStyles()
-  console.log('props', props)
 
   function changeDistance(event: any, value: number | number[]) {
-    console.log(value)
     props.distance(value)
     if (props.setUpdate) props.setUpdate(false)
   }
