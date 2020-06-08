@@ -29,7 +29,8 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
     const scrollHeight = document.documentElement.scrollHeight
 
     setScrollPosition(90 + result)
-    const fabBtn = document.getElementsByTagName('button').item(2) || null
+    const btnLen = document.getElementsByTagName.length
+    const fabBtn = document.getElementsByTagName('button').item(btnLen) || null
     if (scrollHeight - clientHeight === Math.round(position)) {
       if (fabBtn !== null) fabBtn.style.display = 'none'
     } else {
