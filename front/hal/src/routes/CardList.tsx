@@ -99,7 +99,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
       getJoinMoim(user.uid, setJoin)
       didMountRef.current = true
     }
-  }, [join, data, user.uid])
+  }, [join, data])
   const time = data.time.split(/[. : T -]/)
 
   const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
