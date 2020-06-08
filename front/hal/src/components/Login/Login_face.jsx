@@ -63,9 +63,7 @@ const Login_face = (props) => {
     container.style.position = 'relative'
     document.body.append(container)
 
-    // 얼굴과 라벨을 매칭
-    const labeledFaceDescriptors = await loadLabeledImage()
-    const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+    
 
     // 영상을 화면에 표시
     //  const canvas = faceapi.createCanvasFromMedia(video)
@@ -75,48 +73,52 @@ const Login_face = (props) => {
     //  faceapi.matchDimensions(canvas, displaySize)
     // document.body.append("로그인 중 15초 동안 로그인 안될시 메인페이지로?")
     video.addEventListener('play', async () => {
-      var repeat = setInterval(async () => {
-        //영상에서 얼굴을 식별한다
-        const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors()
-        const resizedDetections = faceapi.resizeResults(detections, displaySize)
-        // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-        const result = resizedDetections.map((d) => faceMatcher.findBestMatch(d.descriptor))
+      // 얼굴과 라벨을 매칭
+      const labeledFaceDescriptors = await loadLabeledImage()
+      const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
 
-        var login_flag = false;
-        result.forEach((result, i) => {
-          const box = resizedDetections[i].detection.box
-          // const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
-          // drawBox.draw(canvas)
-          // console.log(result._label) 사진이름
-          // console.log(result._distance) distance값
+      
+      //영상에서 얼굴을 식별한다
+      const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors()
+      const resizedDetections = faceapi.resizeResults(detections, displaySize)
+      // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+      const result = resizedDetections.map((d) => faceMatcher.findBestMatch(d.descriptor))
 
-          if (result._label === phone && result._distance < 0.4) {
-            // document.body.append('로그인 성공')
-            login_flag = true
-            console.log('로그인 성공')
-            //console.log('result._label :: ' + result._label)
-            //console.log('distance :: ' + result._distance)
-            clearInterval(repeat)
+      var login_flag = false;
+      result.forEach((result, i) => {
+        const box = resizedDetections[i].detection.box
+        // const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
+        // drawBox.draw(canvas)
+        // console.log(result._label) 사진이름
+        // console.log(result._distance) distance값
 
-            // 세션에 유저정보 담기
-            sessionStorage.setItem('user', JSON.stringify(props.location.state.user))
-            // 페이지 이동
-            props.history.push('/moim');
-            return;
-          } else {
-            setTimeout(() => {
-              // document.body.append('로그인 실패')
-              if (!login_flag) {
-                console.log('10초 :: 로그인 실패')
-                //console.log('result._label :: ' + result._label)
-                //console.log('distance :: ' + result._distance)
-                clearInterval(repeat)
-                props.history.push('/')
-              }
-            }, 10000)
-          }
-        })
-      }, 1000)
+        if (result._label === phone && result._distance < 0.4) {
+          // document.body.append('로그인 성공')
+          login_flag = true
+          console.log('로그인 성공')
+          //console.log('result._label :: ' + result._label)
+          //console.log('distance :: ' + result._distance)
+          
+
+          // 세션에 유저정보 담기
+          sessionStorage.setItem('user', JSON.stringify(props.location.state.user))
+          // 페이지 이동
+          props.history.push('/moim');
+          return;
+        } else {
+          setTimeout(() => {
+            // document.body.append('로그인 실패')
+            if (!login_flag) {
+              console.log('10초 :: 로그인 실패')
+              //console.log('result._label :: ' + result._label)
+              //console.log('distance :: ' + result._distance)
+              
+              props.history.push('/')
+            }
+          }, 10000)
+        }
+      })
+      
     })
   }
 
