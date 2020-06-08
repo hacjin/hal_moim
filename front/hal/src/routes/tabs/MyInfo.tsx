@@ -34,8 +34,10 @@ const MyInfo = () => {
       
     } else {
       //session id로 조회해야함
-      getMoimMeList(1)
-      getMoimOtherList(1)
+      let user = JSON.parse(sessionStorage.getItem('user') || '{}')
+      console.log("user",user);
+      getMoimMeList(user.uid)
+      getMoimOtherList(user.uid)
 
       setUpdate(true)
     }
