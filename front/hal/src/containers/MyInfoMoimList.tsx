@@ -10,16 +10,10 @@ type MyInfoMoimListProps ={
   showButton: boolean
 }
 
-function _deleteMoim(){
-  console.log("지움")
-  //리랜더
-}
-
 const MyInfoMoimList = ({moims, showButton} : MyInfoMoimListProps) => {
   const getMoim = moims.map((data:any, index: number) => <MyInfoMoim
                                                               data={data}
                                                               key={index}
-                                                              isDelete={_deleteMoim}
                                                               showButton={showButton}/>)
   return (
     <div>

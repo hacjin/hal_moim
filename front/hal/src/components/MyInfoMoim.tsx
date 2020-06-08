@@ -15,10 +15,11 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import api from '../apis/api'
+import {useDispatch } from 'react-redux';
+import {updateInfo} from '../modules/myInfo'
 
 interface Props {
   data: any
-  isDelete : any
   showButton : boolean
 }
 const useStyles = (color:string) => 
@@ -97,7 +98,7 @@ const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number |
       // console.log(res)
     })
 }
-const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null, isDelete:any) => {
+const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null, isDelete: boolean) => {
   // console.log(mid, uid)
   e.preventDefault()
   await api
@@ -111,8 +112,7 @@ const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number |
       // console.log(res)
     })
   //isDelete상태 변경
-  isDelete(true);
-  
+  isDelete = !isDelete;
 }
 const getJoinMoim = async (uid: any, setJoin: React.Dispatch<any>) => {
   await api
@@ -133,8 +133,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 })
 
-const MyInfoMoim = ({ data, isDelete, showButton }: Props) => {
-  console.log("moim", isDelete)
+const MyInfoMoim = ({ data, showButton }: Props) => {
   let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
   const color = data.state===true?'#6a60a9':'#dedcee'
   const classes = useStyles(color)();
@@ -149,6 +148,13 @@ const MyInfoMoim = ({ data, isDelete, showButton }: Props) => {
   const didMountRef = useRef(false)
   const [join, setJoin] = useState(Array<any>())
   const [button, setButton] = useState(false)
+
+  const isDelete = false;
+
+  const dispatch = useDispatch();
+  const setUpdateList = (isupdate: boolean) => {
+    dispatch(updateInfo(isupdate))
+  }
   
   async function getMember(mid: Number) {
     await api
@@ -195,6 +201,9 @@ const MyInfoMoim = ({ data, isDelete, showButton }: Props) => {
 
   const handleClose = () => {
     setOpen(false);
+    if(!isDelete){
+      setUpdateList(false)
+    }
   };
     return (
       <Grid item>
@@ -217,9 +226,6 @@ const MyInfoMoim = ({ data, isDelete, showButton }: Props) => {
             <Typography variant="h6" className={classes.popupTitle}>
               {data.title}
             </Typography>
-            {/* <Button autoFocus color="inherit" onClick={handleClose}>
-              모임취소
-            </Button> */}
             {showButton?
               button ? (
                 <Button autoFocus color="secondary"
