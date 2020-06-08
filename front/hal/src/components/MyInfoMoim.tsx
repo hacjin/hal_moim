@@ -1,25 +1,11 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import MyInfoMember from './MyInfoMember'
-import Typography from '@material-ui/core/Typography';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import {Typography, CardActionArea, Card, CardContent, CardMedia, makeStyles, Grid, Dialog
+  , ListItemText, ListItem, List, AppBar, Toolbar, IconButton, ListItemAvatar, Avatar, Button} from '@material-ui/core'
 import Color from 'color'
-import Grid from '@material-ui/core/Grid';
-import {makeStyles} from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import PlaceIcon from '@material-ui/icons/Place';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import StarIcon from '@material-ui/icons/Star';
@@ -29,9 +15,12 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import api from '../apis/api'
+import {useDispatch } from 'react-redux';
+import {updateInfo} from '../modules/myInfo'
 
 interface Props {
   data: any
+  showButton : boolean
 }
 const useStyles = (color:string) => 
 makeStyles({
@@ -96,6 +85,46 @@ makeStyles({
     paddingRight:'3px',
   },
 })
+const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
+  // console.log(mid, uid)
+  e.preventDefault()
+  await api
+    .post('/moim/participate', {
+      pid: 0,
+      mid: mid,
+      uid: uid,
+    })
+    .then((res: any) => {
+      // console.log(res)
+    })
+}
+const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null, isDelete: boolean) => {
+  // console.log(mid, uid)
+  e.preventDefault()
+  await api
+    .delete('/moim/participate', {
+      params: {
+        mid: mid,
+        uid: uid,
+      },
+    })
+    .then((res: any) => {
+      // console.log(res)
+    })
+  //isDelete상태 변경
+  isDelete = !isDelete;
+}
+const getJoinMoim = async (uid: any, setJoin: React.Dispatch<any>) => {
+  await api
+    .get('/moim/participateListByUser', {
+      params: {
+        uid: uid,
+      },
+    })
+    .then((res: any) => {
+      setJoin(res.data.data)
+    })
+}
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -104,7 +133,8 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 })
 
-const MyInfoMoim = ({ data }: Props) => {
+const MyInfoMoim = ({ data, showButton }: Props) => {
+  let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
   const color = data.state===true?'#6a60a9':'#dedcee'
   const classes = useStyles(color)();
   const [open, setOpen] = React.useState(false);
@@ -115,6 +145,17 @@ const MyInfoMoim = ({ data }: Props) => {
   const [member, setMember] = useState([])
   const [update, setUpdate] = useState(false)
 
+  const didMountRef = useRef(false)
+  const [join, setJoin] = useState(Array<any>())
+  const [button, setButton] = useState(false)
+
+  const isDelete = false;
+
+  const dispatch = useDispatch();
+  const setUpdateList = (isupdate: boolean) => {
+    dispatch(updateInfo(isupdate))
+  }
+  
   async function getMember(mid: Number) {
     await api
       .get('/moim/participateAllList', {
@@ -131,8 +172,20 @@ const MyInfoMoim = ({ data }: Props) => {
       getMember(data.mid)
       setUpdate(true)
     }
-       
-  })
+    
+    if (didMountRef.current) {
+      if (join.length > 0) {
+        join.map((bool: any, index: number) => {
+          if (bool.moim.mid === data.mid) {
+            setButton(true)
+          }
+        })
+      }
+    } else {
+      getJoinMoim(user.uid, setJoin)
+      didMountRef.current = true
+    }
+  }, [join])
 
   const myInfoMemberList = member.map((dataM:any, index: number) => <MyInfoMember
                                                               data={dataM}
@@ -148,6 +201,9 @@ const MyInfoMoim = ({ data }: Props) => {
 
   const handleClose = () => {
     setOpen(false);
+    if(!isDelete){
+      setUpdateList(false)
+    }
   };
     return (
       <Grid item>
@@ -170,9 +226,31 @@ const MyInfoMoim = ({ data }: Props) => {
             <Typography variant="h6" className={classes.popupTitle}>
               {data.title}
             </Typography>
-            {/* <Button autoFocus color="inherit" onClick={handleClose}>
-              모임취소
-            </Button> */}
+            {showButton?
+              button ? (
+                <Button autoFocus color="secondary"
+                  onClick={(e) => {
+                    handleDelParticipate(e, data.mid, user.uid, isDelete)
+                    setUpdate(false)
+                    didMountRef.current = false
+                    setButton(false)
+                  }}
+                >
+                  취소
+                </Button>
+              ) : (
+                <Button autoFocus color="inherit"
+                  onClick={(e) => {
+                    handleAddParticipate(e, data.mid, user.uid)
+                    setUpdate(false)
+                    didMountRef.current = false
+                    setButton(true)
+                  }}
+                >
+                  참가
+                </Button>
+              )
+            : null}
           </Toolbar>
         </AppBar>
         <List>

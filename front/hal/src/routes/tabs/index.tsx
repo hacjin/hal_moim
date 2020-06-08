@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import Friend from './Friend'
 import Chat from './Chat'
