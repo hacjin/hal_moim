@@ -67,22 +67,21 @@ const Login_face = (props) => {
             // document.body.append('로그인 성공')
             login_flag = true
             console.log('로그인 성공')
-            console.log('result._label :: ' + result._label)
-            console.log('distance :: ' + result._distance)
+            //console.log('result._label :: ' + result._label)
+            //console.log('distance :: ' + result._distance)
             clearInterval(repeat)
-            console.log(props)
 
             // 세션에 유저정보 담기
-            sessionStorage.setItem('user', props.location.state.user)
+            sessionStorage.setItem('user', JSON.stringify(props.location.state.user));
             // 페이지 이동
-            // props.history.push('/moim');
+            props.history.push('/moim');
           } else {
             setTimeout(() => {
               // document.body.append('로그인 실패')
               if (!login_flag) {
                 console.log('10초 :: 로그인 실패')
-                console.log('result._label :: ' + result._label)
-                console.log('distance :: ' + result._distance)
+                //console.log('result._label :: ' + result._label)
+                //console.log('distance :: ' + result._distance)
                 clearInterval(repeat)
                 // props.history.push('/');
               }
@@ -101,7 +100,9 @@ const Login_face = (props) => {
     return Promise.all(
       labels.map(async (label) => {
         const description = []
-        const img = await faceapi.fetchImage('user_img/' + label + '.png')
+        //const img = await faceapi.fetchImage('user_img/' + label + '.png')
+        console.log(props.location.state.user.loginImg);
+        const img = await faceapi.fetchImage(props.location.state.user.loginImg) // 서버이미지
         const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
         description.push(detections.descriptor)
         return new faceapi.LabeledFaceDescriptors(label, description)

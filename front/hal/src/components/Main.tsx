@@ -71,10 +71,15 @@ const Main = ( {history}:Props ) => {
           })
         } else {
           // 로그인 페이지(얼굴인식)
-          sessionStorage.setItem('user', JSON.stringify(res.data.data));
+          //sessionStorage.setItem('user', JSON.stringify(res.data.data));
           history.push({
+<<<<<<< HEAD
             // pathname: '/login_face',
             pathname: '/moim',
+=======
+            pathname: '/login_face',
+            //pathname: '/moim',
+>>>>>>> 5194fd17ab3be29c3a5203ce8c03305d1189364d
             state: { user: res.data.data }
           });
         }
@@ -109,7 +114,7 @@ const Main = ( {history}:Props ) => {
         id="phone" label="핸드폰 번호" name="phone" autoComplete="phone"
         value={phone}
         onKeyUp={(event) => {
-          if (event.key=== 'Enter') {
+          if (event.key== 'Enter') {
             login(event);
           }  
         }}
