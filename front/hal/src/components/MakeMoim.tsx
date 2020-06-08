@@ -30,12 +30,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '200px',
   },
   btn: {
-    variant: "contained",
-    backgroundColor: '#FDE26C'
+    variant: 'contained',
+    backgroundColor: '#FDE26C',
   },
   btnPink: {
-    variant: "contained",
-    backgroundColor: '#eb9f9f'
+    variant: 'contained',
+    backgroundColor: '#eb9f9f',
   },
 }))
 
@@ -105,6 +105,7 @@ function MakeMoim(props: any) {
     await api.post('/moim/add', data).then((res) => {
       console.log(res)
     })
+    handleClose()
   }
   const post = async () => {
     await new daum.Postcode({
@@ -146,16 +147,16 @@ function MakeMoim(props: any) {
               onChange={handleImg}
             />
             <label htmlFor="contained-button-file">
-              <Button variant="contained" color='secondary' component="span">
+              <Button variant="contained" color="secondary" component="span">
                 이미지 업로드
               </Button>
             </label>
             <br />
-            <TextField id="outlined-basic" label="제목" color='secondary' variant="outlined" value={title} onChange={handleTitle} />
+            <TextField id="outlined-basic" label="제목" color="secondary" variant="outlined" value={title} onChange={handleTitle} />
             <br />
             <MuiPickersUtilsProvider locale={convert} utils={DateFnsUtils}>
               <KeyboardDatePicker
-                color='secondary'
+                color="secondary"
                 margin="normal"
                 id="date-picker-dialog"
                 label="모임 날짜"
@@ -168,7 +169,7 @@ function MakeMoim(props: any) {
               />
               <br />
               <KeyboardTimePicker
-                color='secondary'
+                color="secondary"
                 margin="normal"
                 format="HH:mm:ss"
                 id="time-picker"
@@ -182,7 +183,7 @@ function MakeMoim(props: any) {
             </MuiPickersUtilsProvider>
             <br />
             <TextField
-              color='secondary'
+              color="secondary"
               variant="outlined"
               label="만날 장소를 검색해주세요."
               InputProps={{
@@ -194,7 +195,7 @@ function MakeMoim(props: any) {
             <br />
             <TextField
               //
-              color='secondary'
+              color="secondary"
               id="outlined-multiline-static"
               label="모임 설명"
               multiline
@@ -208,10 +209,9 @@ function MakeMoim(props: any) {
                 취소
               </Button>
               &emsp;
-              <Button variant="contained" color='primary' onClick={handleSubmit}>
+              <Button variant="contained" color="primary" onClick={handleSubmit}>
                 만들기
               </Button>
-              
             </div>
           </div>
         </DialogContent>
