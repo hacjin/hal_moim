@@ -87,7 +87,7 @@ const Main = ( {history}:Props ) => {
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         {'SSAFY 107팀'} 
-        <h6>{'김혜희 / 박성호 / 이학진 / 최현정 / 홍기석'}</h6>
+        {'김혜희 / 박성호 / 이학진 / 최현정 / 홍기석'}
         {/* {new Date().getFullYear()} */}
         {'.'}
       </Typography>
