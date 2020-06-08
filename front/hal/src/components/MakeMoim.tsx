@@ -12,30 +12,34 @@ const useStyles = makeStyles((theme: Theme) => ({
   dialog: {
     textAlign: 'center',
   },
+  dialogContent: {
+    padding: '0',
+  },
   root: {
     '& > *': {
       margin: theme.spacing(1),
-    },
-    '& > div': {
-      width: '80%',
     },
   },
   input: {
     display: 'none',
   },
+  title: {
+    width: '80%',
+  },
   previewNone: {
     margin: '0px auto',
     backgroundColor: '#efefef',
     width: '300px',
+    maxWidth: '65vw',
+    maxHeight: '25vh',
     height: '200px',
     border: 'solid 3px',
     borderColor: 'red',
   },
   preview: {
     margin: '0px auto',
-    backgroundColor: '#efefef',
-    width: '300px',
-    height: '200px',
+    maxWidth: '65vw',
+    maxHeight: '25vh',
   },
   btn: {
     variant: 'contained',
@@ -145,7 +149,7 @@ function MakeMoim(props: any) {
         fullWidth={true}
       >
         <DialogTitle id="alert-dialog-title">모임 만들기</DialogTitle>
-        <DialogContent>
+        <DialogContent className={classes.dialogContent}>
           <div className={classes.root}>
             <div className={imgBase64 === '' ? classes.previewNone : classes.preview}>{imgBase64 === '' ? '' : <img className={classes.preview} src={imgBase64} alt="" />}</div>
             <input
@@ -163,10 +167,11 @@ function MakeMoim(props: any) {
               </Button>
             </label>
             <br />
-            <TextField id="title" error={title === ''} label="제목" color="secondary" variant="outlined" value={title} onChange={handleTitle} />
+            <TextField className={classes.title} id="title" error={title === ''} label="제목" color="secondary" variant="outlined" value={title} onChange={handleTitle} />
             <br />
             <MuiPickersUtilsProvider locale={convert} utils={DateFnsUtils}>
               <KeyboardDatePicker
+                className={classes.title}
                 color="secondary"
                 margin="normal"
                 id="date-picker-dialog"
@@ -180,6 +185,7 @@ function MakeMoim(props: any) {
               />
               <br />
               <KeyboardTimePicker
+                className={classes.title}
                 color="secondary"
                 margin="normal"
                 format="HH:mm:ss"
@@ -194,6 +200,7 @@ function MakeMoim(props: any) {
             </MuiPickersUtilsProvider>
             <br />
             <TextField
+              className={classes.title}
               color="secondary"
               variant="outlined"
               error={location === ''}
@@ -207,6 +214,7 @@ function MakeMoim(props: any) {
             <br />
             <TextField
               //
+              className={classes.title}
               error={coment === ''}
               color="secondary"
               id="outlined-multiline-static"
