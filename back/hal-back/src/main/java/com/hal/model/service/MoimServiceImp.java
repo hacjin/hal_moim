@@ -39,7 +39,7 @@ public class MoimServiceImp implements MoimService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			User client = ur.findById(uid).orElseThrow(IllegalArgumentException::new);
-			List<Moim> moims = mr.findByHostNot(client);
+			List<Moim> moims = mr.findByHostNotAndTimeAfterOrderByTimeDesc(client, new Date());
 			List<MoimResponseDto> result = new ArrayList<>();
 			double user_lat = client.getLatitude();
 			double user_long = client.getLongitude();

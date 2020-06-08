@@ -66,7 +66,8 @@ const styles: any = (muiBaseTheme: any) => ({
   btn: {
     backgroundColor: '#FDE26C',
     color: 'black',
-    width: '100%', fontSize: '20px'
+    width: '100%',
+    fontSize: '20px',
   },
 })
 const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
@@ -127,7 +128,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
   }, [join])
   const time = data.time.split(/[. : T -]/)
   let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
-  console.log('모임 이미지 경로', data)
+  console.log('불러온 모임', data)
   return (
     <>
       {data.state ? (
@@ -173,8 +174,8 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
           </div>
           <CardActions>
             {button ? (
-              <Button            
-                style={{ width: '100%', fontSize: '20px',  backgroundColor: '#eb9f9f',  color: 'black',}}
+              <Button
+                style={{ width: '100%', fontSize: '20px', backgroundColor: '#eb9f9f', color: 'black' }}
                 // style={{ width: '100%', fontSize: '20px'}}
                 // color = 'secondary' variant = 'contained'
                 onClick={(e) => {
@@ -188,8 +189,9 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
               </Button>
             ) : (
               <Button
-                style={{ width: '100%', fontSize: '20px'}}
-                color = 'primary' variant = 'contained'
+                style={{ width: '100%', fontSize: '20px' }}
+                color="primary"
+                variant="contained"
                 onClick={(e) => {
                   handleAddParticipate(e, data.mid, user.uid)
                   setUpdate(false)

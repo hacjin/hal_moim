@@ -4,6 +4,7 @@ import CardList from '../CardList'
 import AddIcon from '@material-ui/icons/Add'
 import { Fab, makeStyles, Theme } from '@material-ui/core'
 import MakeMoim from '../../components/MakeMoim'
+import DistanceSlider from '../../components/Friend/DistanceSlider'
 
 type MoimProps = {
   moim: Array<any>
@@ -17,6 +18,7 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
   const [scrollPosition, setScrollPosition] = useState(90)
   const [update, setUpdate] = useState(false)
   const [open, setOpen] = useState(false)
+  const [distance, setDistance] = useState(3)
   const classes = useStyles(scrollPosition)
   let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
 
@@ -27,7 +29,8 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
     const scrollHeight = document.documentElement.scrollHeight
 
     setScrollPosition(90 + result)
-    const fabBtn = document.getElementsByTagName('button').item(2) || null
+    const btnLen = document.getElementsByTagName.length
+    const fabBtn = document.getElementsByTagName('button').item(btnLen) || null
     if (scrollHeight - clientHeight === Math.round(position)) {
       if (fabBtn !== null) fabBtn.style.display = 'none'
     } else {
@@ -40,6 +43,7 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
   }
 
   async function getMoimList(dis_filter: Number, uid: Number) {
+    console.log('거리', dis_filter)
     await api
       .get('/moim/allList', {
         params: {
@@ -57,14 +61,14 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
         window.removeEventListener('scroll', handleScroll)
       }
     } else {
-      getMoimList(10, user.uid)
+      getMoimList(distance, user.uid)
       setUpdate(true)
     }
   })
-
   const getMoim = moim.map((data: any, index: number) => <CardList data={data} key={index} setUpdate={setUpdate} />)
   return (
     <div>
+      <DistanceSlider distance={setDistance} text={'주변 모임 거리'} setUpdate={setUpdate} />
       <div>{getMoim}</div>
       <Fab
         //
