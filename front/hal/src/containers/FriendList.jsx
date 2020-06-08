@@ -131,8 +131,7 @@ class FriendList extends React.Component {
     return (
       <div>
         <SockJsClient
-          url={'http://localhost:8080/webSocket'}
-          // url={"http://52.78.120.154:8080/webSocket" }
+          url={'http://52.78.120.154:8080/webSocket'}
           topics={topics}
           onMessage={(msg) => {
             var replytext
