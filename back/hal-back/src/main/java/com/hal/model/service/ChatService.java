@@ -2,7 +2,6 @@ package com.hal.model.service;
 
 import java.util.List;
 
-import com.hal.model.dto.Chat;
 import com.hal.model.dto.ChatRequestDto;
 import com.hal.model.dto.ChatResponseDto;
 

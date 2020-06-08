@@ -34,7 +34,6 @@ public class WebSocketEventListener {
             logger.info("User Disconnected : " + username);
 
             Chat chatMessage = new Chat();
-            //chatMessage.setSender(username); //Usertype으로 보내줘야함
 
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }

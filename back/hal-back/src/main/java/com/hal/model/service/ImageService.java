@@ -4,7 +4,6 @@ package com.hal.model.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.*;
 
@@ -43,7 +42,6 @@ public class ImageService {
 			fileName = StringUtils.cleanPath(eFile.getOriginalFilename());
 			byte[] bytes = eFile.getBytes();
 			fileUri = fileStorageLocation + "/" + subPath;
-			System.out.println("파일경로 : "+fileUri);
 			File file = new File(fileUri,fileName);
 			
 			if (fileName.contains("..")) {

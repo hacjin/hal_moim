@@ -28,12 +28,10 @@ public class Room {
 	private int rid;
 	
 	@ManyToOne
-//	@JoinColumn(name = "uid1",referencedColumnName = "uid",insertable = false, updatable = false)
 	@JoinColumn(name = "uid1",referencedColumnName = "uid")
 	private User user1;
 	
 	@ManyToOne
-//	@JoinColumn(name = "uid2", referencedColumnName = "uid", insertable = false, updatable = false)
 	@JoinColumn(name = "uid2", referencedColumnName = "uid")
 	private User user2;
 	

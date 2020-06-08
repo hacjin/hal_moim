@@ -4,11 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.hal.model.dto.Moim;
-import com.hal.model.dto.MoimRequestDto;
 import com.hal.model.dto.User;
 
 public interface MoimRepository extends JpaRepository<Moim, Integer> {
