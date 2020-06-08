@@ -242,7 +242,7 @@ const Register = ( props:any ) => {
         <Button
           type="submit"  fullWidth variant="contained" color="primary" 
             className={classes.submit} onClick={handleSubmit} >
-          가입하깅
+          가입하기
         </Button>
       </div>
     </Container>
