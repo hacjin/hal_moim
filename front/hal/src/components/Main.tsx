@@ -1,6 +1,10 @@
 import React, {useState} from 'react'
 import { RouteComponentProps } from 'react-router-dom';
 import { TextField, Button, CssBaseline, Typography, Container, Box } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+
 import api from '../apis/api'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -21,6 +25,21 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  root: {
+    display: 'flex',
+    marginTop: theme.spacing(5),
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: '#fffcf2',
+  },
+  content: {
+    flex: '1 0 auto',
+  },
+  cover: {
+    width: '100%',
   },
 }));
 
@@ -85,9 +104,9 @@ const Main = ( {history}:Props ) => {
   function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        {'SSAFY 107팀'} 
-        <h6>{'김혜희 / 박성호 / 이학진 / 최현정 / 홍기석'}</h6>
+        {'Copyright © SSAFY 107팀'}
+        <br/>
+        {'김혜희 / 박성호 / 이학진 / 최현정 / 홍기석'}
         {/* {new Date().getFullYear()} */}
         {'.'}
       </Typography>
@@ -97,32 +116,82 @@ const Main = ( {history}:Props ) => {
   return (
     <Container component="main" maxWidth="xs">
     <CssBaseline />
-    <div className={classes.paper} 
-      // style={{backgroundImage: `url(${require("./bgtest.gif")})`}}
-    >
-      <Typography component="h1" variant="h5">
-        할 모 임
-      </Typography>
-      <TextField
-        color = 'secondary'
-        variant="outlined" margin="normal" required fullWidth
-        id="phone" label="핸드폰 번호" name="phone" autoComplete="phone"
-        value={phone}
-        onKeyUp={(event) => {
-          if (event.key== 'Enter') {
-            login(event);
-          }  
-        }}
-        onChange={handlePhone} autoFocus/>
-      <Button
-        id="login" type="submit" fullWidth variant="contained"
-        color="primary" className={classes.submit}
-        onClick={login}
-      > 로그인 </Button>
-    <Box mt={8}>
-      <Copyright/>
-    </Box>
-    </div>
+      <Container component="main" maxWidth="sm">
+      <div className={classes.paper} 
+        // style={{backgroundImage: `url(${require("./bgtest.gif")})`}}
+      >
+        <Typography component="h1" variant="h5">
+          할 모 임
+        </Typography>
+        <TextField
+          color = 'secondary'
+          variant="outlined" margin="normal" required fullWidth
+          id="phone" label="핸드폰 번호" name="phone" autoComplete="phone"
+          value={phone}
+          onKeyUp={(event) => {
+            if (event.key== 'Enter') {
+              login(event);
+            }  
+          }}
+          onChange={handlePhone} autoFocus/>
+        <Button
+          id="login" type="submit" fullWidth variant="contained"
+          color="primary" className={classes.submit}
+          onClick={login}
+        > 로그인 </Button>
+      
+      </div>
+      </Container>
+
+      {/* Intro 1 */}
+      <Container component="main" maxWidth="sm">
+        <Card className={classes.root}>
+        <div className={classes.details}>
+          <CardContent className={classes.content}>
+            <Typography component="h6" variant="h6">
+              노후를 즐겁게!
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              지금은 동네 친구가 필요한 순간!
+              같은 관심사를 가진 사람들과 소통해 보세요!
+            </Typography>
+          </CardContent>
+          
+        </div>
+        <CardMedia
+          className={classes.cover}
+          image="http://blogfiles.naver.net/MjAxOTA3MDFfMjYy/MDAxNTYxOTM4NDY3ODc5.NXRWU-AICzwyxrGGwzXm17SqSm4cUUx13NyadxLub6Mg.5hA0uWxA95Ti2KvoQB1SN3UkXIrftWSgLuJMaf-PVREg.PNG.hanwha_official/%BE%D7%C6%BC%BA%EA%BD%C3%B4%CF%BE%EE-02.png"
+          title="intor_1"
+        />
+      </Card>
+      </Container>
+      
+      {/* Intro 2 */}
+      <Container component="main" maxWidth="sm">
+        <Card className={classes.root}>
+        <CardMedia
+          className={classes.cover}
+          image="http://imgnews.naver.net/image/5727/2019/03/11/0000000043_001_20190311155701622.jpg"
+          title="intor_2"
+        />
+        <div className={classes.details}>
+          <CardContent className={classes.content}>
+            <Typography component="h6" variant="h6">
+              쉽고 간편하게!
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              얼굴인식으로 편하게 로그인하세요! 주위 사람들과 편하게 대화해 보세요!
+            </Typography>
+          </CardContent>
+          
+        </div>
+      </Card>
+      </Container>
+
+      {/* CopyRight */}
+      <Box mt={8}>
+        <Copyright/>
+      </Box>
     </Container>
   )
 }

@@ -13,9 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -44,12 +42,10 @@ public class Chat {
 	private boolean state; //true: 읽음, false: 안읽음
 	
 	@ManyToOne
-//	@JoinColumn(name = "rid",referencedColumnName = "rid", updatable = false, insertable = false)
 	@JoinColumn(name = "rid",referencedColumnName = "rid")
 	private Room room;
 	
 	@ManyToOne
-//	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
 	@JoinColumn(name = "uid",referencedColumnName = "uid")
 	private User sender;
 	

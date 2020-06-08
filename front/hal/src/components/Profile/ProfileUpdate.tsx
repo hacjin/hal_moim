@@ -155,6 +155,19 @@ const ProfileUpdate = ( props:any ) => {
   const handleProfileUpdate = async(e:any) => {
     e.preventDefault();
 
+    if(phone === '') {
+      alert("핸드폰 번호를 입력해주세요");
+      return;
+    } else if(phone.length !== 11 || phone.substr(0,3) !== '010') {
+      alert("핸드폰 번호를 정확히 입력해주세요.");
+      return;
+    } 
+    else if(addr === '') {
+      alert("지역을 확인해주세요.");
+      return;
+    }
+
+
     // 변경 사항이 있다면
     if(  phone !== user.phone
       || addr !== user.addr
@@ -212,11 +225,10 @@ const ProfileUpdate = ( props:any ) => {
                 {/* 미리 보기 */}
                 {base64Img === '' ? 
                 // 기존사진 
-                <Avatar alt="프로필 사진" src={profileImg}
-                  className={classes.large} />
+                <Avatar alt="프로필 사진" src={profileImg} className={classes.large} />
                 : 
                 // 수정사진
-                <Avatar className={classes.large} alt="수정 사진" src={base64Img} />
+                <Avatar alt="수정 사진" src={base64Img} className={classes.large}  />
                 }
               </Badge>
               
@@ -286,6 +298,7 @@ const ProfileUpdate = ( props:any ) => {
               <TextField
                 variant="outlined" required fullWidth
                 id="phone" label="핸드폰 번호" name="phone"
+                error={phone === ''}
                 InputProps={{
                   classes: {notchedOutline: classes.notchedOutline}
                 }}

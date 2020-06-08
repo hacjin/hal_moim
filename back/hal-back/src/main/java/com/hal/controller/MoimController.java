@@ -1,6 +1,5 @@
 package com.hal.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,17 +87,5 @@ public class MoimController {
 	@GetMapping("/participateListByUser")
 	public ResponseEntity<Map<String, Object>> moimFindParticipateByUsers(@RequestParam int uid) {
 		return new ResponseEntity<Map<String, Object>>(moimService.findPartsByUid(uid), HttpStatus.OK);
-	}
-	
-	@ApiOperation(value = "해당 유저가 생성한 모임 목록 조회")
-	@GetMapping("/listByMe")
-	public ResponseEntity<Map<String, Object>> moimFindListByMe(@RequestParam int uid) {
-		return new ResponseEntity<Map<String, Object>>(moimService.findMoimByMe(uid), HttpStatus.OK);
-	}
-	
-	@ApiOperation(value = "해당 유저가 참가한 모임 목록 조회")
-	@GetMapping("/listByOther")
-	public ResponseEntity<Map<String, Object>> moimFindListByOther(@RequestParam int uid) {
-		return new ResponseEntity<Map<String, Object>>(moimService.findMoimByOther(uid), HttpStatus.OK);
 	}
 }

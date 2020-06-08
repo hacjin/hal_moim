@@ -1,7 +1,6 @@
 package com.hal.controller;
 
 import java.util.HashMap;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hal.model.dto.Chat;
 import com.hal.model.dto.ChatRequestDto;
-import com.hal.model.dto.User;
 import com.hal.model.service.ChatService;
 import com.hal.model.service.RoomService;
 
@@ -50,7 +47,6 @@ public class ChatController {
     @MessageMapping("/sendMessage/{rid}")
     @SendTo("/topic/roomId/{rid}")
     public ChatRequestDto sendMessage(@Payload ChatRequestDto chat) {
-    	System.out.println(chat.toString());
     	//메세지 db에 넣기
     	cservice.save(chat);
     	
@@ -70,7 +66,6 @@ public class ChatController {
     @ApiOperation(value = "chat 목록 조회")
     @GetMapping("/findChatListById")
     public ResponseEntity<Map<String, Object>> findChatListById(@RequestParam int rid) throws Exception {
-    	System.out.println("chat list"+rid);
     	return handleSuccess(cservice.findChatListById(rid)); 
     }
     

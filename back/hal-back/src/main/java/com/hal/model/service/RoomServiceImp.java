@@ -1,7 +1,6 @@
 package com.hal.model.service;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.hal.model.dao.RoomRepository;
 import com.hal.model.dao.UserRepository;
-import com.hal.model.dto.MoimResponseDto;
 import com.hal.model.dto.Room;
 import com.hal.model.dto.RoomResponseDto;
 import com.hal.model.dto.User;

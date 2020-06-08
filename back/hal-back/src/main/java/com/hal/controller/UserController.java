@@ -49,10 +49,10 @@ public class UserController {
 													,  @RequestParam(value="longitude", required = true) String longitude
 													) throws Exception {		
 		
-		String profile_filename = "default.jpg"; // 프로필은 기본사진으로 저장
+		String profile_filename = "/images/profile/default.jpg"; // 프로필은 기본사진으로 저장
 		String login_filename = "/images/login/";
 		if(myImg != null) login_filename += myImg.getOriginalFilename();
-		else login_filename = "default.jpg";
+		else login_filename += "default.jpg";
 		
 		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, profile_filename ,login_filename 
 				, Double.parseDouble(latitude), Double.parseDouble(longitude), null);
@@ -106,7 +106,6 @@ public class UserController {
 	@ApiOperation(value = "모든 Friend 조회")
 	@GetMapping("/friendsByDistance")
 	public ResponseEntity<Map<String, Object>> friendsAllList(@RequestParam int uid, @RequestParam int dis_filter) throws Exception {
-	    System.out.println("friendsData:::::::::::"+uid);
 		return handleSuccess(userServiceImp.findFriendByDistance(uid, dis_filter));
 	}
 	
