@@ -28,6 +28,30 @@ class ChatList extends React.Component {
         this.websocket = React.createRef();
     }
   
+    _onFilesSelected(fileList) {
+      const objectURL = window.URL.createObjectURL(fileList[0]);
+      console.log("objectURL",objectURL)
+
+      var tmpMessageList = this.state.totalmessageList[this.state.roomId] ===undefined ? [] : this.state.totalmessageList[this.state.roomId]
+      tmpMessageList.push({
+        // author: msg.senderId===this.user.uid?'me':'them',
+        author: 'me',
+        type: 'file',
+        data: {
+          url: objectURL,
+          fileName: fileList[0].name
+        }
+        })
+      this.setState({
+        ...this.setState,
+        totalmessageList: {
+          ...this.state.totalmessageList,
+          [this.state.roomId] : tmpMessageList
+            
+        }
+      })
+    }
+  
     // from Launcher를 사용하는 Chat.js 에서 가져옴
     _onMessageWasSent(message) {
       const chat = {message: "",
@@ -162,7 +186,7 @@ class ChatList extends React.Component {
                   <ChatWindow
                     messageList={this.state.totalmessageList[this.state.roomId]}
                     onUserInputSubmit={this._onMessageWasSent.bind(this)}
-                    onFilesSelected={this.props.onFilesSelected}
+                    onFilesSelected={this._onFilesSelected.bind(this)}
                     agentProfile={{
                       teamName: this.state.receiver.name,
                       imageUrl: this.state.receiver.profileImg
