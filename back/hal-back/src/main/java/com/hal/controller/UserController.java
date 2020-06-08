@@ -55,13 +55,13 @@ public class UserController {
 		if(myImg != null) {
 			UUID uuid = UUID.randomUUID();
 			login_filename += uuid+"_"+myImg.getOriginalFilename();
+			imageService.saveImage(myImg, "login",uuid);
 			}
 		else login_filename += "default.jpg";
 		
 		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, profile_filename ,login_filename 
 				, Double.parseDouble(latitude), Double.parseDouble(longitude), null);
 		
-		imageService.saveImage(myImg, "login");
 		
 	    return handleSuccess(userServiceImp.addUser(user));
 	}
@@ -80,7 +80,7 @@ public class UserController {
 		if(profileImg != null) { // 사진 변경하고자 할 때
 			UUID uuid = UUID.randomUUID();
 			profile_filename += uuid+"_"+profileImg.getOriginalFilename();
-			imageService.saveImage(profileImg, "profile");
+			imageService.saveImage(profileImg, "profile",uuid);
 		} else {
 			User user = userServiceImp.findUserById(Integer.parseInt(uid));
 			profile_filename = user.getProfileImg();

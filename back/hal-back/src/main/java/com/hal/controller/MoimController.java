@@ -52,7 +52,7 @@ public class MoimController {
 		if (file != null) {
 			UUID uuid = UUID.randomUUID();
 			fileName = "/images/moim/" + uuid+"_"+file.getOriginalFilename();
-			imgService.saveImage(file, "moim");
+			imgService.saveImage(file, "moim",uuid);
 		}else {
 			fileName = "/images/moim/default.jpg";
 		}
