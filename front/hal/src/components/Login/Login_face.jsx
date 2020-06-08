@@ -82,14 +82,13 @@ const Login_face = (props) => {
         // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
         const result = resizedDetections.map((d) => faceMatcher.findBestMatch(d.descriptor))
 
+        var login_flag = false;
         result.forEach((result, i) => {
           const box = resizedDetections[i].detection.box
           // const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
           // drawBox.draw(canvas)
           // console.log(result._label) 사진이름
           // console.log(result._distance) distance값
-
-          var login_flag = false
 
           if (result._label === phone && result._distance < 0.4) {
             // document.body.append('로그인 성공')
@@ -102,7 +101,8 @@ const Login_face = (props) => {
             // 세션에 유저정보 담기
             sessionStorage.setItem('user', JSON.stringify(props.location.state.user))
             // 페이지 이동
-            props.history.push('/moim')
+            props.history.push('/moim');
+            return;
           } else {
             setTimeout(() => {
               // document.body.append('로그인 실패')
@@ -116,7 +116,7 @@ const Login_face = (props) => {
             }, 10000)
           }
         })
-      }, 100)
+      }, 1000)
     })
   }
 
