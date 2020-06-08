@@ -53,9 +53,6 @@ const ChatItem = props => {
 
                 <div className='col-3' style={{padding:'0px'}}>
                     <Avatar variant='rounded' src={item.receiver.profileImg} style={{width:'70px', height:'70px'}} sizes='50px'/>
-                    {/* <Avatar shape='rounded' type='image' src={`${item.receiver.profileImg}`}>
-                        <img src= {`${item.receiver.profileImg}`}></img>
-                    </Avatar> */}
                 </div>
                 <div className='col-6'>
                     <h2 style={{fontSize: 25, color: '#000000', marginBottom: 0, padding:5}} className="text-uppercase">{item.receiver.name}</h2>
