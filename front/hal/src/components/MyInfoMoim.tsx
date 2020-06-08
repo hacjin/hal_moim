@@ -18,7 +18,9 @@ import api from '../apis/api'
 
 interface Props {
   data: any
+  key: number
   isDelete : boolean
+  showButton : boolean
 }
 const useStyles = (color:string) => 
 makeStyles({
@@ -131,7 +133,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 })
 
-const MyInfoMoim = ({ data, isDelete }: Props) => {
+const MyInfoMoim = ({ data, key, isDelete, showButton }: Props) => {
   let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
   const color = data.state===true?'#6a60a9':'#dedcee'
   const classes = useStyles(color)();
@@ -146,6 +148,8 @@ const MyInfoMoim = ({ data, isDelete }: Props) => {
   const didMountRef = useRef(false)
   const [join, setJoin] = useState(Array<any>())
   const [button, setButton] = useState(false)
+  console.log("key",key)
+  console.log("show",showButton)
   
   async function getMember(mid: Number) {
     await api
@@ -217,29 +221,31 @@ const MyInfoMoim = ({ data, isDelete }: Props) => {
             {/* <Button autoFocus color="inherit" onClick={handleClose}>
               모임취소
             </Button> */}
-            {button ? (
-              <Button autoFocus color="secondary"
-                onClick={(e) => {
-                  handleDelParticipate(e, data.mid, user.uid)
-                  setUpdate(false)
-                  didMountRef.current = false
-                  setButton(false)
-                }}
-              >
-                취소
-              </Button>
-            ) : (
-              <Button autoFocus color="inherit"
-                onClick={(e) => {
-                  handleAddParticipate(e, data.mid, user.uid)
-                  setUpdate(false)
-                  didMountRef.current = false
-                  setButton(true)
-                }}
-              >
-                참가
-              </Button>
-            )}
+            {showButton?
+              button ? (
+                <Button autoFocus color="secondary"
+                  onClick={(e) => {
+                    handleDelParticipate(e, data.mid, user.uid)
+                    setUpdate(false)
+                    didMountRef.current = false
+                    setButton(false)
+                  }}
+                >
+                  취소
+                </Button>
+              ) : (
+                <Button autoFocus color="inherit"
+                  onClick={(e) => {
+                    handleAddParticipate(e, data.mid, user.uid)
+                    setUpdate(false)
+                    didMountRef.current = false
+                    setButton(true)
+                  }}
+                >
+                  참가
+                </Button>
+              )
+            : null}
           </Toolbar>
         </AppBar>
         <List>

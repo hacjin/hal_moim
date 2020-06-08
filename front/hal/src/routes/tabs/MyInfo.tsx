@@ -51,6 +51,7 @@ const MyInfo = ( props:any ) => {
       </Typography>
       <MyInfoMoimList
       moims = {moimMe}
+      showButton = {false}
       />
       <Divider variant="middle" />
       <Typography gutterBottom variant="subtitle1" style={{marginTop:'10px'}}>
@@ -58,6 +59,7 @@ const MyInfo = ( props:any ) => {
       </Typography>
       <MyInfoMoimList
       moims = {moimOther}
+      showButton = {true}
       />
     </div>
   )

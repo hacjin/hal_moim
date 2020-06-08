@@ -7,14 +7,16 @@ import MyInfoMoim from '../components/MyInfoMoim'
 
 type MyInfoMoimListProps ={
   moims: Array<any>
+  showButton: boolean
 }
 
 
-const MyInfoMoimList = ({moims} : MyInfoMoimListProps) => {
+const MyInfoMoimList = ({moims, showButton} : MyInfoMoimListProps) => {
   const getMoim = moims.map((data:any, index: number) => <MyInfoMoim
                                                               data={data}
                                                               key={index}
-                                                              isDelete={false}/>)
+                                                              isDelete={false}
+                                                              showButton={showButton}/>)
   return (
     <div>
       <Box p={1}  overflow={'hidden'}>
