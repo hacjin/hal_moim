@@ -18,8 +18,7 @@ import api from '../apis/api'
 
 interface Props {
   data: any
-  key: number
-  isDelete : boolean
+  isDelete : any
   showButton : boolean
 }
 const useStyles = (color:string) => 
@@ -98,7 +97,7 @@ const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number |
       // console.log(res)
     })
 }
-const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
+const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null, isDelete:any) => {
   // console.log(mid, uid)
   e.preventDefault()
   await api
@@ -111,7 +110,8 @@ const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number |
     .then((res: any) => {
       // console.log(res)
     })
-  
+  //isDelete상태 변경
+  isDelete(true);
   
 }
 const getJoinMoim = async (uid: any, setJoin: React.Dispatch<any>) => {
@@ -133,7 +133,8 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 })
 
-const MyInfoMoim = ({ data, key, isDelete, showButton }: Props) => {
+const MyInfoMoim = ({ data, isDelete, showButton }: Props) => {
+  console.log("moim", isDelete)
   let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
   const color = data.state===true?'#6a60a9':'#dedcee'
   const classes = useStyles(color)();
@@ -148,8 +149,6 @@ const MyInfoMoim = ({ data, key, isDelete, showButton }: Props) => {
   const didMountRef = useRef(false)
   const [join, setJoin] = useState(Array<any>())
   const [button, setButton] = useState(false)
-  console.log("key",key)
-  console.log("show",showButton)
   
   async function getMember(mid: Number) {
     await api
@@ -225,7 +224,7 @@ const MyInfoMoim = ({ data, key, isDelete, showButton }: Props) => {
               button ? (
                 <Button autoFocus color="secondary"
                   onClick={(e) => {
-                    handleDelParticipate(e, data.mid, user.uid)
+                    handleDelParticipate(e, data.mid, user.uid, isDelete)
                     setUpdate(false)
                     didMountRef.current = false
                     setButton(false)

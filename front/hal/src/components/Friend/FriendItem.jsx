@@ -71,6 +71,8 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 const FriendItem = (props) => 
 { 
   const item = props.dataItem
+  const genderString =  item.gender==1? "남자" :"여자"
+console.log(genderString)
   const userId = props.userId
   const styles = useStyles();
   const {
@@ -131,7 +133,7 @@ const FriendItem = (props) =>
         <TextInfoContent
           // classes={contentStyles}
           // overline={'28 MAR 2019'}
-          overline={' ('+item.birth+'년생/'+item.gender+')'}
+          overline={' ('+item.birth+'년생/ '+genderString+')'}
           heading={item.name }
           body={
             item.description
