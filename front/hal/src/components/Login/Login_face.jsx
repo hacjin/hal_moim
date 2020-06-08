@@ -100,7 +100,15 @@ const Login_face = (props) => {
             console.log('로그인 성공')
             //console.log('result._label :: ' + result._label)
             //console.log('distance :: ' + result._distance)
-            clearInterval(repeat)
+            clearInterval(repeat);
+
+            // 비디오 스트림 정지
+            //console.log(video.srcObject);
+            let tracks = video.srcObject.getTracks();
+            tracks.forEach(function(track) {
+              track.stop();
+            });
+            video.srcObject = null;
 
             // 세션에 유저정보 담기
             sessionStorage.setItem('user', JSON.stringify(props.location.state.user))
@@ -121,10 +129,15 @@ const Login_face = (props) => {
           //   }, 10000)
           // }
         })
-        
+
         if(timeCount > 10) {
           console.log('10초 :: 로그인 실패');
           clearInterval(repeat);
+          let tracks = video.srcObject.getTracks();
+            tracks.forEach(function(track) {
+              track.stop();
+            });
+          video.srcObject = null;
           props.history.push('/');
         }
       }, 1000)
