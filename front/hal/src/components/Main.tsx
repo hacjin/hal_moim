@@ -73,13 +73,8 @@ const Main = ( {history}:Props ) => {
           // 로그인 페이지(얼굴인식)
           //sessionStorage.setItem('user', JSON.stringify(res.data.data));
           history.push({
-<<<<<<< HEAD
-            // pathname: '/login_face',
-            pathname: '/moim',
-=======
             pathname: '/login_face',
             //pathname: '/moim',
->>>>>>> 5194fd17ab3be29c3a5203ce8c03305d1189364d
             state: { user: res.data.data }
           });
         }
