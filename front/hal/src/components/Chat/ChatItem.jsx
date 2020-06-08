@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { Avatar } from '@progress/kendo-react-layout';
+// import { Avatar } from '@progress/kendo-react-layout';
+import { Avatar} from '@material-ui/core';
 import API from "../../apis/api"
 
 const ChatItem = props => {
@@ -25,7 +26,7 @@ const ChatItem = props => {
               replytext = {'emoji':item.message}
             }
             roomMessageList.push({
-                author: item.sender.uid==userId?'me':'them',
+                author: item.sender.uid===userId?'me':'them',
                 type: item.type,
                 data: replytext
                 })
@@ -50,17 +51,18 @@ const ChatItem = props => {
         
             <div className={classList.join(' ')} style={{ margin: 10}} onClick={_onFormSubmit}>
 
-                <div className='col-2'>
-                    <Avatar shape='circle' type='img'>
-                        <img src={`${item.receiver.profileImg}`} width='200%'/>
-                    </Avatar>
+                <div className='col-3' style={{padding:'0px'}}>
+                    <Avatar variant='rounded' src={item.receiver.profileImg} style={{width:'70px', height:'70px'}} sizes='50px'/>
+                    {/* <Avatar shape='rounded' type='image' src={`${item.receiver.profileImg}`}>
+                        <img src= {`${item.receiver.profileImg}`}></img>
+                    </Avatar> */}
                 </div>
                 <div className='col-6'>
-                    <h2 style={{fontSize: 20, color: '#454545', marginBottom: 0}} className="text-uppercase">{item.receiver.name}</h2>
-                    <div style={{fontSize: 12, color: "#a0a0a0"}}>{}</div>
+                    <h2 style={{fontSize: 20, color: '#454545', marginBottom: 0, padding:5}} className="text-uppercase">{item.receiver.name}</h2>
+                    <div style={{fontSize: 16, color: "#a0a0a0"}}>{}</div>
                 </div>
-                <div className='col-4'>
-                    <div className='k-chip k-chip-filled'>
+                <div className='col-3'>
+                    <div className='k-chip k-chip-filled'  style={{backgroundColor:'#f1bbba'}}>
                         <div className='k-chip-content'>
                             {} new
                         </div>

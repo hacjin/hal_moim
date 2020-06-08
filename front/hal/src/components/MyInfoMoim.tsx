@@ -7,8 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Color from 'color'
 import Grid from '@material-ui/core/Grid';
-import { CSSProperties } from '@material-ui/core/styles/withStyles'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';

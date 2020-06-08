@@ -121,7 +121,8 @@ class ChatList extends React.Component {
         return (
           <div>
           <SockJsClient 
-          url={"http://52.78.120.154:8080/webSocket" }
+          url={"http://localhost:8080/webSocket" }
+          // url={"http://52.78.120.154:8080/webSocket" }
           topics={topics} 
           onMessage={msg => { 
             const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1;
@@ -134,7 +135,7 @@ class ChatList extends React.Component {
 
             var tmpMessageList = this.state.totalmessageList[this.state.roomId] ===undefined ? [] : this.state.totalmessageList[this.state.roomId]
             tmpMessageList.push({
-              author: msg.senderId==this.user.uid?'me':'them',
+              author: msg.senderId===this.user.uid?'me':'them',
               type: msg.type,
               data: replytext
               })

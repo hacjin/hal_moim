@@ -56,12 +56,13 @@ class FriendList extends React.Component {
         let userData = await API.get('user/friendsByDistance', {
           params: {
             uid: this.user.uid,
-            dis_filter : 10
+            dis_filter : 3
           }
         });
+        console.log("userDate",userData)
 
         this.setState({
-          ...this.state, ...{
+          ...this.state,...{
             friendsData : userData.data.data,
             userId: this.user.uid
           }
@@ -147,6 +148,7 @@ class FriendList extends React.Component {
 
           <SockJsClient 
           url={"http://localhost:8080/webSocket" }
+          // url={"http://52.78.120.154:8080/webSocket" }
           topics={topics} 
           onMessage={msg => { 
             var replytext 
@@ -158,7 +160,7 @@ class FriendList extends React.Component {
 
             var tmpMessageList = this.state.totalmessageList[this.state.roomId] ===undefined ? [] : this.state.totalmessageList[this.state.roomId]
             tmpMessageList.push({
-              author: msg.senderId==this.user.uid?'me':'them',
+              author: msg.senderId===this.user.uid?'me':'them',
               type: msg.type,
               data: replytext
               })

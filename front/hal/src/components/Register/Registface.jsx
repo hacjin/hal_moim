@@ -128,8 +128,8 @@ const Registface = ( props ) => {
                       <img src={url} alt="dd"></img>
                       <canvas id="canvas" width='100%' style={{display: 'none'}}></canvas>
                       <br/><br/><br/>
-                      <Button variant="contained" color="primary" onClick={handleRetake}>다시찍기</Button> &nbsp;&nbsp;&nbsp;
-                      <Button variant="contained" color="secondary" onClick={handleSave}>저장하기</Button>
+                      <Button variant="contained" color="secondary" onClick={handleRetake}>다시찍기</Button> &nbsp;&nbsp;&nbsp;
+                      <Button variant="contained" color="primary" onClick={handleSave}>저장하기</Button>
                     </div>
                     }
                 </div>

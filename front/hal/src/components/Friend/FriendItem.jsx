@@ -131,9 +131,11 @@ const FriendItem = (props) =>
         <TextInfoContent
           // classes={contentStyles}
           // overline={'28 MAR 2019'}
-          heading={item.name}
+          overline={' ('+item.birth+'년생/'+item.gender+')'}
+          heading={item.name }
           body={
             item.description
+            
           }
         />
         {/* <Button className={styles.btn} fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button> */}

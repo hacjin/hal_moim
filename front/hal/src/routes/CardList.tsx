@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Button, Card, CardHeader, CardContent, CardActions, Typography, withStyles, CardMedia, Divider } from '@material-ui/core'
+import { Button, Card, CardContent, CardActions, Typography, withStyles, CardMedia } from '@material-ui/core'
 import api from '../apis/api'
 type CardProps = {
   data: any
