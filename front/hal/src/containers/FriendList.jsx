@@ -22,7 +22,7 @@ class FriendList extends React.Component {
       totalmessageList: {},
       receiver: '',
       roomId: '',
-      dis: '',
+      dis: 3,
       // userId: this.user.uid ,
     }
     this.websocket = React.createRef()
@@ -159,12 +159,18 @@ class FriendList extends React.Component {
         />
 
         <DistanceSlider distance={this._getFriendList} text={'친구와의 거리'} />
-        <ListView
-          data={this.state.friendsData} //contacts : json데이터
-          item={this.MyCustomItem}
-          // item={ChatItem}
-          style={{ width: '100%' }}
-        />
+        {this.state.friendsData.length > 0 ? (
+          <ListView
+            data={this.state.friendsData} //contacts : json데이터
+            item={this.MyCustomItem}
+            // item={ChatItem}
+            style={{ width: '100%' }}
+          />
+        ) : (
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ fontSize: '20px', fontWeight: 'bold' }}>주변 {this.state.dis}km 내 친구가 존재하지 않습니다.</p>
+          </div>
+        )}
 
         <div id="chat-launcher">
           <ChatWindow

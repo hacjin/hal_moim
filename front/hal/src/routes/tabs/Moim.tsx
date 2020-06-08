@@ -64,7 +64,14 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
       setUpdate(true)
     }
   })
-  const getMoim = moim.map((data: any, index: number) => <CardList data={data} key={index} setUpdate={setUpdate} />)
+  const getMoim =
+    moim.length > 0 ? (
+      moim.map((data: any, index: number) => <CardList data={data} key={index} setUpdate={setUpdate} />)
+    ) : (
+      <div style={{ textAlign: 'center' }}>
+        <p style={{ fontSize: '20px', fontWeight: 'bold' }}>주변 {distance}km 내 모임이 존재하지 않습니다.</p>
+      </div>
+    )
   return (
     <div>
       <DistanceSlider distance={setDistance} text={'주변 모임 거리'} setUpdate={setUpdate} />
@@ -73,7 +80,7 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
         //
         aria-label="Add"
         className={classes.fab}
-        style={{ top: `${scrollPosition}%`, backgroundColor:'#336714', color:'white' }}
+        style={{ top: `${scrollPosition}%`, backgroundColor: '#336714', color: 'white' }}
         onClick={handleClickOpen}
       >
         <AddIcon />
