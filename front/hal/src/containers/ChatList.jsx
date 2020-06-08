@@ -135,7 +135,7 @@ class ChatList extends React.Component {
 
             var tmpMessageList = this.state.totalmessageList[this.state.roomId] ===undefined ? [] : this.state.totalmessageList[this.state.roomId]
             tmpMessageList.push({
-              author: msg.senderId==this.user.uid?'me':'them',
+              author: msg.senderId===this.user.uid?'me':'them',
               type: msg.type,
               data: replytext
               })

@@ -109,7 +109,7 @@ const Main = ( {history}:Props ) => {
         id="phone" label="핸드폰 번호" name="phone" autoComplete="phone"
         value={phone}
         onKeyUp={(event) => {
-          if (event.key== 'Enter') {
+          if (event.key=== 'Enter') {
             login(event);
           }  
         }}

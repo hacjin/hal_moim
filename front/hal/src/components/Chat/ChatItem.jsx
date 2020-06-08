@@ -26,7 +26,7 @@ const ChatItem = props => {
               replytext = {'emoji':item.message}
             }
             roomMessageList.push({
-                author: item.sender.uid==userId?'me':'them',
+                author: item.sender.uid===userId?'me':'them',
                 type: item.type,
                 data: replytext
                 })
