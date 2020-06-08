@@ -60,6 +60,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   },
   content: {
     padding: 24,
+    color:'#098765'
   },
   cta: {
     marginTop: 24,
@@ -133,6 +134,7 @@ console.log(genderString)
         <TextInfoContent
           // classes={contentStyles}
           // overline={'28 MAR 2019'}
+          className={styles.content}
           overline={' ('+item.birth+'년생/ '+genderString+')'}
           heading={item.name }
           body={

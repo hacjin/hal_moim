@@ -33,7 +33,8 @@ const styles: any = (muiBaseTheme: any) => ({
   },
   content: {
     textAlign: 'left',
-    padding: muiBaseTheme.spacing(3),
+    // padding: muiBaseTheme.spacing(3),
+    fontSize:'20px'
   },
   front: {
     width: '100%',
@@ -50,11 +51,14 @@ const styles: any = (muiBaseTheme: any) => ({
   },
   heading: {
     fontWeight: 'bold',
+    fontSize:'30px',
+    margin: '0px'
   },
   subheading: {
     fontWeight: 'bold',
     lineHeight: 1.8,
-    fontSize: '0.9rem',
+    // fontSize: '0.9rem',
+    fontSize:'25px'
   },
   avatar: {
     display: 'inline-block',
@@ -139,15 +143,15 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
                 <Typography className={classes.heading} variant={'h6'} gutterBottom>
                   {data.title}
                 </Typography>
-                <Typography className={classes.subheading} variant={'caption'}>
+                <Typography className={classes.subheading} variant={'h6'}>
+                  * {data.coment} *
+                </Typography>
+                <Typography className={classes.content} variant={'caption'}>
                   장소 : {data.location}
                   <br />
                 </Typography>
-                <Typography className={classes.subheading} variant={'caption'}>
-                  시간 : {time[0]}년 {time[1]}월 {time[2]}일 {time[3]}시:{time[4]}분까지
-                </Typography>
-                <Typography className={classes.heading} variant={'h6'}>
-                  설명 : {data.coment}
+                <Typography className={classes.content} variant={'caption'}>
+                  시간 : {time[0]}년 {time[1]}월 {time[2]}일 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {time[3]}시 {time[4]}분까지
                 </Typography>
               </CardContent>
             </div>

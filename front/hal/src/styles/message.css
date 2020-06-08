@@ -34,7 +34,7 @@
   padding: 17px 20px;
   border-radius: 6px;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 25px;
   line-height: 1.4;
   white-space: pre-wrap;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -43,14 +43,14 @@
 }
 
 .sc-message--content.sent .sc-message--text {
-  color: #263238;
+  color: black;
   background-color: #eb9f9f;
-  max-width: calc(100% - 120px);
+  max-width: calc(100% - 70px);
   word-wrap: break-word;
 }
 
 .sc-message--content.received .sc-message--text {
-  color: #263238;
+  color: black;
   background-color: #f8ecc9;
   margin-right: 40px;
 }

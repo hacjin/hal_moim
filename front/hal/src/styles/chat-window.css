@@ -13,7 +13,8 @@
   justify-content: space-between;
   transition: 0.3s ease-in-out;
   border-radius: 10px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans KR'; /*"Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  font-size: 25px;
 }
 
 .sc-chat-window.closed {

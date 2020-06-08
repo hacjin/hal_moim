@@ -58,15 +58,15 @@ const ChatItem = props => {
                     </Avatar> */}
                 </div>
                 <div className='col-6'>
-                    <h2 style={{fontSize: 20, color: '#454545', marginBottom: 0, padding:5}} className="text-uppercase">{item.receiver.name}</h2>
-                    <div style={{fontSize: 16, color: "#a0a0a0"}}>{}</div>
+                    <h2 style={{fontSize: 25, color: '#000000', marginBottom: 0, padding:5}} className="text-uppercase">{item.receiver.name}</h2>
+                    <div style={{fontSize: 16, color: "#a0a0a0"}}>채팅중입니다{}</div>
                 </div>
                 <div className='col-3'>
-                    <div className='k-chip k-chip-filled'  style={{backgroundColor:'#f1bbba'}}>
+                    {/* <div className='k-chip k-chip-filled'  style={{backgroundColor:'#f1bbba'}}>
                         <div className='k-chip-content'>
                             {} new
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
