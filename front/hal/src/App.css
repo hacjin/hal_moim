@@ -37,7 +37,23 @@
   }
 }
 
+.wrapperInfo {
+  margin: 0 auto;
+}
+
+@media (min-width: 0px) {
+  .wrapperInfo {
+    max-width: 444px;
+  }
+}
+
+@media (min-width: 600px) {
+  .wrapperInfo {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
 
 .k-listview-footer {
-    border-top-width: 0 !important;
+  border-top-width: 0 !important;
 }
