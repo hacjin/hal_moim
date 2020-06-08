@@ -14,9 +14,9 @@ import GroupIcon from '@material-ui/icons/Group'
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import api from '../apis/api'
+import api from '../../apis/api'
 import {useDispatch } from 'react-redux';
-import {updateInfo} from '../modules/myInfo'
+import {updateInfo} from '../../modules/myInfo'
 
 interface Props {
   data: any
@@ -185,7 +185,7 @@ const MyInfoMoim = ({ data, showButton }: Props) => {
       getJoinMoim(user.uid, setJoin)
       didMountRef.current = true
     }
-  }, [join])
+  }, [data.mid, join, update, user.uid])
 
   const myInfoMemberList = member.map((dataM:any, index: number) => <MyInfoMember
                                                               data={dataM}

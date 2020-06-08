@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import * as faceapi from 'face-api.js'
 import * as React from 'react'
-import { Grid, Container, Typography, List } from '@material-ui/core'
+import { Grid, Typography, List } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -32,13 +32,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    }),
-  );
-}
+// function generate(element) {
+//   return [0, 1, 2].map((value) =>
+//     React.cloneElement(element, {
+//       key: value,
+//     }),
+//   );
+// }
 
 const Login_face = (props) => {
   let videoRef = React.createRef()
@@ -88,7 +88,7 @@ const Login_face = (props) => {
 
         result.forEach((result, i) => {
           const box = resizedDetections[i].detection.box
-          const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
+          // const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
           // drawBox.draw(canvas)
           // console.log(result._label) 사진이름
           // console.log(result._distance) distance값

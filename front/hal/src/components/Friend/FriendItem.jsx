@@ -6,7 +6,6 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import TextInfoContent from '@mui-treasury/components/content/textInfo'
-import { useBlogTextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/blog'
 import { useOverShadowStyles } from '@mui-treasury/styles/shadow/over'
 import API from '../../apis/api'
 
@@ -72,17 +71,17 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 const FriendItem = (props) => 
 { 
   const item = props.dataItem
-  const genderString =  item.gender==1? "남자" :"여자"
-console.log(genderString)
+  const genderString =  item.gender===1? "남자" :"여자"
+// console.log(genderString)
   const userId = props.userId
   const styles = useStyles();
-  const {
-    button: buttonStyles,
-    ...contentStyles
-  } = useBlogTextInfoContentStyles();
+  // const {
+    // button: buttonStyles,
+    // ...contentStyles
+  // } = useBlogTextInfoContentStyles();
   const shadowStyles = useOverShadowStyles();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [, setIsOpen] = useState(false);
 
 
   async function _onFormSubmit(){
@@ -110,7 +109,7 @@ console.log(genderString)
           replytext = {'emoji':item.message}
         }
         roomMessageList.push({
-            author: item.sender.uid==userId?'me':'them',
+            author: item.sender.uid===userId?'me':'them',
             type: item.type,
             data: replytext
             })
@@ -142,8 +141,7 @@ console.log(genderString)
             
           }
         />
-        {/* <Button className={styles.btn} fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button> */}
-        <Button  variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
+        <Button  variant="contained" color="primary" fullWidth={true} onClick={_onFormSubmit}>메세지 보내기</Button>
       </CardContent>
     </Card>
   )

@@ -1,9 +1,7 @@
 import React from 'react';
-import GoogleFont from 'react-google-font-loader';
-import NoSsr from '@material-ui/core/NoSsr';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import MyInfoMoim from '../components/MyInfoMoim'
+import MyInfoMoim from '../components/MyInfo/MyInfoMoim'
 
 type MyInfoMoimListProps ={
   moims: Array<any>

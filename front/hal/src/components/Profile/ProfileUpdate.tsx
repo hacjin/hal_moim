@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Button, TextField, Grid, Container, Badge, CssBaseline, Avatar, Tooltip, Typography } from '@material-ui/core';
+import { Button, TextField, Grid, Container, Badge, CssBaseline, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import api from '../../apis/api'
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
@@ -114,7 +114,7 @@ const ProfileUpdate = ( props:any ) => {
     }
 
     // 핸드폰 번호 유효성 검사
-    if(onlyNums.length == 11) {
+    if(onlyNums.length === 11) {
       phoneList.map( (data:String, index:number) => {
         if(onlyNums === data && onlyNums !== user.phone) {
           alert("이미 등록된 번호입니다.");
