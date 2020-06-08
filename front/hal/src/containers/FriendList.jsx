@@ -50,25 +50,16 @@ class FriendList extends React.Component {
     let userData = await API.get('user/friendsByDistance', {
       params: {
         uid: this.user.uid,
-        dis_filter: 3,
+        dis_filter: this.state.dis,
       },
     })
     console.log('userDate', userData)
 
     this.setState({
       ...this.state,
-      ...{
-        friendsData: userData.data.data,
-        userId: this.user.uid,
-      },
+      friendsData: userData.data.data,
+      userId: this.user.uid,
     })
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if ((this.state.dis !== nextState.dis) | (this.state.dis === '')) {
-      return true //새로 렌더링
-    }
-    return false
   }
 
   async _getFriendList(dis) {
@@ -81,10 +72,8 @@ class FriendList extends React.Component {
 
     this.setState({
       ...this.state,
-      ...{
-        dis: dis,
-        friendsData: userData.data.data,
-      },
+      dis: dis,
+      friendsData: userData.data.data,
     })
   }
 
@@ -92,14 +81,12 @@ class FriendList extends React.Component {
     console.log('_openChatWindow')
     this.setState({
       ...this.state,
-      ...{
-        isOpen: flag,
-        receiver: receiver,
-        roomId: roomId,
-        totalmessageList: {
-          ...this.state.totalmessageList,
-          [roomId]: totalChatData,
-        },
+      isOpen: flag,
+      receiver: receiver,
+      roomId: roomId,
+      totalmessageList: {
+        ...this.state.totalmessageList,
+        [roomId]: totalChatData,
       },
     })
   }
@@ -159,6 +146,7 @@ class FriendList extends React.Component {
         />
 
         <DistanceSlider distance={this._getFriendList} text={'친구와의 거리'} />
+        {console.log('데이터크기', this.state.friendsData)}
         {this.state.friendsData.length > 0 ? (
           <ListView
             data={this.state.friendsData} //contacts : json데이터
