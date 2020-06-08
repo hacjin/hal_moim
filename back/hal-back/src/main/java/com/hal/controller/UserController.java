@@ -76,6 +76,9 @@ public class UserController {
 		if(profileImg != null) { // 사진 변경하고자 할 때
 			profile_filename += profileImg.getOriginalFilename();
 			imageService.saveImage(profileImg, "profile");
+		} else {
+			User user = userServiceImp.findUserById(Integer.parseInt(uid));
+			profile_filename = user.getProfileImg();
 		}
 		
 		int tmpNum = 0;
