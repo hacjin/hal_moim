@@ -71,10 +71,10 @@ const Main = ( {history}:Props ) => {
           })
         } else {
           // 로그인 페이지(얼굴인식)
-          sessionStorage.setItem('user', JSON.stringify(res.data.data));
+          //sessionStorage.setItem('user', JSON.stringify(res.data.data));
           history.push({
-            //pathname: '/login_face',
-            pathname: '/moim',
+            pathname: '/login_face',
+            //pathname: '/moim',
             state: { user: res.data.data }
           });
         }
@@ -109,7 +109,7 @@ const Main = ( {history}:Props ) => {
         id="phone" label="핸드폰 번호" name="phone" autoComplete="phone"
         value={phone}
         onKeyUp={(event) => {
-          if (event.key=== 'Enter') {
+          if (event.key== 'Enter') {
             login(event);
           }  
         }}
