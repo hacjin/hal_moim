@@ -135,7 +135,7 @@ const Transition = React.forwardRef(function Transition(
 
 const MyInfoMoim = ({ data, showButton }: Props) => {
   let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
-  const color = data.state===true?'#6a60a9':'#dedcee'
+  const color = data.state===true?'#FDE26C':'#75682f'
   const classes = useStyles(color)();
   const [open, setOpen] = React.useState(false);
   const [openMember, setOpenMember] = React.useState(false);

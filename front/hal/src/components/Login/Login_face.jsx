@@ -173,7 +173,7 @@ const Login_face = (props) => {
                   <CheckIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary="최대 15초 이상 걸릴 수 있으니 기다려주세요..."
+                  primary="최대 15초 이상 걸릴 수 있으니 기다려주세요."
                 />
               </ListItem>
             </List>

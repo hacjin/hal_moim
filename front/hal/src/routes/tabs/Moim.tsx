@@ -73,8 +73,7 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
         //
         aria-label="Add"
         className={classes.fab}
-        color="default"
-        style={{ top: `${scrollPosition}%` }}
+        style={{ top: `${scrollPosition}%`, backgroundColor:'#336714', color:'white' }}
         onClick={handleClickOpen}
       >
         <AddIcon />
