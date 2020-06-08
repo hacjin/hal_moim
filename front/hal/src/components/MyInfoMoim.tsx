@@ -18,7 +18,7 @@ import api from '../apis/api'
 
 interface Props {
   data: any
-  isDelete : boolean
+  isDelete : any
 }
 const useStyles = (color:string) => 
 makeStyles({
@@ -96,7 +96,7 @@ const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number |
       // console.log(res)
     })
 }
-const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
+const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null, isDelete:any) => {
   // console.log(mid, uid)
   e.preventDefault()
   await api
@@ -109,7 +109,8 @@ const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number |
     .then((res: any) => {
       // console.log(res)
     })
-  
+  //isDelete상태 변경
+  isDelete(true);
   
 }
 const getJoinMoim = async (uid: any, setJoin: React.Dispatch<any>) => {
@@ -132,6 +133,7 @@ const Transition = React.forwardRef(function Transition(
 })
 
 const MyInfoMoim = ({ data, isDelete }: Props) => {
+  console.log("moim", isDelete)
   let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
   const color = data.state===true?'#6a60a9':'#dedcee'
   const classes = useStyles(color)();
@@ -220,7 +222,7 @@ const MyInfoMoim = ({ data, isDelete }: Props) => {
             {button ? (
               <Button autoFocus color="secondary"
                 onClick={(e) => {
-                  handleDelParticipate(e, data.mid, user.uid)
+                  handleDelParticipate(e, data.mid, user.uid, isDelete)
                   setUpdate(false)
                   didMountRef.current = false
                   setButton(false)

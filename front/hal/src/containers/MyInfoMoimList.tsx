@@ -9,12 +9,16 @@ type MyInfoMoimListProps ={
   moims: Array<any>
 }
 
+function _deleteMoim(){
+  console.log("지움")
+  //리랜더
+}
 
 const MyInfoMoimList = ({moims} : MyInfoMoimListProps) => {
   const getMoim = moims.map((data:any, index: number) => <MyInfoMoim
                                                               data={data}
                                                               key={index}
-                                                              isDelete={false}/>)
+                                                              isDelete={_deleteMoim}/>)
   return (
     <div>
       <Box p={1}  overflow={'hidden'}>
