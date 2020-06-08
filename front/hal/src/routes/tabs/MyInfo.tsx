@@ -35,7 +35,6 @@ const MyInfo = ( props:any ) => {
     } else {
       //session id로 조회해야함
       let user = JSON.parse(sessionStorage.getItem('user') || '{}')
-      console.log("user",user);
       getMoimMeList(user.uid)
       getMoimOtherList(user.uid)
 
