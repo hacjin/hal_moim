@@ -54,6 +54,7 @@ const Login_face = (props) => {
   async function startVideo() {
     const video = videoRef.current
     const constraints = { video: true }
+    navigator.mediaDevices.getUserMedia = navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia
     navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
       video.srcObject = stream
     })
@@ -70,12 +71,12 @@ const Login_face = (props) => {
     const displaySize = { width: video.width, height: video.height }
     //  faceapi.matchDimensions(canvas, displaySize)
     // document.body.append("로그인 중 15초 동안 로그인 안될시 메인페이지로?")
-    
-    let timeCount = 0;
+
+    let timeCount = 0
 
     video.addEventListener('play', async () => {
       var repeat = setInterval(async () => {
-        timeCount++;
+        timeCount++
         // 얼굴과 라벨을 매칭
         const labeledFaceDescriptors = await loadLabeledImage()
         const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
@@ -86,13 +87,13 @@ const Login_face = (props) => {
         // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
         const result = resizedDetections.map((d) => faceMatcher.findBestMatch(d.descriptor))
 
-       // var login_flag = false;
+        // var login_flag = false;
         result.forEach((result, i) => {
           // const box = resizedDetections[i].detection.box
           // const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
           // drawBox.draw(canvas)
           // console.log(result._label) 사진이름
-           console.log(result._distance) //distance값
+          console.log(result._distance) //distance값
 
           if (result._label === phone && result._distance < 0.4) {
             // document.body.append('로그인 성공')
@@ -100,22 +101,22 @@ const Login_face = (props) => {
             console.log('로그인 성공')
             //console.log('result._label :: ' + result._label)
             //console.log('distance :: ' + result._distance)
-            clearInterval(repeat);
+            clearInterval(repeat)
 
             // 비디오 스트림 정지
             //console.log(video.srcObject);
-            let tracks = video.srcObject.getTracks();
-            tracks.forEach(function(track) {
-              track.stop();
-            });
-            video.srcObject = null;
+            let tracks = video.srcObject.getTracks()
+            tracks.forEach(function (track) {
+              track.stop()
+            })
+            video.srcObject = null
 
             // 세션에 유저정보 담기
             sessionStorage.setItem('user', JSON.stringify(props.location.state.user))
             // 페이지 이동
-            props.history.push('/moim');
-            return;
-          } 
+            props.history.push('/moim')
+            return
+          }
           //   else {
           //   setTimeout(() => {
           //     // document.body.append('로그인 실패')
@@ -130,15 +131,15 @@ const Login_face = (props) => {
           // }
         })
 
-        if(timeCount > 10) {
-          console.log('10초 :: 로그인 실패');
-          clearInterval(repeat);
-          let tracks = video.srcObject.getTracks();
-            tracks.forEach(function(track) {
-              track.stop();
-            });
-          video.srcObject = null;
-          props.history.push('/');
+        if (timeCount > 10) {
+          console.log('10초 :: 로그인 실패')
+          clearInterval(repeat)
+          let tracks = video.srcObject.getTracks()
+          tracks.forEach(function (track) {
+            track.stop()
+          })
+          video.srcObject = null
+          props.history.push('/')
         }
       }, 1000)
     })
