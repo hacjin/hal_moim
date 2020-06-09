@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Button, TextField, Grid, Container, Badge, CssBaseline, Avatar, Tooltip, Typography } from '@material-ui/core';
+import { Button, TextField, Grid, Container, Badge, CssBaseline, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import api from '../../apis/api'
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
@@ -73,7 +73,8 @@ const ProfileUpdate = ( props:any ) => {
     },
     notchedOutline: {
       borderWidth: "2px",
-      borderColor: "orange !important"
+      // borderColor: "orange !important"
+      borderColor: "#6a60a9 !important"
     },
   }));
   const classes = useStyles();
@@ -113,7 +114,7 @@ const ProfileUpdate = ( props:any ) => {
     }
 
     // 핸드폰 번호 유효성 검사
-    if(onlyNums.length == 11) {
+    if(onlyNums.length === 11) {
       phoneList.map( (data:String, index:number) => {
         if(onlyNums === data && onlyNums !== user.phone) {
           alert("이미 등록된 번호입니다.");
@@ -153,6 +154,19 @@ const ProfileUpdate = ( props:any ) => {
 
   const handleProfileUpdate = async(e:any) => {
     e.preventDefault();
+
+    if(phone === '') {
+      alert("핸드폰 번호를 입력해주세요");
+      return;
+    } else if(phone.length !== 11 || phone.substr(0,3) !== '010') {
+      alert("핸드폰 번호를 정확히 입력해주세요.");
+      return;
+    } 
+    else if(addr === '') {
+      alert("지역을 확인해주세요.");
+      return;
+    }
+
 
     // 변경 사항이 있다면
     if(  phone !== user.phone
@@ -211,11 +225,10 @@ const ProfileUpdate = ( props:any ) => {
                 {/* 미리 보기 */}
                 {base64Img === '' ? 
                 // 기존사진 
-                <Avatar alt="프로필 사진" src={profileImg}
-                  className={classes.large} />
+                <Avatar alt="프로필 사진" src={profileImg} className={classes.large} />
                 : 
                 // 수정사진
-                <Avatar className={classes.large} alt="수정 사진" src={base64Img} />
+                <Avatar alt="수정 사진" src={base64Img} className={classes.large}  />
                 }
               </Badge>
               
@@ -245,6 +258,7 @@ const ProfileUpdate = ( props:any ) => {
             {/* 성 함 */}
             <Grid item xs>
             <TextField
+                color='secondary'
                 id="name" label="성 함" name="name" required fullWidth
                 variant="outlined"
                 inputProps={{
@@ -256,6 +270,7 @@ const ProfileUpdate = ( props:any ) => {
             {/* 생일년도 */}
             <Grid item xs>
             <TextField
+            color='secondary'
                 id="birth"  label="생일년도" name="birth" required fullWidth 
                 variant="outlined"  
                 type="number"
@@ -268,6 +283,7 @@ const ProfileUpdate = ( props:any ) => {
             {/* 성 별 */}
             <Grid item xs>
                 <TextField
+                color='secondary'
                 variant="outlined" required fullWidth
                 id="gender" label="성별" name="gender"
                 inputProps={{
@@ -282,6 +298,7 @@ const ProfileUpdate = ( props:any ) => {
               <TextField
                 variant="outlined" required fullWidth
                 id="phone" label="핸드폰 번호" name="phone"
+                error={phone === ''}
                 InputProps={{
                   classes: {notchedOutline: classes.notchedOutline}
                 }}
@@ -303,7 +320,7 @@ const ProfileUpdate = ( props:any ) => {
             </Grid>
             <Grid item xs={12} sm={4}>
                 <Button
-                variant="outlined" size='large' style={{marginTop:5, marginLeft:5}}
+                variant="outlined" color='secondary' size='large' style={{marginTop:5, marginLeft:5}}
                 onClick={handleAddr}>위치변경</Button>
             </Grid>
         </Grid>
@@ -311,7 +328,7 @@ const ProfileUpdate = ( props:any ) => {
 
         {/* Register Submit */}
         <Button
-          type="submit"  fullWidth variant="contained" color="secondary" 
+          type="submit"  fullWidth variant="contained" color="primary" 
           className={classes.submit} onClick={handleProfileUpdate} >
           정보수정을 완료할래요!
         </Button>

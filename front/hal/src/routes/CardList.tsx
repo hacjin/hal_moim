@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Button, Card, CardHeader, CardContent, CardActions, Typography, withStyles, CardMedia, Divider } from '@material-ui/core'
+import { Button, Card, CardContent, CardActions, Typography, withStyles, CardMedia } from '@material-ui/core'
 import api from '../apis/api'
+import { useDispatch } from 'react-redux'
+import { updateInfo } from '../modules/myInfo'
 type CardProps = {
   data: any
   classes: any
@@ -33,7 +35,8 @@ const styles: any = (muiBaseTheme: any) => ({
   },
   content: {
     textAlign: 'left',
-    padding: muiBaseTheme.spacing(3),
+    // padding: muiBaseTheme.spacing(3),
+    fontSize: '20px',
   },
   front: {
     width: '100%',
@@ -50,11 +53,14 @@ const styles: any = (muiBaseTheme: any) => ({
   },
   heading: {
     fontWeight: 'bold',
+    fontSize: '30px',
+    margin: '0px',
   },
   subheading: {
     fontWeight: 'bold',
     lineHeight: 1.8,
-    fontSize: '0.9rem',
+    // fontSize: '0.9rem',
+    fontSize: '25px',
   },
   avatar: {
     display: 'inline-block',
@@ -66,51 +72,20 @@ const styles: any = (muiBaseTheme: any) => ({
   btn: {
     backgroundColor: '#FDE26C',
     color: 'black',
-    width: '100%', fontSize: '20px'
+    width: '100%',
+    fontSize: '20px',
   },
 })
-const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
-  // console.log(mid, uid)
-  e.preventDefault()
-  await api
-    .post('/moim/participate', {
-      pid: 0,
-      mid: mid,
-      uid: uid,
-    })
-    .then((res: any) => {
-      // console.log(res)
-    })
-}
-const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
-  // console.log(mid, uid)
-  e.preventDefault()
-  await api
-    .delete('/moim/participate', {
-      params: {
-        mid: mid,
-        uid: uid,
-      },
-    })
-    .then((res: any) => {
-      // console.log(res)
-    })
-}
-const getJoinMoim = async (uid: any, setJoin: React.Dispatch<any>) => {
-  await api
-    .get('/moim/participateListByUser', {
-      params: {
-        uid: uid,
-      },
-    })
-    .then((res: any) => {
-      setJoin(res.data.data)
-    })
-}
+
 const CardList = ({ data, classes, setUpdate }: CardProps) => {
+  const dispatch = useDispatch()
   const didMountRef = useRef(false)
   const [join, setJoin] = useState(Array<any>())
   const [button, setButton] = useState(false)
+  const user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
+  const myInfoUpdate = (infoUpdate: boolean) => {
+    dispatch(updateInfo(infoUpdate))
+  }
   useEffect(() => {
     if (didMountRef.current) {
       if (join.length > 0) {
@@ -124,10 +99,43 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
       getJoinMoim(user.uid, setJoin)
       didMountRef.current = true
     }
-  }, [join])
+  }, [join, data])
   const time = data.time.split(/[. : T -]/)
-  let user = JSON.parse(window.sessionStorage.getItem('user') || '{}')
-  console.log('모임 이미지 경로', data)
+
+  const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
+    e.preventDefault()
+    await api
+      .post('/moim/participate', {
+        pid: 0,
+        mid: mid,
+        uid: uid,
+      })
+      .then((res: any) => {})
+    myInfoUpdate(false)
+  }
+  const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
+    e.preventDefault()
+    await api
+      .delete('/moim/participate', {
+        params: {
+          mid: mid,
+          uid: uid,
+        },
+      })
+      .then((res: any) => {})
+    myInfoUpdate(false)
+  }
+  const getJoinMoim = async (uid: number, setJoin: React.Dispatch<any>) => {
+    await api
+      .get('/moim/participateListByUser', {
+        params: {
+          uid: uid,
+        },
+      })
+      .then((res: any) => {
+        setJoin(res.data.data)
+      })
+  }
   return (
     <>
       {data.state ? (
@@ -139,15 +147,16 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
                 <Typography className={classes.heading} variant={'h6'} gutterBottom>
                   {data.title}
                 </Typography>
-                <Typography className={classes.subheading} variant={'caption'}>
+                <Typography className={classes.subheading} variant={'h6'}>
+                  * {data.coment} *
+                </Typography>
+                <Typography className={classes.content} variant={'caption'}>
                   장소 : {data.location}
                   <br />
                 </Typography>
-                <Typography className={classes.subheading} variant={'caption'}>
-                  시간 : {time[0]}년 {time[1]}월 {time[2]}일 {time[3]}시:{time[4]}분까지
-                </Typography>
-                <Typography className={classes.heading} variant={'h6'}>
-                  설명 : {data.coment}
+                <Typography className={classes.content} variant={'caption'}>
+                  시간 : {time[0]}년 {time[1]}월 {time[2]}일 <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {time[3]}시 {time[4]}분까지
                 </Typography>
               </CardContent>
             </div>
@@ -173,11 +182,11 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
           </div>
           <CardActions>
             {button ? (
-              <Button            
-                style={{ width: '100%', fontSize: '20px',  backgroundColor: '#eb9f9f',  color: 'black',}}
+              <Button
+                style={{ width: '100%', fontSize: '20px', backgroundColor: '#eb9f9f', color: 'black' }}
                 // style={{ width: '100%', fontSize: '20px'}}
                 // color = 'secondary' variant = 'contained'
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent) => {
                   handleDelParticipate(e, data.mid, user.uid)
                   setUpdate(false)
                   didMountRef.current = false
@@ -188,9 +197,10 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
               </Button>
             ) : (
               <Button
-                style={{ width: '100%', fontSize: '20px'}}
-                color = 'primary' variant = 'contained'
-                onClick={(e) => {
+                style={{ width: '100%', fontSize: '20px' }}
+                color="primary"
+                variant="contained"
+                onClick={(e: React.MouseEvent) => {
                   handleAddParticipate(e, data.mid, user.uid)
                   setUpdate(false)
                   didMountRef.current = false

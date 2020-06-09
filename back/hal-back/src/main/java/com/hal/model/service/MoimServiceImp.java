@@ -39,7 +39,7 @@ public class MoimServiceImp implements MoimService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			User client = ur.findById(uid).orElseThrow(IllegalArgumentException::new);
-			List<Moim> moims = mr.findByHostNot(client);
+			List<Moim> moims = mr.findByHostNotAndTimeAfterOrderByTimeDesc(client, new Date());
 			List<MoimResponseDto> result = new ArrayList<>();
 			double user_lat = client.getLatitude();
 			double user_long = client.getLongitude();
@@ -272,8 +272,16 @@ public class MoimServiceImp implements MoimService {
 			List<Moim> moims = new ArrayList<Moim>();
 			
 			for(Participate p : parts) {
-				moims.add(p.getMoim());
+				if(p.getMoim().getTime().after(new Date()))
+					moims.add(p.getMoim());
 			}
+			
+			Collections.sort(moims, new Comparator<Moim>() {
+				@Override
+				public int compare(Moim o1, Moim o2) {
+					return (int)(o1.getTime().compareTo(o2.getTime()));
+				}
+			});
 			resultMap.put("state", "Success");
 			resultMap.put("message", "해당 유저가 참여한 모임 목록 조회 성공");
 			resultMap.put("data", moims);

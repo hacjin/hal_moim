@@ -1,14 +1,29 @@
-import React, { useEffect, useState} from 'react';
-import Profile from '../../components/Profile/Profile';
+import React, { useEffect } from 'react'
+import Profile from '../../components/Profile/Profile'
 import api from '../../apis/api'
 import MyInfoMoimList from '../../containers/MyInfoMoimList'
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider'
+import Typography from '@material-ui/core/Typography'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../../modules'
+import { updateInfo, updateMe, updateOther } from '../../modules/myInfo'
+import '../../App.css'
 
-const MyInfo = ( props:any ) => {
-  const [moimMe, setMoimMe] = useState([])
-  const [moimOther, setMoimOther] = useState([])
-  const [update, setUpdate] = useState(false)
+const MyInfo = (props: any) => {
+  const update = useSelector((state: RootState) => state.myInfo.update)
+  const moimMe = useSelector((state: RootState) => state.myInfo.moimMe)
+  const moimOther = useSelector((state: RootState) => state.myInfo.moimOther)
+
+  const dispatch = useDispatch()
+  const setUpdate = (isupdate: boolean) => {
+    dispatch(updateInfo(isupdate))
+  }
+  const setMoimMe = (moims: Array<any>) => {
+    dispatch(updateMe(moims))
+  }
+  const setMoimOther = (moims: Array<any>) => {
+    dispatch(updateOther(moims))
+  }
 
   async function getMoimMeList(uid: Number) {
     await api
@@ -31,33 +46,29 @@ const MyInfo = ( props:any ) => {
 
   useEffect(() => {
     if (update) {
-      
     } else {
-      //session id로 조회해야함
-      getMoimMeList(1)
-      getMoimOtherList(1)
+      let user = JSON.parse(sessionStorage.getItem('user') || '{}')
+      getMoimMeList(user.uid)
+      getMoimOtherList(user.uid)
 
       setUpdate(true)
     }
-       
   })
 
   return (
     <div>
-      <Profile {...props}/>
-      <Typography gutterBottom variant="subtitle1" style={{marginTop:'10px'}}>
-      내가 개설한 모임
-      </Typography>
-      <MyInfoMoimList
-      moims = {moimMe}
-      />
-      <Divider variant="middle" />
-      <Typography gutterBottom variant="subtitle1" style={{marginTop:'10px'}}>
-      내가 참여한 모임
-      </Typography>
-      <MyInfoMoimList
-      moims = {moimOther}
-      />
+      <Profile {...props} />
+      <div className="wrapperInfo">
+        <Typography gutterBottom variant="subtitle1" style={{ marginTop: '10px' }}>
+          내가 개설한 모임
+        </Typography>
+        <MyInfoMoimList moims={moimMe} showButton={false} />
+        <Divider variant="middle" />
+        <Typography gutterBottom variant="subtitle1" style={{ marginTop: '10px' }}>
+          내가 참여한 모임
+        </Typography>
+        <MyInfoMoimList moims={moimOther} showButton={true} />
+      </div>
     </div>
   )
 }

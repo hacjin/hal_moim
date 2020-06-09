@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import { Button, TextField, FormControl, RadioGroup, 
   FormControlLabel, Radio, Grid, Container, Typography, 
   CssBaseline, Avatar } from '@material-ui/core';
@@ -242,7 +242,7 @@ const Register = ( props:any ) => {
         <Button
           type="submit"  fullWidth variant="contained" color="primary" 
             className={classes.submit} onClick={handleSubmit} >
-          가입하깅
+          가입하기
         </Button>
       </div>
     </Container>

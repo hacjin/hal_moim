@@ -1,7 +1,7 @@
 package com.hal.controller;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,8 +50,9 @@ public class MoimController {
 			@RequestParam(name = "file", required = false) MultipartFile file, @RequestParam(name = "uid") int uid) {
 		String fileName = "";
 		if (file != null) {
-			fileName = "/images/moim/" + file.getOriginalFilename();
-			imgService.saveImage(file, "moim");
+			UUID uuid = UUID.randomUUID();
+			fileName = "/images/moim/" + uuid+"_"+file.getOriginalFilename();
+			imgService.saveImage(file, "moim",uuid);
 		}else {
 			fileName = "/images/moim/default.jpg";
 		}
@@ -101,4 +102,5 @@ public class MoimController {
 	public ResponseEntity<Map<String, Object>> moimFindListByOther(@RequestParam int uid) {
 		return new ResponseEntity<Map<String, Object>>(moimService.findMoimByOther(uid), HttpStatus.OK);
 	}
+
 }

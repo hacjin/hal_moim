@@ -14,9 +14,12 @@ const theme = createMuiTheme({
       main:'#FDE26C'
     },
     secondary:{
-      main: '#6a60a9'//'#eb9f9f'
+      main: '#336714'//'#6a60a9'(보)//'#eb9f9f'
     }
-  }
+  },
+  typography: {
+    fontFamily: 'Noto Sans KR !important',
+  },
 })
 
 function App() {

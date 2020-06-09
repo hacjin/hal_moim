@@ -1,15 +1,10 @@
 package com.hal.model.service;
 
-import java.util.List;
 import java.util.Map;
 
 import com.hal.model.dto.Moim;
 import com.hal.model.dto.MoimRequestDto;
-import com.hal.model.dto.MoimResponseDto;
-import com.hal.model.dto.Participate;
 import com.hal.model.dto.ParticipateRequestDto;
-import com.hal.model.dto.ParticipateResponseDto;
-import com.hal.model.dto.User;
 
 public interface MoimService {
 	// 사용자 위치를 기준으로 거리기반의 모임들을 불러오는 메소드 => 참여 인원 조회 추가

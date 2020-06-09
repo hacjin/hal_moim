@@ -2,6 +2,7 @@ package com.hal.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,13 +52,16 @@ public class UserController {
 		
 		String profile_filename = "/images/profile/default.jpg"; // 프로필은 기본사진으로 저장
 		String login_filename = "/images/login/";
-		if(myImg != null) login_filename += myImg.getOriginalFilename();
+		if(myImg != null) {
+			UUID uuid = UUID.randomUUID();
+			login_filename += uuid+"_"+myImg.getOriginalFilename();
+			imageService.saveImage(myImg, "login",uuid);
+			}
 		else login_filename += "default.jpg";
 		
 		User user = new User(0, name, birth, Integer.parseInt(gender), phone, addr, profile_filename ,login_filename 
 				, Double.parseDouble(latitude), Double.parseDouble(longitude), null);
 		
-		imageService.saveImage(myImg, "login");
 		
 	    return handleSuccess(userServiceImp.addUser(user));
 	}
@@ -74,8 +78,12 @@ public class UserController {
 													) throws Exception {
 		String profile_filename = "/images/profile/";
 		if(profileImg != null) { // 사진 변경하고자 할 때
-			profile_filename += profileImg.getOriginalFilename();
-			imageService.saveImage(profileImg, "profile");
+			UUID uuid = UUID.randomUUID();
+			profile_filename += uuid+"_"+profileImg.getOriginalFilename();
+			imageService.saveImage(profileImg, "profile",uuid);
+		} else {
+			User user = userServiceImp.findUserById(Integer.parseInt(uid));
+			profile_filename = user.getProfileImg();
 		}
 		
 		int tmpNum = 0;
@@ -103,7 +111,6 @@ public class UserController {
 	@ApiOperation(value = "모든 Friend 조회")
 	@GetMapping("/friendsByDistance")
 	public ResponseEntity<Map<String, Object>> friendsAllList(@RequestParam int uid, @RequestParam int dis_filter) throws Exception {
-	    System.out.println("friendsData:::::::::::"+uid);
 		return handleSuccess(userServiceImp.findFriendByDistance(uid, dis_filter));
 	}
 	

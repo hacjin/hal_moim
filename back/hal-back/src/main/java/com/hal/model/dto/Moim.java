@@ -57,7 +57,6 @@ public class Moim {
 	private String moimImg;
 	
 	@OneToOne
-//	@JoinColumn(name = "uid",referencedColumnName = "uid", updatable = false, insertable = false)
 	@JoinColumn(name = "uid",referencedColumnName = "uid")
 	private User host; // host 정보
 	

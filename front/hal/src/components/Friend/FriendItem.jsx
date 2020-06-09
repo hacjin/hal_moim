@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import cx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -6,7 +6,6 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import TextInfoContent from '@mui-treasury/components/content/textInfo'
-import { useBlogTextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/blog'
 import { useOverShadowStyles } from '@mui-treasury/styles/shadow/over'
 import API from '../../apis/api'
 
@@ -60,35 +59,28 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   },
   content: {
     padding: 24,
+    color: '#098765',
   },
   cta: {
     marginTop: 24,
     textTransform: 'initial',
   },
+}))
 
-}));
-
-const FriendItem = (props) => 
-{ 
+const FriendItem = (props) => {
   const item = props.dataItem
+  const genderString = item.gender === 1 ? '남자' : '여자'
   const userId = props.userId
-  const styles = useStyles();
-  const {
-    button: buttonStyles,
-    ...contentStyles
-  } = useBlogTextInfoContentStyles();
-  const shadowStyles = useOverShadowStyles();
+  const styles = useStyles()
+  const shadowStyles = useOverShadowStyles()
 
-  const [isOpen, setIsOpen] = useState(false);
-
-
-  async function _onFormSubmit(){
+  async function _onFormSubmit() {
     //이친구와 방이 있나 확인(있으면 방 번호 리턴, 없으면 방 만들고 방번호 리턴)
-    const roomId = await API.get('chat/addRoom',{
-        params:{
-            senderId: userId, //세션
-            receiverId: item.uid
-        }
+    const roomId = await API.get('chat/addRoom', {
+      params: {
+        senderId: userId, //세션
+        receiverId: item.uid,
+      },
     })
 
     //채팅방 메시지 불러오기
@@ -98,46 +90,32 @@ const FriendItem = (props) =>
       },
     })
     var roomMessageList = []
-    
-    totalChatData.data.data.forEach(function(item, index, array){
-        var replytext 
-        if(item.type ==='text'){
-          replytext = {'text':item.message}
-        }else{
-          replytext = {'emoji':item.message}
-        }
-        roomMessageList.push({
-            author: item.sender.uid==userId?'me':'them',
-            type: item.type,
-            data: replytext
-            })
+
+    totalChatData.data.data.forEach(function (item, index, array) {
+      var replytext
+      if (item.type === 'text') {
+        replytext = { text: item.message }
+      } else {
+        replytext = { emoji: item.message }
+      }
+      roomMessageList.push({
+        author: item.sender.uid === userId ? 'me' : 'them',
+        type: item.type,
+        data: replytext,
+      })
     })
 
-    setIsOpen(true)
     props.openChatWindow(true, roomId.data.data, item, roomMessageList)
   }
 
-
   return (
     <Card className={cx(styles.root, shadowStyles.root)}>
-      <CardMedia
-        className={styles.media}
-        image={
-          item.profileImg
-          // "../../public/logo.jpg"
-        }
-      />
+      <CardMedia className={styles.media} image={item.profileImg} />
       <CardContent style={{ width: '400px' }}>
-        <TextInfoContent
-          // classes={contentStyles}
-          // overline={'28 MAR 2019'}
-          heading={item.name}
-          body={
-            item.description
-          }
-        />
-        {/* <Button className={styles.btn} fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button> */}
-        <Button  variant="contained" color="primary" fullWidth="true" onClick={_onFormSubmit}>메세지 보내기</Button>
+        <TextInfoContent className={styles.content} overline={' (' + item.birth + '년생/ ' + genderString + ')'} heading={item.name} body={item.description} />
+        <Button variant="contained" color="primary" fullWidth={true} onClick={_onFormSubmit}>
+          메세지 보내기
+        </Button>
       </CardContent>
     </Card>
   )

@@ -4,9 +4,9 @@ package com.hal.model.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.*;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class ImageService {
 		}
 	}
 
-	public void saveImage(MultipartFile eFile, String subPath) {
+	public void saveImage(MultipartFile eFile, String subPath, UUID uuid) {
 		// 파일 이름
 		String fileName = "";
 		String fileUri = "";
@@ -43,8 +43,7 @@ public class ImageService {
 			fileName = StringUtils.cleanPath(eFile.getOriginalFilename());
 			byte[] bytes = eFile.getBytes();
 			fileUri = fileStorageLocation + "/" + subPath;
-			System.out.println("파일경로 : "+fileUri);
-			File file = new File(fileUri,fileName);
+			File file = new File(fileUri,uuid+"_"+fileName);
 			
 			if (fileName.contains("..")) {
 				throw new FileStorageException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);

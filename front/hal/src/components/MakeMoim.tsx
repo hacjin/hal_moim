@@ -12,30 +12,42 @@ const useStyles = makeStyles((theme: Theme) => ({
   dialog: {
     textAlign: 'center',
   },
+  dialogContent: {
+    padding: '0',
+  },
   root: {
     '& > *': {
       margin: theme.spacing(1),
-    },
-    '& > div': {
-      width: '80%',
     },
   },
   input: {
     display: 'none',
   },
-  preview: {
+  title: {
+    width: '80%',
+  },
+  previewNone: {
     margin: '0px auto',
     backgroundColor: '#efefef',
     width: '300px',
+    maxWidth: '65vw',
+    maxHeight: '25vh',
     height: '200px',
+    border: 'solid 3px',
+    borderColor: 'red',
+  },
+  preview: {
+    margin: '0px auto',
+    maxWidth: '65vw',
+    maxHeight: '25vh',
   },
   btn: {
-    variant: "contained",
-    backgroundColor: '#FDE26C'
+    variant: 'contained',
+    backgroundColor: '#FDE26C',
   },
   btnPink: {
-    variant: "contained",
-    backgroundColor: '#eb9f9f'
+    variant: 'contained',
+    backgroundColor: '#eb9f9f',
   },
 }))
 
@@ -87,24 +99,28 @@ function MakeMoim(props: any) {
   }
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
-
-    const data = new FormData()
-    data.append('mid', JSON.stringify(0))
-    data.append('title', title)
-    data.append('time', Moment(selectedDate).format('YYYY-MM-DD HH:mm:ss'))
-    data.append('location', location)
-    data.append('state', JSON.stringify(true))
-    data.append('latitude', latitude.toString())
-    data.append('longitude', longitude.toString())
-    data.append('coment', coment)
-    if (file) {
-      data.append('file', file[0])
+    if (title === '' || location === '' || coment === '' || imgBase64 === '') {
+      alert('모임 정보를 입력해 주세요')
+    } else {
+      const data = new FormData()
+      data.append('mid', JSON.stringify(0))
+      data.append('title', title)
+      data.append('time', Moment(selectedDate).format('YYYY-MM-DD HH:mm:ss'))
+      data.append('location', location)
+      data.append('state', JSON.stringify(true))
+      data.append('latitude', latitude.toString())
+      data.append('longitude', longitude.toString())
+      data.append('coment', coment)
+      if (file) {
+        data.append('file', file[0])
+      }
+      data.append('uid', JSON.stringify(user.uid))
+      // 만들기 전송
+      await api.post('/moim/add', data).then((res) => {
+        console.log(res)
+      })
+      handleClose()
     }
-    data.append('uid', JSON.stringify(user.uid))
-    // 만들기 전송
-    await api.post('/moim/add', data).then((res) => {
-      console.log(res)
-    })
   }
   const post = async () => {
     await new daum.Postcode({
@@ -133,9 +149,9 @@ function MakeMoim(props: any) {
         fullWidth={true}
       >
         <DialogTitle id="alert-dialog-title">모임 만들기</DialogTitle>
-        <DialogContent>
+        <DialogContent className={classes.dialogContent}>
           <div className={classes.root}>
-            <div className={classes.preview}>{imgBase64 === '' ? '' : <img className={classes.preview} src={imgBase64} alt="미리보기" />}</div>
+            <div className={imgBase64 === '' ? classes.previewNone : classes.preview}>{imgBase64 === '' ? '' : <img className={classes.preview} src={imgBase64} alt="" />}</div>
             <input
               //
               accept="image/*"
@@ -146,15 +162,17 @@ function MakeMoim(props: any) {
               onChange={handleImg}
             />
             <label htmlFor="contained-button-file">
-              <Button variant="contained" color='primary' component="span">
+              <Button variant="contained" color="secondary" component="span">
                 이미지 업로드
               </Button>
             </label>
             <br />
-            <TextField id="outlined-basic" label="제목" variant="outlined" value={title} onChange={handleTitle} />
+            <TextField className={classes.title} id="title" error={title === ''} label="제목" color="secondary" variant="outlined" value={title} onChange={handleTitle} />
             <br />
             <MuiPickersUtilsProvider locale={convert} utils={DateFnsUtils}>
               <KeyboardDatePicker
+                className={classes.title}
+                color="secondary"
                 margin="normal"
                 id="date-picker-dialog"
                 label="모임 날짜"
@@ -167,6 +185,8 @@ function MakeMoim(props: any) {
               />
               <br />
               <KeyboardTimePicker
+                className={classes.title}
+                color="secondary"
                 margin="normal"
                 format="HH:mm:ss"
                 id="time-picker"
@@ -180,7 +200,10 @@ function MakeMoim(props: any) {
             </MuiPickersUtilsProvider>
             <br />
             <TextField
+              className={classes.title}
+              color="secondary"
               variant="outlined"
+              error={location === ''}
               label="만날 장소를 검색해주세요."
               InputProps={{
                 readOnly: true,
@@ -191,6 +214,9 @@ function MakeMoim(props: any) {
             <br />
             <TextField
               //
+              className={classes.title}
+              error={coment === ''}
+              color="secondary"
               id="outlined-multiline-static"
               label="모임 설명"
               multiline
@@ -204,10 +230,9 @@ function MakeMoim(props: any) {
                 취소
               </Button>
               &emsp;
-              <Button className={classes.btn} onClick={handleSubmit}>
+              <Button variant="contained" color="primary" onClick={handleSubmit}>
                 만들기
               </Button>
-              
             </div>
           </div>
         </DialogContent>
