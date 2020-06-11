@@ -1,6 +1,6 @@
 import React from 'react'
 import { ListView } from '@progress/kendo-react-listview'
-import API from '../apis/api'
+import API, { websocketUri } from '../apis/api'
 import FriendItem from '../components/Friend/FriendItem'
 import ChatWindow from '../components/Chat/ChatWindow'
 import DistanceSlider from '../components/Friend/DistanceSlider'
@@ -118,7 +118,7 @@ class FriendList extends React.Component {
     return (
       <div>
         <SockJsClient
-          url={'http://52.78.120.154:8080/webSocket'}
+          url={websocketUri}
           topics={topics}
           onMessage={(msg) => {
             var replytext

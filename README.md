@@ -2,7 +2,7 @@
 typora-copy-images-to: img
 ---
 
-![logo](./img/logo.jpg)
+![logo](./readme/img/logo.jpg)
 
 # 시니어를 위한 모임, 친구 만들기 서비스
 
