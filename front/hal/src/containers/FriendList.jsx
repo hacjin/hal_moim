@@ -53,7 +53,6 @@ class FriendList extends React.Component {
         dis_filter: this.state.dis,
       },
     })
-    console.log('userDate', userData)
 
     this.setState({
       ...this.state,
@@ -78,7 +77,6 @@ class FriendList extends React.Component {
   }
 
   _openChatWindow = (flag, roomId, receiver, totalChatData) => {
-    console.log('_openChatWindow')
     this.setState({
       ...this.state,
       isOpen: flag,
@@ -93,7 +91,6 @@ class FriendList extends React.Component {
 
   // from Launcher를 사용하는 Chat.js 에서 가져옴
   _onMessageWasSent(message) {
-    console.log('메시지전송')
     const chat = { message: '', type: '', time: new Date(), roomId: this.state.roomId, senderId: '1' }
 
     if (message.type === 'text') {
@@ -146,7 +143,6 @@ class FriendList extends React.Component {
         />
 
         <DistanceSlider distance={this._getFriendList} text={'친구와의 거리'} />
-        {console.log('데이터크기', this.state.friendsData)}
         {this.state.friendsData.length > 0 ? (
           <ListView
             data={this.state.friendsData} //contacts : json데이터

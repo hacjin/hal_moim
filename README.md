@@ -7,20 +7,17 @@ typora-copy-images-to: img
 # 시니어를 위한 모임, 친구 만들기 서비스
 
 ![react](https://img.shields.io/badge/react-4.1.2-blue?logo=React)
-![redux](https://img.shields.io/badge/redux-6.13.4-blue?logo=redux)
-![typescript](https://img.shields.io/badge/typescript-6.13.4-blue?logo=typescript)
+![redux](https://img.shields.io/badge/redux-7.2.0-blue?logo=redux)
+![typescript](https://img.shields.io/badge/typescript-3.7.3-blue?logo=typescript)
 ![java](https://img.shields.io/badge/java-1.8.0-orange?logo=java)
-![spring](https://img.shields.io/badge/spring-3.9.7-yellow?logo=spring)
-![spring-boot](https://img.shields.io/badge/springboot-4.6.1-yellow?logo=spring)
+![spring](https://img.shields.io/badge/spring-4.6.1-yellow?logo=spring)
+![spring-boot](https://img.shields.io/badge/springboot-2.3.0-yellow?logo=spring)
 ![html](https://img.shields.io/badge/html-html5-red?logo=html5)
 ![css](https://img.shields.io/badge/css-css3-red?logo=css3)
 ![javascript](https://img.shields.io/badge/javascript-es6-yellowgreen?logo=javascript)
 ![mysql](https://img.shields.io/badge/mysql-5.7.30-yellowgreen?logo=mysql)
 ![aws](https://img.shields.io/badge/aws%20-ec2-ff69b4?logo=Amazon)
-![docker](https://img.shields.io/badge/docker%20-5.7.30-ff69b4?logo=docker)
-![kubernetes](https://img.shields.io/badge/kubernetes%20-5.7.30-ff69b4?logo=kubernetes)
-
-
+![docker](https://img.shields.io/badge/docker%20-19.03.9-ff69b4?logo=docker)
 
 ## 프로젝트 설명
 

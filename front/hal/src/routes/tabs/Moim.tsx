@@ -42,7 +42,6 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
   }
 
   async function getMoimList(dis_filter: Number, uid: Number) {
-    console.log('거리', dis_filter)
     await api
       .get('/moim/allList', {
         params: {
