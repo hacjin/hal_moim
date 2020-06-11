@@ -43,12 +43,14 @@ const Moim = ({ moim, isMoims }: MoimProps) => {
 
   async function getMoimList(dis_filter: Number, uid: Number) {
     await api
-      .get('/moim/allList', {
-        params: {
-          uid: uid,
-          dis_filter: dis_filter,
-        },
-      })
+      .get('/moims/'+1+'/distance/'+dis_filter
+      // , {
+      //   params: {
+      //     uid: uid,
+      //     dis_filter: dis_filter,
+      //   },
+      // }
+      )
       .then((res: any) => isMoims(res.data.data))
   }
   useEffect(() => {
