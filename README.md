@@ -15,7 +15,7 @@ typora-copy-images-to: img
 ![html](https://img.shields.io/badge/html-html5-red?logo=html5)
 ![css](https://img.shields.io/badge/css-css3-red?logo=css3)
 ![javascript](https://img.shields.io/badge/javascript-es6-yellowgreen?logo=javascript)
-![mysql](https://img.shields.io/badge/mysql-5.7.30-yellowgreen?logo=mysql)
+![mysql](https://img.shields.io/badge/mysql-8.0.19-yellowgreen?logo=mysql)
 ![aws](https://img.shields.io/badge/aws%20-ec2-ff69b4?logo=Amazon)
 ![docker](https://img.shields.io/badge/docker%20-19.03.9-ff69b4?logo=docker)
 
