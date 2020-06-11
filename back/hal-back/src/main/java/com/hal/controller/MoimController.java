@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,21 +28,21 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/moim")
+@RequestMapping("/moims")
 public class MoimController {
 	@Autowired
 	private MoimService moimService;
 	@Autowired
 	private ImageService imgService;
 
-	@ApiOperation(value = "거리기반 모임방 목록 전체 조회")
-	@GetMapping("/allList")
-	public ResponseEntity<Map<String, Object>> moimFindAllList(@RequestParam int uid, @RequestParam int dis_filter) {
+	@ApiOperation(value = "해당 유저 거리 내 모임방 목록 전체 조회")
+	@GetMapping("/{uid}/distance/{dis_filter}")
+	public ResponseEntity<Map<String, Object>> moimFindAllList(@PathVariable int uid, @PathVariable int dis_filter) {
 		return new ResponseEntity<Map<String, Object>>(moimService.findMoimByDist(uid, dis_filter), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "모임방 만들기")
-	@PostMapping("/add")
+	@PostMapping("")
 	public ResponseEntity<Map<String, Object>> moimAdd(@RequestParam(name = "mid") int mid,
 			@RequestParam(name = "title") String title, @RequestParam(name = "time") String time,
 			@RequestParam(name = "location") String location, @RequestParam(name = "state") boolean state,
