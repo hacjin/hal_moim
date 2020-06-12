@@ -99,7 +99,9 @@ https://localhost:8080/api/swagger-ui.html
 
 ![시스템구조도](readme/img/architecture.png)
 
+### 데이터베이스 ERD
 
+![ERD](readme/img/erd.png)
 
 ### 기획배경
 
