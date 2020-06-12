@@ -124,7 +124,7 @@ public class MoimServiceImp implements MoimService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			moim.closeRoom();
-			mr.updateMoim(moim);
+			moim = mr.save(moim);
 			MoimRequestDto request = new MoimRequestDto();
 			MoimResponseDto response = request.toResponse(moim);
 			resultMap.put("state", "Success");
