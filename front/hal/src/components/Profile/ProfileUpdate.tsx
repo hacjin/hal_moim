@@ -31,7 +31,7 @@ const ProfileUpdate = ( props:any ) => {
     // 핸드폰 전체목록 가져오기 (유효성확인)
     const userPhoneList = async() => {
       await api
-      .get('/user/findall-phone')
+      .get('/users/phonelist')
       .then( (res:any) => {
         setphoneList(res.data.data);
       })
@@ -187,7 +187,7 @@ const ProfileUpdate = ( props:any ) => {
       formdata.append('uid', user.uid);
 
       await api
-      .put('/user/update-user', formdata)
+      .put('/users', formdata)
       .then( (res:any) => {
         // 세션스토리지 변경
         sessionStorage.setItem('user', JSON.stringify(res.data.data));

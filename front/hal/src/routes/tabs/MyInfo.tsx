@@ -26,22 +26,10 @@ const MyInfo = (props: any) => {
   }
 
   async function getMoimMeList(uid: Number) {
-    await api
-      .get('/moim/listByMe', {
-        params: {
-          uid: uid,
-        },
-      })
-      .then((res: any) => setMoimMe(res.data.data))
+    await api.get('/moims/make/users/' + uid, {}).then((res: any) => setMoimMe(res.data.data))
   }
   async function getMoimOtherList(uid: Number) {
-    await api
-      .get('/moim/listByOther', {
-        params: {
-          uid: uid,
-        },
-      })
-      .then((res: any) => setMoimOther(res.data.data))
+    await api.get('/moims/join/users/' + uid, {}).then((res: any) => setMoimOther(res.data.data))
   }
 
   useEffect(() => {

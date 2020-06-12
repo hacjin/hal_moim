@@ -63,7 +63,7 @@ public class MoimController {
 	}
 
 	@ApiOperation(value = "모임방 상태 변화 (폭파)")
-	@PutMapping("/state")
+	@PutMapping("")
 	public ResponseEntity<Map<String, Object>> moimUpdate(@RequestBody Moim moim) {
 		return new ResponseEntity<Map<String, Object>>(moimService.updateMoim(moim), HttpStatus.OK);
 	}
@@ -75,32 +75,32 @@ public class MoimController {
 	}
 
 	@ApiOperation(value = "해당 모임에 특정 사용자 참여 삭제 기능")
-	@DeleteMapping("/participate")
-	public ResponseEntity<Map<String, Object>> moimUpdateParticipate(@RequestParam int uid, @RequestParam int mid) {
+	@DeleteMapping("/{mid}/users/{uid}/participate")
+	public ResponseEntity<Map<String, Object>> moimUpdateParticipate(@PathVariable int uid, @PathVariable int mid) {
 		return new ResponseEntity<Map<String, Object>>(moimService.deleteParticipate(uid, mid), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "해당 모임에 참여한 유저 목록 전체 조회")
-	@GetMapping("/participateAllList")
-	public ResponseEntity<Map<String, Object>> moimFindParticipateAllUsers(@RequestParam int mid) {
+	@GetMapping("/{mid}/participate")
+	public ResponseEntity<Map<String, Object>> moimFindParticipateAllUsers(@PathVariable int mid) {
 		return new ResponseEntity<Map<String, Object>>(moimService.findUsersByMid(mid), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "해당 유저가 참여한 모임 목록 조회")
-	@GetMapping("/participateListByUser")
-	public ResponseEntity<Map<String, Object>> moimFindParticipateByUsers(@RequestParam int uid) {
+	@GetMapping("/users/{uid}/participate")
+	public ResponseEntity<Map<String, Object>> moimFindParticipateByUsers(@PathVariable int uid) {
 		return new ResponseEntity<Map<String, Object>>(moimService.findPartsByUid(uid), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "해당 유저가 생성한 모임 목록 조회")
-	@GetMapping("/listByMe")
-	public ResponseEntity<Map<String, Object>> moimFindListByMe(@RequestParam int uid) {
+	@GetMapping("/make/users/{uid}")
+	public ResponseEntity<Map<String, Object>> moimFindListByMe(@PathVariable int uid) {
 		return new ResponseEntity<Map<String, Object>>(moimService.findMoimByMe(uid), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "해당 유저가 참가한 모임 목록 조회")
-	@GetMapping("/listByOther")
-	public ResponseEntity<Map<String, Object>> moimFindListByOther(@RequestParam int uid) {
+	@GetMapping("/join/users/{uid}")
+	public ResponseEntity<Map<String, Object>> moimFindListByOther(@PathVariable int uid) {
 		return new ResponseEntity<Map<String, Object>>(moimService.findMoimByOther(uid), HttpStatus.OK);
 	}
 

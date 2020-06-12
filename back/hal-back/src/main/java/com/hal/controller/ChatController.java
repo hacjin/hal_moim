@@ -11,6 +11,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @RestController
-@RequestMapping("/chat")
+@RequestMapping("/chats")
 public class ChatController {
 	
 	@Autowired
@@ -63,21 +64,22 @@ public class ChatController {
     
     
 
-    @ApiOperation(value = "chat 목록 조회")
-    @GetMapping("/findChatListById")
-    public ResponseEntity<Map<String, Object>> findChatListById(@RequestParam int rid) throws Exception {
+    @ApiOperation(value = "해당 채팅방의 채팅 내용 전체를 조회")
+    @GetMapping("/rooms/{rid}")
+    public ResponseEntity<Map<String, Object>> findChatListById(@PathVariable int rid) throws Exception {
     	return handleSuccess(cservice.findChatListById(rid)); 
     }
     
     
-	@ApiOperation(value = "chat room 목록 조회")
-	@GetMapping("/findRoomListById")
-	public ResponseEntity<Map<String, Object>> findRoomListById(@RequestParam int uid) throws Exception {
+	@ApiOperation(value = "해당 유저의 chat room 목록을 조회")
+//	@GetMapping("/findRoomListById")
+	@GetMapping("/users/{uid}/rooms")
+	public ResponseEntity<Map<String, Object>> findRoomListById(@PathVariable int uid) throws Exception {
 		return handleSuccess(rservice.findRoomListById(uid)); 
 	}
 	
-	@ApiOperation(value = "chat room 만들기")
-	@GetMapping("/addRoom")
+	@ApiOperation(value = "chat room 조회")
+	@GetMapping("/rooms")
 	public ResponseEntity<Map<String, Object>> addRoom(@RequestParam int senderId,@RequestParam int receiverId) throws Exception {
 		//방이 있는지 없는지 확인하고 없으면 방 만들어줌, 리턴값은 room id
 		return handleSuccess(rservice.addRoom(senderId,receiverId)); 

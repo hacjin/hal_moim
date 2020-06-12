@@ -103,7 +103,7 @@ const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number |
   // console.log(mid, uid)
   e.preventDefault()
   await api
-    .post('/moim/participate', {
+    .post('/moims/participate', {
       pid: 0,
       mid: mid,
       uid: uid,
@@ -115,29 +115,16 @@ const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number |
 const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null, isDelete: boolean) => {
   // console.log(mid, uid)
   e.preventDefault()
-  await api
-    .delete('/moim/participate', {
-      params: {
-        mid: mid,
-        uid: uid,
-      },
-    })
-    .then((res: any) => {
-      // console.log(res)
-    })
+  await api.delete('/moims/' + mid + '/users/' + uid + '/participate', {}).then((res: any) => {
+    // console.log(res)
+  })
   //isDelete상태 변경
   isDelete = !isDelete
 }
 const getJoinMoim = async (uid: any, setJoin: React.Dispatch<any>) => {
-  await api
-    .get('/moim/participateListByUser', {
-      params: {
-        uid: uid,
-      },
-    })
-    .then((res: any) => {
-      setJoin(res.data.data)
-    })
+  await api.get('/moims/users/' + uid + '/participate', {}).then((res: any) => {
+    setJoin(res.data.data)
+  })
 }
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & { children?: React.ReactElement }, ref: React.Ref<unknown>) {
@@ -167,13 +154,7 @@ const MyInfoMoim = ({ data, showButton }: Props) => {
   }
 
   async function getMember(mid: Number) {
-    await api
-      .get('/moim/participateAllList', {
-        params: {
-          mid: mid,
-        },
-      })
-      .then((res: any) => setMember(res.data.data))
+    await api.get('/moims/' + mid + '/participate', {}).then((res: any) => setMember(res.data.data))
   }
 
   useEffect(() => {

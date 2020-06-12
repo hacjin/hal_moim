@@ -76,7 +76,7 @@ const FriendItem = (props) => {
 
   async function _onFormSubmit() {
     //이친구와 방이 있나 확인(있으면 방 번호 리턴, 없으면 방 만들고 방번호 리턴)
-    const roomId = await API.get('chat/addRoom', {
+    const roomId = await API.get('chats/rooms', {
       params: {
         senderId: userId, //세션
         receiverId: item.uid,
@@ -84,11 +84,8 @@ const FriendItem = (props) => {
     })
 
     //채팅방 메시지 불러오기
-    let totalChatData = await API.get('chat/findChatListById', {
-      params: {
-        rid: roomId.data.data,
-      },
-    })
+    let totalChatData = await API.get('chats/rooms/'+roomId.data.data)
+
     var roomMessageList = []
 
     totalChatData.data.data.forEach(function (item, index, array) {

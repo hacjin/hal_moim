@@ -9,11 +9,8 @@ const ChatItem = (props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   async function _onFormSubmit() {
-    let totalChatData = await API.get('chat/findChatListById', {
-      params: {
-        rid: item.rid,
-      },
-    })
+    let totalChatData = await API.get('chats/rooms/'+item.rid)
+
     var roomMessageList = []
 
     totalChatData.data.data.forEach(function (item, index, array) {

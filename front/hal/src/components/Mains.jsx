@@ -78,7 +78,7 @@ const Mains = (history) => {
         } else {
         const num = phone.replace(/-/gi,'');
         await api
-        .get('/user/login', {
+        .get('/users/login', {
             params: {
                 phone: num
             }
