@@ -105,7 +105,7 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
   const handleAddParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
     e.preventDefault()
     await api
-      .post('/moim/participate', {
+      .post('/moims/participate', {
         pid: 0,
         mid: mid,
         uid: uid,
@@ -115,26 +115,13 @@ const CardList = ({ data, classes, setUpdate }: CardProps) => {
   }
   const handleDelParticipate = async (e: React.MouseEvent, mid: any, uid: number | null) => {
     e.preventDefault()
-    await api
-      .delete('/moim/participate', {
-        params: {
-          mid: mid,
-          uid: uid,
-        },
-      })
-      .then((res: any) => {})
+    await api.delete('/moims/' + mid + '/users/' + uid + '/participate', {}).then((res: any) => {})
     myInfoUpdate(false)
   }
   const getJoinMoim = async (uid: number, setJoin: React.Dispatch<any>) => {
-    await api
-      .get('/moim/participateListByUser', {
-        params: {
-          uid: uid,
-        },
-      })
-      .then((res: any) => {
-        setJoin(res.data.data)
-      })
+    await api.get('/moims/users/' + uid + '/participate', {}).then((res: any) => {
+      setJoin(res.data.data)
+    })
   }
   return (
     <>

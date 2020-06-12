@@ -116,7 +116,7 @@ function MakeMoim(props: any) {
       }
       data.append('uid', JSON.stringify(user.uid))
       // 만들기 전송
-      await api.post('/moim/add', data).then((res) => {
+      await api.post('/moims', data).then((res) => {
         console.log(res)
       })
       handleClose()
