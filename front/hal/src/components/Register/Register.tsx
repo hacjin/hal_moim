@@ -145,7 +145,7 @@ const Register = ( props:any ) => {
 
   const doRegist = async (formdata:FormData) => {
     await api
-    .post('/user/add-user', formdata)
+    .post('/users', formdata)
     .then( (res:any) => {
       // 세션스토리지 저장
       sessionStorage.setItem('user', JSON.stringify(res.data.data));

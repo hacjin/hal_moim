@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -33,13 +34,13 @@ public class UserController {
 	private ImageService imageService;
 	
 	@ApiOperation(value = "모든 User 목록 조회")
-	@GetMapping("/userlist")
+	@GetMapping("")
 	public ResponseEntity<Map<String, Object>> userSearchAllList() throws Exception {
 	    return handleSuccess(userServiceImp.userSearchAllList());
 	}
 	
 	@ApiOperation(value = "회원가입")
-	@PostMapping("/add-user")
+	@PostMapping("")
 	public ResponseEntity<Map<String, Object>> addUser(@RequestParam(value="name", required = true) String name
 													,  @RequestParam(value="birth", required = true) String birth
 													,  @RequestParam(value="gender", required = true) String gender
@@ -66,8 +67,8 @@ public class UserController {
 	    return handleSuccess(userServiceImp.addUser(user));
 	}
 	
-	@ApiOperation(value = "프로필 수정")
-	@PutMapping("/update-user")
+	@ApiOperation(value = "user정보 수정")
+	@PutMapping("")
 	public ResponseEntity<Map<String, Object>> updateUser( @RequestParam(value="phone", required = true) String phone
 													,  @RequestParam(value="addr", required = true) String addr
 													,  @RequestParam(value="profileImg", required = false) MultipartFile profileImg
@@ -97,7 +98,7 @@ public class UserController {
 	}
 	
 	@ApiOperation(value = "모든 회원 폰번호 조회")
-	@GetMapping("/findall-phone")
+	@GetMapping("/phonelist")
 	public ResponseEntity<Map<String, Object>> findAllPhoneList() throws Exception {
 	    return handleSuccess(userServiceImp.findAllPhone());
 	}
@@ -108,9 +109,9 @@ public class UserController {
 	    return handleSuccess(userServiceImp.userLogin(phone));
 	}
 	
-	@ApiOperation(value = "모든 Friend 조회")
-	@GetMapping("/friendsByDistance")
-	public ResponseEntity<Map<String, Object>> friendsAllList(@RequestParam int uid, @RequestParam int dis_filter) throws Exception {
+	@ApiOperation(value = "해당 user의 해당 거리 이내에 있는 모든 user 조회")
+	@GetMapping("{uid}/distance/{dis_filter}")
+	public ResponseEntity<Map<String, Object>> friendsAllList(@PathVariable int uid, @PathVariable int dis_filter) throws Exception {
 		return handleSuccess(userServiceImp.findFriendByDistance(uid, dis_filter));
 	}
 	

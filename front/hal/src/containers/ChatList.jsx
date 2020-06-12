@@ -70,11 +70,12 @@ class ChatList extends React.Component {
 
   async componentDidMount() {
     // Load async data.
-    let userData = await API.get('chat/findRoomListById', {
-      params: {
-        uid: this.user.uid,
-      },
-    })
+    let userData = await API.get('chats/users/'+this.user.uid+'/rooms')
+    // , {
+    //   params: {
+    //     uid: this.user.uid,
+    //   },
+    // })
 
     this.setState({
       ...this.state,
