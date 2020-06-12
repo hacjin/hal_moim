@@ -40,7 +40,7 @@ typora-copy-images-to: img
 [video](발표/할모임최종.mp4)
 
 
-## 할모임 다운로드 하기
+## 할모임 사용법
 
 ### 깃랩에서 클론하기
 
@@ -54,8 +54,6 @@ $ git clone https://lab.ssafy.com/s02-final/s02p31a107.git
 $ wget https://lab.ssafy.com/s02-final/s02p31a107/-/archive/master/s02p31a107-master.zip -O halmoim.zip; unzip halmoim.zip; rm halmoim.zip
 ```
 
-
-
 ## Front 
 
 - 프로그램을 시작하는데 필요한 모듈 목록이 포함 된 `package.json`
@@ -66,8 +64,6 @@ $ wget https://lab.ssafy.com/s02-final/s02p31a107/-/archive/master/s02p31a107-ma
 npm install
 ```
 
-
-
 - 프로그램을 실행하려면 다음 명령어
 - http://localhost:3000 포트 3000번으로 실행되어 다음 링크를 따라 확인
 
@@ -75,17 +71,11 @@ npm install
 npm start
 ```
 
-
-
 - material-ui 설치
 
 ```
 $ npm install @material-ui/core
 ```
-
-
-
-
 
 ## Back
 
@@ -94,8 +84,87 @@ $ npm install @material-ui/core
 - 객체와 Entity에 필요한 Lombok 설치
   - 설치방법: https://duzi077.tistory.com/142
 
-
-
 #### API 확인
 
-http://localhost:8080/swagger-ui.html
+https://localhost:8080/api/swagger-ui.html
+
+
+
+### 시스템 구조도
+
+![시스템구조도](readme/img/architecture.png)
+
+
+
+### 기획배경
+
+- 한국 노인 자살률은 OECD국가 중 최고에 달한다.
+- 그 이유 중 하나가 외로움으로 인한 우울증이며
+  이러한 노인분들의 외로움을 달래줄 만남 어플을 기획
+- **의문점** : <span style="color:red">노인분들의 미디어 활용 능력 정도가 어떠한가?</span>
+- =>  활동적인 노후생활 추구, 미디어 활용능력이 좋은 **Active Senior** 생겨났고, 시간이 지날수록 그 수는 더 많아질것으로 판단
+
+![기획배경](readme/img/plan_background.png)
+
+![기획배경2](readme/img/plan_background2.png)
+
+
+
+### 기능 구현
+
+#### 회원가입 및 로그인
+
+- 주 고객층을 고려한 차별화된 서비스 =>  **간편한 로그인**
+- 잊어 버리기 쉬운 아이디, 비밀번호 => 휴대폰 번호 + **얼굴 인식**을 통한 인증 과정
+
+![회원가입/로그인](readme/img/member_plan.png)
+
+- 회원가입시 주소입력의 번거로움 => Kakao 지도 API 활용한 **현재 위치 기반의 주소 받아오기**
+- 사진등록 => 로그인 시 필요한 **얼굴 사진 저장**
+
+![회원가입](readme/img/register.png)
+
+![회원가입/로그인 얼굴인식](readme/img/face_login.png)
+
+
+
+#### 모임 기능
+
+- 주변 거리 반경 내 모임 정보 조회, 생성, 참여 기능
+- 카드 뒤집기 => **주최자 정보 **조회 가능
+- 참여, 취소 => 실시간 반영
+
+![모임조회](readme/img/moim_select.png)
+
+![모임만들기](readme/img/moim_add.png)
+
+![모임참여](readme/img/moim_join.png)
+
+
+
+### 친구 기능
+
+- 주변 거리 반경 내 존재하는 친구 조회
+- 친구 목록 중 만남을 원하는 친구 선택시 **채팅연결**
+
+![친구목록](readme/img/friend_list.png)
+
+
+
+### 채팅 기능
+
+- **WebSocket** + 텍스트 기반의 메세징 프로토콜 **STOMP** 을 활용한 채팅 기능 구현
+
+![채팅기능](readme/img/chat_list.png)
+
+
+
+### 내 정보 페이지
+
+- 프로필 사진, 지역, 이름, 생년월일 등 개인 정보 수정 가능
+- 내가 개설한 모임, 내가 참여한 모임 조회
+
+![내정보페이지](readme/img/mypage.png)
+
+![모임상세정보](readme/img/mypage_moim_detail.png)
+

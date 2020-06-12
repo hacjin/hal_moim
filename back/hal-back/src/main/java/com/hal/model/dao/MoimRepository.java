@@ -15,5 +15,4 @@ public interface MoimRepository extends JpaRepository<Moim, Integer> {
 	Moim findById(int mid);
 	// 내가 생성한 모임 조회
 	List<Moim> findByHostUidAndTimeAfterOrderByTimeDesc(int uid, Date now);
-	
 }
