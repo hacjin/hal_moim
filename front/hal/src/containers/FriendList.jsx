@@ -47,12 +47,7 @@ class FriendList extends React.Component {
 
   async componentDidMount() {
     // Load async data.
-    let userData = await API.get('user/friendsByDistance', {
-      params: {
-        uid: this.user.uid,
-        dis_filter: this.state.dis,
-      },
-    })
+    let userData = await API.get('users/'+this.user.uid+'/distance/'+this.state.dis)
 
     this.setState({
       ...this.state,
@@ -62,12 +57,7 @@ class FriendList extends React.Component {
   }
 
   async _getFriendList(dis) {
-    let userData = await API.get('user/friendsByDistance', {
-      params: {
-        uid: this.user.uid,
-        dis_filter: dis,
-      },
-    })
+    let userData = await API.get('users/'+this.user.uid+'/distance/'+dis)
 
     this.setState({
       ...this.state,
