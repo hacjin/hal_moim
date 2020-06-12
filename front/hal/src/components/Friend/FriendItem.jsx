@@ -85,11 +85,7 @@ const FriendItem = (props) => {
 
     //채팅방 메시지 불러오기
     let totalChatData = await API.get('chats/rooms/'+roomId.data.data)
-    // , {
-    //   params: {
-    //     rid: roomId.data.data,
-    //   },
-    // })
+
     var roomMessageList = []
 
     totalChatData.data.data.forEach(function (item, index, array) {

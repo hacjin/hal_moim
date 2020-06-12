@@ -10,11 +10,7 @@ const ChatItem = (props) => {
 
   async function _onFormSubmit() {
     let totalChatData = await API.get('chats/rooms/'+item.rid)
-    // , {
-    //   params: {
-    //     rid: item.rid,
-    //   },
-    // })
+
     var roomMessageList = []
 
     totalChatData.data.data.forEach(function (item, index, array) {

@@ -16,13 +16,11 @@ class ChatWindow extends Component {
   }
 
   render() {
-    // console.log("chatwindow",this.props)
     let messageList = this.props.messageList || [];
     let classList = [
       'sc-chat-window',
       (this.props.isOpen ? 'opened' : 'closed')
     ];
-    // console.log("dd",this.props)
     return (
       <div className={classList.join(' ')}>
         <ChatHeader
