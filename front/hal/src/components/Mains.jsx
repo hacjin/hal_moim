@@ -93,10 +93,10 @@ const Mains = (history) => {
             })
             } else {
             // 로그인 페이지(얼굴인식)
-            sessionStorage.setItem('user', JSON.stringify(res.data.data));
+            // sessionStorage.setItem('user', JSON.stringify(res.data.data));
             history.push({
-                // pathname: '/login_face',
-                pathname: '/moim',
+                pathname: '/login_face',
+                // pathname: '/moim',
                 state: { user: res.data.data }
             });
             }
