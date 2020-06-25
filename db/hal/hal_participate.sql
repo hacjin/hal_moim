@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: 52.78.120.154    Database: hal
 -- ------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE TABLE `participate` (
   KEY `uid_idx` (`uid`),
   CONSTRAINT `partfkmid` FOREIGN KEY (`mid`) REFERENCES `moim` (`mid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `partfkuid` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `participate` (
 
 LOCK TABLES `participate` WRITE;
 /*!40000 ALTER TABLE `participate` DISABLE KEYS */;
-INSERT INTO `participate` VALUES (1,1,2),(3,6,38),(4,7,38),(15,4,38),(16,13,38),(22,2,2),(32,2,5),(40,13,3),(42,10,3),(44,14,3),(101,10,5),(116,10,1),(117,4,1),(118,13,1);
+INSERT INTO `participate` VALUES (1,1,2),(3,6,38),(4,7,38),(15,4,38),(16,13,38),(22,2,2),(32,2,5),(40,13,3),(42,10,3),(44,14,3),(101,10,5),(118,13,1),(125,8,1),(126,4,1),(161,18,62),(162,18,5);
 /*!40000 ALTER TABLE `participate` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-11 15:08:59
+-- Dump completed on 2020-06-25 13:52:54

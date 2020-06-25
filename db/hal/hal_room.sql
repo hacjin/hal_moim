@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: 52.78.120.154    Database: hal
 -- ------------------------------------------------------
@@ -26,12 +26,13 @@ CREATE TABLE `room` (
   `rid` int(11) NOT NULL AUTO_INCREMENT,
   `uid1` int(11) NOT NULL,
   `uid2` int(11) NOT NULL,
+  `last_time` datetime DEFAULT NULL,
   PRIMARY KEY (`rid`),
   KEY `roomfkuid1_idx` (`uid1`),
   KEY `roomfkuid2_idx` (`uid2`),
   CONSTRAINT `roomfkuid1` FOREIGN KEY (`uid1`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `roomfkuid2` FOREIGN KEY (`uid2`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +41,7 @@ CREATE TABLE `room` (
 
 LOCK TABLES `room` WRITE;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` VALUES (1,1,2),(2,1,3),(3,4,7),(4,3,6),(5,1,4),(6,1,5),(7,5,8),(8,5,9),(9,5,20),(10,5,24),(11,7,36),(12,11,22),(13,5,22),(14,5,23),(15,3,45),(16,10,5),(17,51,1),(18,5,3),(19,5,26),(20,2,54),(21,2,55);
+INSERT INTO `room` VALUES (1,1,2,'2020-06-19 13:11:41'),(2,1,3,'2020-06-19 13:05:04'),(3,4,7,'2020-06-19 13:11:41'),(4,3,6,'2020-06-19 13:11:41'),(5,1,4,'2020-06-19 13:11:41'),(6,1,5,'2020-06-19 13:27:24'),(7,5,8,'2020-06-19 13:11:41'),(8,5,9,'2020-06-19 13:11:41'),(9,5,20,'2020-06-19 13:11:41'),(10,5,24,'2020-06-19 13:11:41'),(11,7,36,'2020-06-19 13:11:41'),(12,11,22,'2020-06-19 13:11:41'),(13,5,22,'2020-06-19 13:11:41'),(14,5,23,'2020-06-19 13:11:41'),(15,3,45,'2020-06-19 13:11:41'),(16,10,5,'2020-06-19 13:11:41'),(17,51,1,'2020-06-19 13:11:41'),(18,5,3,'2020-06-19 13:11:41'),(19,5,26,'2020-06-19 13:11:41'),(20,2,54,'2020-06-19 13:11:41'),(21,2,55,'2020-06-19 13:11:41'),(22,62,1,'2020-06-19 13:11:41'),(23,63,1,'2020-06-19 13:11:41'),(24,62,63,'2020-06-19 13:11:41'),(25,5,25,'2020-06-19 13:11:41');
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-11 15:08:59
+-- Dump completed on 2020-06-25 13:52:55
