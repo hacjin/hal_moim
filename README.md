@@ -40,13 +40,11 @@ typora-copy-images-to: img
 
 - [WireFrame](readme/wireframe.md)
 
+
+
 [ppt](발표/할모임발표.pptx)
 
-#### 할모임 시연영상
-
-<div>
-<iframe width="1413" height="529" src="https://www.youtube.com/embed/FEuLBY0edQk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+[할모임 시연영상](https://youtu.be/FEuLBY0edQk)
 
 
 
