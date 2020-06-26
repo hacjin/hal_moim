@@ -163,7 +163,7 @@ const Mains = (history) => {
               {/* <Container component="main" > */}
               <Card className={classes.root}>
                 <CardActionArea>
-                  <CardMedia className={classes.media} image="http://imgnews.naver.net/image/5727/2019/03/11/0000000043_001_20190311155701622.jpg" title="Contemplative Reptile" />
+                  <CardMedia className={classes.media} image="0000000043_001_20190311155701622.jpg" title="Contemplative Reptile" />
                   <CardContent className={classes.contentColor}>
                     <Typography gutterBottom variant="h5" component="h2">
                       노후를 즐겁게!
