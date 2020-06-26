@@ -44,8 +44,9 @@ typora-copy-images-to: img
 
 #### 할모임 시연영상
 
+<div>
 <iframe width="1413" height="529" src="https://www.youtube.com/embed/FEuLBY0edQk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+</div>
 
 
 
